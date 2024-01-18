@@ -1,51 +1,42 @@
-import './App.css';
-import Home from './components/HomePage/Home';
-import Books from './components/Books';
-import { createBrowserRouter , Outlet, RouterProvider } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import Login from './components/Login';
-import Register from './components/Register';
+import "./App.css";
+import Home from "./components/HomePage/Home";
+import Books from "./components/Books";
+import {
+  BrowserRouter as Router,
+  Outlet,
+  Routes,
+  Route,
+} from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import ScrollToTop from "./components/ScrollToTop";
 
-const Layout=()=>{
-  return(
-    <>
-      <Navbar/>
-      <Outlet/>
-      <Footer/>
-    </>
-  )
-}
-const router=createBrowserRouter([
-  {
-    path:'/',
-    element:<Layout/>,
-    errorElement: <p>Oops something went wrong</p>,
-    children:[{
-        path:'/',
-        element:<Home/>
-      },
-      {
-        path:'/books',
-        element:<Books/>
-      }
-    ]
-  },
-  {
-    path:'/login',
-    element:<Login/>
-  },
-  {
-    path:'/register',
-    element:<Register/>
-  }
-  
-])
+const Layout = () => {
+  return (
+    <div className="overflow-x-hidden">
+      <Navbar />
+      <Outlet />
+      <Footer />
+    </div>
+  );
+};
 
 function App() {
   return (
-    <div className="bg-bgcolor h-screen overflow-x-hidden  ">
-      <RouterProvider router ={router}/>
+    <div className="bg-bgcolor  ">
+      <Router>
+        <ScrollToTop />
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="books" element={<Books />} />
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+          </Route>
+        </Routes>
+      </Router>
     </div>
   );
 }

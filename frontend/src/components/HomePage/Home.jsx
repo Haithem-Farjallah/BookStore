@@ -91,7 +91,6 @@ function Home() {
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         data.items ? setResults(data.items) : setResults([]);
         setLoading(false);
       })
@@ -107,7 +106,7 @@ function Home() {
   };
 
   return (
-    <div className="  relative  sm:mt-10 mt-1  ">
+    <div className="  relative  sm:mt-10 mt-1   ">
       <div className=" flex  justify-around      md:scale-105 ">
         <div className=" flex flex-col  lg:items-start items-center  lg:ml-12 px-5 sm:space-y-6 space-y-7  pt-8 lg:w-title_width  md:w-widthtitle">
           <h1 className=" drop-shadow-xl sm:text-7xl text-6xl lg:w-title_width md:px-5 lg:px-0 pl-1 sm:pl-0 text-center lg:text-left  text-darkblue font-bold  ">
@@ -144,9 +143,9 @@ function Home() {
       </div>
       {/*<img className="w-screen z-10 " src={wave} alt="" />*/}
       {/* part 2 of the home page */}
-      <div className=" mt-20 ">
+      <div className=" pt-20  ">
         <svg
-          className=" h-[30px]  fill-grayy  w-full"
+          className=" h-[30px]  fill-grayy   w-full"
           xmlns="http://www.w3.org/2000/svg"
           x="0px"
           y="0px"
@@ -502,7 +501,7 @@ function Home() {
             <span className="font-bold underline">Download Now</span> and Embark
             on a Reading Adventure:
           </p>
-          <div className="flex  w-fit space-x-5 ">
+          <div className="flex    space-x-5 ">
             <Link
               to="https://play.google.com/store/games?hl=en&gl=US&pli=1"
               target="_blank"
@@ -511,19 +510,19 @@ function Home() {
               <img
                 src={playstore}
                 alt="playstore"
-                className=" cursor-pointer drop-shadow-2xl "
+                className=" cursor-pointer drop-shadow-2xl  "
               />
             </Link>
             <Link
               to="https://www.apple.com/app-store/"
               target="_blank"
-              className=""
+              className="w-[20.5%]"
             >
               {" "}
               <img
                 src={appstore}
                 alt="appstore"
-                className=" w-[22%]  cursor-pointer "
+                className="drop-shadow-2xl"
               />{" "}
             </Link>
           </div>
