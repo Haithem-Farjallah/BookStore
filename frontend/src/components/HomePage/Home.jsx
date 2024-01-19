@@ -111,7 +111,7 @@ function Home() {
         <div className=" flex flex-col  lg:items-start items-center  lg:ml-12 px-5 sm:space-y-6 space-y-7  pt-8 lg:w-title_width  md:w-widthtitle">
           <h1 className=" drop-shadow-xl sm:text-7xl text-6xl lg:w-title_width md:px-5 lg:px-0 pl-1 sm:pl-0 text-center lg:text-left  text-darkblue font-bold  ">
             Get your{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-br  from-bgreen to-lightgray">
+            <span className="text-transparent bg-clip-text bg-gradient-to-br  from-bgreen to-gray-200">
               Books
             </span>{" "}
             online and Read them for free.

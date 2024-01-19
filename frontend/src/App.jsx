@@ -1,6 +1,7 @@
 import "./App.css";
 import Home from "./components/HomePage/Home";
 import Books from "./components/Books";
+import BookDetails from "./components/BookDetails";
 import {
   BrowserRouter as Router,
   Outlet,
@@ -34,6 +35,7 @@ function App() {
             <Route path="books" element={<Books />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
+            <Route path="books/:id" element={<BookDetails />} />
           </Route>
         </Routes>
       </Router>
