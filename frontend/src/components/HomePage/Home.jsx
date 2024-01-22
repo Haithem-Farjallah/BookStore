@@ -111,7 +111,7 @@ function Home() {
         <div className=" flex flex-col  lg:items-start items-center  lg:ml-12 px-5 sm:space-y-6 space-y-7  pt-8 lg:w-title_width  md:w-widthtitle">
           <h1 className=" drop-shadow-xl sm:text-7xl text-6xl lg:w-title_width md:px-5 lg:px-0 pl-1 sm:pl-0 text-center lg:text-left  text-darkblue font-bold  ">
             Get your{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-br  from-bgreen to-gray-200">
+            <span className="text-transparent bg-clip-text bg-gradient-to-br  from-[#29A354] to-gray-200">
               Books
             </span>{" "}
             online and Read them for free.
@@ -143,7 +143,7 @@ function Home() {
       </div>
       {/*<img className="w-screen z-10 " src={wave} alt="" />*/}
       {/* part 2 of the home page */}
-      <div className=" pt-20  ">
+      <div className=" pt-4  ">
         <svg
           className=" h-[30px]  fill-grayy   w-full"
           xmlns="http://www.w3.org/2000/svg"

@@ -212,7 +212,7 @@ function Books() {
                       {result.volumeInfo.title}
                     </h1>
                     {result.volumeInfo.authors ? (
-                      <p className="text-pgray font-semibold text-lg py-1">
+                      <p className="text-pgray font-semibold text-lg py-1 line-clamp-1 pr-2">
                         <span className="font-[650]">
                           {result.volumeInfo.authors.length === 1
                             ? "Author : "
@@ -241,11 +241,16 @@ function Books() {
                     <div className="flex justify-between items-center ">
                       <div className="flex ml-4 ">
                         {result.volumeInfo.categories ? (
-                          result.volumeInfo.categories.map((categorie) => (
-                            <p className="text-sm bg-white/25 border border-gray-300 w-fit py-2 px-2 m-1 text-darkblue font-semibold rounded-lg cursor-pointer">
-                              {categorie}
-                            </p>
-                          ))
+                          result.volumeInfo.categories.map(
+                            (categorie, index) => (
+                              <p
+                                key={index}
+                                className="text-sm bg-white/25 border border-gray-300 w-fit py-2 px-2 m-1 text-darkblue font-semibold rounded-lg cursor-pointer"
+                              >
+                                {categorie}
+                              </p>
+                            )
+                          )
                         ) : (
                           <p className="text-sm bg-white/25 border border-gray-300 w-fit py-2 px-2 m-1 text-darkblue font-semibold rounded-lg">
                             Not mentioned
@@ -260,7 +265,7 @@ function Books() {
                         <input
                           type="button"
                           value="View Details >"
-                          className="cursor-pointer rounded-xl  p-2 bg-bggreen text-white font-medium text-md shadow-md hover:underline "
+                          className="cursor-pointer rounded-xl  p-2 bg-bgreen text-white font-medium text-md border border-bgreen shadow-xl hover:underline "
                         />
                       </NavLink>
                     </div>

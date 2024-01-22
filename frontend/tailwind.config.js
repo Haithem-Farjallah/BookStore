@@ -22,12 +22,12 @@ module.exports = {
       colors: {
         darkblue: "#241d45" /*5f5f7e */,
         pgray: "#827A7A",
-        bgreen: "#29A354",
+        bgreen: "#299054",
         bgcolor: "#f5f6fa",
         whitebg: "#f6f7f8",
         /*lightpurple:'#6255A5',*/
         lightgreen: "#45D979",
-        lightgray: "#f3f4f6",
+        lightgray: "#d9dad9",
         darkbg: "rgba(0,0,0,0.5)",
         searchbg: "#eee",
         bggreen: "#267e6a",

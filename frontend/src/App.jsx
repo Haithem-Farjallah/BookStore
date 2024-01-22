@@ -2,6 +2,7 @@ import "./App.css";
 import Home from "./components/HomePage/Home";
 import Books from "./components/Books";
 import BookDetails from "./components/BookDetails";
+
 import {
   BrowserRouter as Router,
   Outlet,
