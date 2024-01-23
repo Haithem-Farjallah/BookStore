@@ -2,6 +2,7 @@ import "./App.css";
 import Home from "./components/HomePage/Home";
 import Books from "./components/Books";
 import BookDetails from "./components/BookDetails";
+import Cart from "./components/Cart";
 
 import {
   BrowserRouter as Router,
@@ -14,6 +15,7 @@ import Footer from "./components/Footer";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import ScrollToTop from "./components/ScrollToTop";
+import Search from "./components/Search";
 
 const Layout = () => {
   return (
@@ -34,10 +36,11 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route path="/" element={<Home />} />
             <Route path="books" element={<Books />} />
-            <Route path="login" element={<Login />} />
-            <Route path="register" element={<Register />} />
+            <Route path="cart" element={<Cart />} />
             <Route path="books/:id" element={<BookDetails />} />
           </Route>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </Router>
     </div>

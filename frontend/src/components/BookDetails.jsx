@@ -26,7 +26,7 @@ const BookDetails = () => {
         console.log(err);
         setLoading(true);
       });
-  }, []);
+  }, [id]);
   return (
     <div className="h-screen">
       {loading && (
@@ -35,10 +35,10 @@ const BookDetails = () => {
         </div>
       )}
       {!loading && (
-        <div className="grid grid-cols-3 mx-5 mt-[3%]  ">
-          <div className=" col-span-1 border flex  justify-center  mr-8 bg-grayy rounded-xl border-gray-400">
+        <div className="grid grid-cols-4 mx-5 mt-[3%]   h-[30rem]">
+          <div className=" col-span-2 border flex  justify-center  mr-8 bg-grayy rounded-xl border-gray-400 h-[100%]">
             <img
-              src={results.volumeInfo.imageLinks.small}
+              src={results.volumeInfo.imageLinks.thumbnail}
               alt="book image"
               className="rounded-2xl  drop-shadow-lg my-6 "
             />

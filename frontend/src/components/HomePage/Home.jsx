@@ -81,7 +81,7 @@ function Home() {
     ],
   };
 
-  const [search, setSearch] = useState("");
+  const [search] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -106,7 +106,7 @@ function Home() {
   };
 
   return (
-    <div className="  relative  sm:mt-10 mt-1   ">
+    <div className="  relative  sm:mt-10 mt-1  ">
       <div className=" flex  justify-around      md:scale-105 ">
         <div className=" flex flex-col  lg:items-start items-center  lg:ml-12 px-5 sm:space-y-6 space-y-7  pt-8 lg:w-title_width  md:w-widthtitle">
           <h1 className=" drop-shadow-xl sm:text-7xl text-6xl lg:w-title_width md:px-5 lg:px-0 pl-1 sm:pl-0 text-center lg:text-left  text-darkblue font-bold  ">
@@ -174,7 +174,7 @@ function Home() {
             <img
               src={books}
               alt="books"
-              className=" h-[600px] rounded-full
+              className=" h-[590px] rounded-full 
               "
             />
             <div className="  w-[55%]  text-bggreen  h-[400px] p-5  flex flex-col justify-center ">
@@ -200,8 +200,8 @@ function Home() {
             />
             {/*text-[#267e6a] */}
             <div className="  w-[50%]    text-bggreen h-[400px] p-5  flex flex-col justify-center ">
-              <h1 className="font-bold text-6xl mb-4">
-                Elevating Your Bookstore Experience{" "}
+              <h1 className="font-bold text-6xl mb-4  w-[110%] ">
+                Elevate Your Bookstore Experience{" "}
               </h1>
               <p className=" font-medium text-2xl text-pgray ">
                 We believe in building lasting relationships with our customers,
