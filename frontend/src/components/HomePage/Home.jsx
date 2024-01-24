@@ -106,7 +106,7 @@ function Home() {
   };
 
   return (
-    <div className="  relative  sm:mt-10 mt-1  ">
+    <div className="  relative  mt-5 ">
       <div className=" flex  justify-around      md:scale-105 ">
         <div className=" flex flex-col  lg:items-start items-center  lg:ml-12 px-5 sm:space-y-6 space-y-7  pt-8 lg:w-title_width  md:w-widthtitle">
           <h1 className=" drop-shadow-xl sm:text-7xl text-6xl lg:w-title_width md:px-5 lg:px-0 pl-1 sm:pl-0 text-center lg:text-left  text-darkblue font-bold  ">
@@ -158,16 +158,14 @@ function Home() {
       </div>
 
       <div className="  -mt-1 pt-24 pb-1  flex flex-col   bg-grayy  relative overflow-hidden">
-        <div className=" flex justify-center">
-          <div className=" flex flex-col justify-center items-center h-fit  ">
-            <h1 className="text-7xl text-darkblue font-bold mb-8 ">
-              why choose our online Store ?
-            </h1>
-            <p className="text-[28px] font-medium w-[70%] mb-8 text-center text-pgray ">
-              Shop online and save! Access, read, practice, and engage with
-              digital content.
-            </p>
-          </div>
+        <div className=" flex flex-col justify-center items-center h-fit mb-8 ">
+          <h1 className="text-7xl text-darkblue font-bold mb-8 ">
+            why choose our online Store ?
+          </h1>
+          <p className="text-[28px] font-medium w-[50%] mb-8 text-center text-pgray ">
+            Shop online and save! Access, read, practice, and engage with
+            digital content.
+          </p>
         </div>
         <div className=" my-2 mb-12">
           <div className="flex justify-around items-center my-12">

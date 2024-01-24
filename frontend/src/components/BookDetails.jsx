@@ -35,7 +35,7 @@ const BookDetails = () => {
         </div>
       )}
       {!loading && (
-        <div className="grid grid-cols-4 mx-5 mt-[3%]   h-[30rem]">
+        <div className="grid grid-cols-4 mx-5 mt-[2%]   h-[30rem]">
           <div className=" col-span-2 border flex  justify-center  mr-8 bg-grayy rounded-xl border-gray-400 h-[100%]">
             <img
               src={results.volumeInfo.imageLinks.thumbnail}

@@ -49,17 +49,7 @@ function Books() {
 
   return (
     <>
-      <div className="h-bookheight     ">
-        {/*<div>
-          <img src="https://books.google.com/books/content?id=WN-1CgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api" alt="" />
-          <div>
-            <p>Catherine</p>
-            <p>The House at The edge</p>
-            <p>Drama</p>
-          </div>
-  </div>*/}
-      </div>
-      <div className="flex mx-8 px-8 -mt-12  relative rounded-xl">
+      <div className="flex mx-8 mt-12   relative rounded-xl">
         <div className=" rounded-2xl bg-grayy  w-56 h-screen py-5 px-2 mr-5">
           <div className="mb-5">
             <h1 className="font-semibold text-xl text-darkgray mb-2">
@@ -231,7 +221,7 @@ function Books() {
                       "Not mentioned"
                     )}
 
-                    <p className="text-pgray font-medium text-lg mb-3 ml-4 mr-44 h-24   line-clamp-3 ">
+                    <p className="text-pgray font-medium text-lg mb-3 ml-4 w-[90%]  h-24   line-clamp-3 ">
                       {result.searchInfo
                         ? result.searchInfo.textSnippet
                             .replace(/&#39;/g, "'")
