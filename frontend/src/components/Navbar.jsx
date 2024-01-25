@@ -38,13 +38,27 @@ export default function Example() {
   const [open, setOpen] = useState(false);
   const [show, setShow] = useState(false);
   const [openCart, setOpenCart] = useState(false);
-
+  const [HideNavbar, setHideNavBar] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
   const outside = (e) => {
     if (e.target.classList.contains("outside")) {
       setShow(!show);
       console.log(show);
     }
   };
+  const changeNavBarBackground = () => {
+    if (window.scrollY > scrollY) {
+      //when we scroll down
+      setHideNavBar(true);
+    } else {
+      //when we scroll up
+      setHideNavBar(false);
+    }
+    setScrollY(window.scrollY);
+  };
+  useEffect(() => {
+    window.addEventListener("scroll", changeNavBarBackground);
+  }, [scrollY]);
   useEffect(() => {
     show || openCart
       ? document.body.classList.add("overflow-hidden")
@@ -54,7 +68,7 @@ export default function Example() {
     };
   }, [show, openCart]);
   return (
-    <div className="bg-white relative ">
+    <div className="relative bg-white">
       {/* Mobile menu */}
       <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="relative z-40 lg:hidden" onClose={setOpen}>
@@ -100,7 +114,7 @@ export default function Example() {
                     <div key={page.name} className="flow-root">
                       <NavLink
                         to={page.href}
-                        className="-m-2 block p-2 font-medium text-gray-900"
+                        className="-m-2 block hover:bg-green-100/50 p-2 font-medium text-gray-900 "
                       >
                         {page.name}
                       </NavLink>
@@ -146,7 +160,11 @@ export default function Example() {
         </Dialog>
       </Transition.Root>
 
-      <header className="relative bg-white ">
+      <header
+        className={`${
+          HideNavbar && " -translate-y-20"
+        }  bg-white/50  fixed w-full  z-20 backdrop-blur-md transform duration-[0.3s]`}
+      >
         <nav aria-label="Top" className="  sm:px-6   shadow-sm ">
           <div className="flex items-center h-20 ">
             {/*menu button for mobile*/}
@@ -161,7 +179,7 @@ export default function Example() {
             </button>
 
             {/* Logo */}
-            <div className="  h-full ml-4  ">
+            <div className="  h-full ml-12  ">
               <NavLink to="/">
                 <img
                   className="  h-full float-right  pt-2"
@@ -177,25 +195,25 @@ export default function Example() {
                 <ul className=" space-x-8  ">
                   <NavLink
                     to="/"
-                    className="text-pgray hover:text-gray-800 aria-[current=page]:text-bgreen   font-medium  "
+                    className="text-darkblue/90 hover:text-gray-900 aria-[current=page]:text-bgreen   font-medium  "
                   >
                     Home
                   </NavLink>
                   <NavLink
                     to="/books"
-                    className="text-pgray hover:text-gray-800 aria-[current=page]:text-bgreen font-medium "
+                    className="text-darkblue/90 hover:text-gray-900 aria-[current=page]:text-bgreen font-medium "
                   >
                     Books
                   </NavLink>
                   <NavLink
                     to="/authors"
-                    className="text-pgray hover:text-gray-800 aria-[current=page]:text-bgreen font-medium "
+                    className="text-darkblue/90 hover:text-gray-900 aria-[current=page]:text-bgreen font-medium "
                   >
                     Authors
                   </NavLink>
                   <NavLink
                     to="/blog"
-                    className="text-pgray hover:text-gray-800 aria-[current=page]:text-bgreen font-medium "
+                    className="text-darkblue/90 hover:text-gray-900 aria-[current=page]:text-bgreen font-medium "
                   >
                     Blog
                   </NavLink>
@@ -203,18 +221,18 @@ export default function Example() {
               </div>
             </Popover.Group>
 
-            <div className="ml-auto  flex items-center">
+            <div className="ml-auto lg:mr-14 flex items-center">
               <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                 <NavLink
                   to="/login"
-                  className=" font-medium text-gray-700 hover:text-gray-800"
+                  className=" font-medium text-darkblue/90 hover:text-gray-900"
                 >
                   Sign in
                 </NavLink>
                 <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
                 <NavLink
                   to="/register"
-                  className=" font-medium text-gray-700 hover:text-gray-800"
+                  className=" font-medium text-darkblue/90 hover:text-gray-900"
                 >
                   Create account
                 </NavLink>
@@ -240,7 +258,7 @@ export default function Example() {
                 <span className="sr-only">Search</span>
 
                 <MagnifyingGlassIcon
-                  className="h-6 w-6 text-bgreen cursor-pointer font-bold"
+                  className="h-6 w-6 text-gray-400 hover:text-gray-500 cursor-pointer font-bold"
                   onClick={() => setShow(!show)}
                   aria-hidden="true"
                 />

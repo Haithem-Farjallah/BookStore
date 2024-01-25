@@ -106,7 +106,7 @@ function Home() {
   };
 
   return (
-    <div className="  relative  mt-5 ">
+    <div className="  relative mt-20">
       <div className=" flex  justify-around      md:scale-105 ">
         <div className=" flex flex-col  lg:items-start items-center  lg:ml-12 px-5 sm:space-y-6 space-y-7  pt-8 lg:w-title_width  md:w-widthtitle">
           <h1 className=" drop-shadow-xl sm:text-7xl text-6xl lg:w-title_width md:px-5 lg:px-0 pl-1 sm:pl-0 text-center lg:text-left  text-darkblue font-bold  ">
@@ -132,12 +132,12 @@ function Home() {
           <img
             src={img1}
             alt=""
-            className="relative z-20 mt-8 w-imagewidth  inline "
+            className="relative z-10 mt-8 w-imagewidth  inline "
           />
           <img
             src={blob}
             alt=""
-            className="absolute top-0 inline left-0 ml-3  mt-12 w-imagewidth  z-10 "
+            className="absolute top-0 inline left-0 ml-3  mt-12 w-imagewidth   "
           />
         </div>
       </div>
@@ -145,7 +145,7 @@ function Home() {
       {/* part 2 of the home page */}
       <div className=" pt-4  ">
         <svg
-          className=" h-[30px]  fill-grayy   w-full"
+          className=" h-[30px]  fill-grayy    w-full"
           xmlns="http://www.w3.org/2000/svg"
           x="0px"
           y="0px"
@@ -348,7 +348,7 @@ function Home() {
       </div>
 
       {/*client review*/}
-      <div className=" z-20 relative flex flex-col justify-center items-center h-fit mt-32  ">
+      <div className=" z-10 relative flex flex-col justify-center items-center h-fit mt-32  ">
         <h1 className=" text-7xl text-darkblue font-bold  mb-8  w-full text-center">
           Our Clients Review
         </h1>
@@ -357,13 +357,13 @@ function Home() {
           bought from us.
         </p>
       </div>
-      <div className="relative  py-16  z-20  ">
+      <div className="relative  py-16  z-10  ">
         <img
           src={blob1}
           alt="blob"
           className=" absolute z-0 right-0 top-0    "
         />
-        <div className="h-[20rem]    space-x-12  flex mr-12 ml-4 pl-12 relative z-20 ">
+        <div className="h-[20rem]    space-x-12  flex mr-12 ml-4 pl-12 relative z-10 ">
           <div className=" shadow-xl  bg-white/50 backdrop-blur-md border border-gray-300 rounded-lg  flex flex-col space-y-2  pt-5 transform  hover:scale-105 duration-500">
             <h1 className="text-darkblue font-bold text-2xl pl-5">
               Great Plateform

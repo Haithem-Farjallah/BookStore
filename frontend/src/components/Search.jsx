@@ -52,7 +52,7 @@ function Search({ outside, closeWindow }) {
         </svg>
       </div>
       {/*elements */}
-      <div className=" bg-grayy/90  relative rounded-xl w-[40%] h-[80%] mt-20 py-4  flex flex-col justify-end  items-end overflow-hidden">
+      <div className=" bg-grayy  relative rounded-xl w-[40%] h-[80%] mt-20 py-4  flex flex-col justify-end  items-end overflow-hidden">
         <div className=" w-full  overflow-x-hidden  ">
           {loading && (
             <div className="  absolute top-[50%] right-[50%] text-bgreen  ">
@@ -69,7 +69,7 @@ function Search({ outside, closeWindow }) {
                 result.volumeInfo.imageLinks.thumbnail && (
                   <div
                     key={index}
-                    className=" bg-white/80 border border-slate-400 border-opacity-50 mb-2 shadow-md rounded-md hover:bg-emerald-200/10 cursor-pointer h-[17%] w-[94%] mx-5 "
+                    className=" bg-white/80 border border-slate-400 border-opacity-50 mb-2 shadow-md rounded-md hover:bg-green-100/40 cursor-pointer h-[17%] w-[94%] mx-5 "
                   >
                     <NavLink
                       to={`/books/${result.id}`}
