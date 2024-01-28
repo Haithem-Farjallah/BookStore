@@ -16,6 +16,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import ScrollToTop from "./components/ScrollToTop";
 import Search from "./components/Search";
+import CartTotals from "./components/CartTotals";
 
 const Layout = () => {
   return (
@@ -36,7 +37,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route path="/" element={<Home />} />
             <Route path="books" element={<Books />} />
-            <Route path="cart" element={<Cart />} />
+            <Route path="cartTotals" element={<CartTotals />} />
             <Route path="books/:id" element={<BookDetails />} />
           </Route>
           <Route path="/login" element={<Login />} />
