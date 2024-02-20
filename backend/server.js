@@ -3,6 +3,7 @@ import "dotenv/config";
 import { connexion } from "./DB.js";
 import cors from "cors";
 import authRouter from "./routers/authRouter.js";
+import userRouter from "./routers/userRouter.js";
 import cookieParser from "cookie-parser";
 
 const PORT = process.env.PORT;
@@ -14,6 +15,7 @@ app.use(cookieParser());
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 
 app.use("/api/auth", authRouter);
+app.use("/api/user", userRouter);
 
 app.listen(PORT, () => console.log("app is listening on port " + PORT));
 

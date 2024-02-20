@@ -28,7 +28,7 @@ const BookDetails = () => {
       });
   }, [id]);
   return (
-    <div className="h-screen pt-20">
+    <div className="h-screen ">
       {loading && (
         <div className="h-[100%] mt-10 text-bgreen flex justify-center items-center  w-full">
           <FontAwesomeIcon icon={faSpinner} spin className="  h-8" />

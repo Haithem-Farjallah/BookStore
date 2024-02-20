@@ -49,7 +49,7 @@ function Books() {
 
   return (
     <>
-      <div className="flex mx-8    relative rounded-xl pt-24">
+      <div className="flex mx-8    relative rounded-xl pt-10">
         <div className=" rounded-2xl bg-grayy  w-56 h-screen py-5 px-2 mr-5">
           <div className="mb-5">
             <h1 className="font-semibold text-xl text-darkgray mb-2">

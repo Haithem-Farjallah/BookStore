@@ -168,14 +168,9 @@ export default function Navbar() {
 
       <header
         className={`${
-          HideNavbar &&
-          location.pathname !== "/login" &&
-          location.pathname !== "/register" &&
-          " -translate-y-20"
+          HideNavbar && location.pathname === "/" && " -translate-y-20"
         }   ${
-          location.pathname !== "/login" &&
-          location.pathname !== "/register" &&
-          "fixed"
+          location.pathname === "/" && "fixed"
         } bg-bgcolor/90   w-full  z-20 backdrop-blur-md transform duration-[0.3s]`}
       >
         <nav aria-label="Top" className="  sm:px-6   shadow-sm ">
