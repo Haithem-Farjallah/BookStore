@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import stars from "../images/stars.svg";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -28,7 +28,7 @@ const BookDetails = () => {
       });
   }, [id]);
   return (
-    <div className="h-screen">
+    <div className="h-screen pt-20">
       {loading && (
         <div className="h-[100%] mt-10 text-bgreen flex justify-center items-center  w-full">
           <FontAwesomeIcon icon={faSpinner} spin className="  h-8" />

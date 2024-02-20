@@ -17,13 +17,14 @@ import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
 import Search from "./Search";
 import img3 from "./../images/capture.png";
 import Cart from "./Cart";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import {
   Bars3Icon,
   MagnifyingGlassIcon,
   ShoppingBagIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
+import { useSelector } from "react-redux";
 
 const navigation = {
   pages: [
@@ -34,7 +35,9 @@ const navigation = {
   ],
 };
 
-export default function Example() {
+export default function Navbar() {
+  const { currentUser } = useSelector((state) => state.user);
+  let location = useLocation();
   const [open, setOpen] = useState(false);
   const [show, setShow] = useState(false);
   const [openCart, setOpenCart] = useState(false);
@@ -43,7 +46,6 @@ export default function Example() {
   const outside = (e) => {
     if (e.target.classList.contains("outside")) {
       setShow(!show);
-      console.log(show);
     }
   };
   const changeNavBarBackground = () => {
@@ -56,9 +58,12 @@ export default function Example() {
     }
     setScrollY(window.scrollY);
   };
+
   useEffect(() => {
     window.addEventListener("scroll", changeNavBarBackground);
   }, [scrollY]);
+
+  //To prevent scrolling when opening search and cart :
   useEffect(() => {
     show || openCart
       ? document.body.classList.add("overflow-hidden")
@@ -67,8 +72,9 @@ export default function Example() {
       document.body.classList.remove("overflow-hidden");
     };
   }, [show, openCart]);
+
   return (
-    <div className="relative bg-white">
+    <div className="relative bg-white ">
       {/* Mobile menu */}
       <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="relative z-40 lg:hidden" onClose={setOpen}>
@@ -162,11 +168,18 @@ export default function Example() {
 
       <header
         className={`${
-          HideNavbar && " -translate-y-20"
-        }  bg-white/50  fixed w-full  z-20 backdrop-blur-md transform duration-[0.3s]`}
+          HideNavbar &&
+          location.pathname !== "/login" &&
+          location.pathname !== "/register" &&
+          " -translate-y-20"
+        }   ${
+          location.pathname !== "/login" &&
+          location.pathname !== "/register" &&
+          "fixed"
+        } bg-bgcolor/90   w-full  z-20 backdrop-blur-md transform duration-[0.3s]`}
       >
         <nav aria-label="Top" className="  sm:px-6   shadow-sm ">
-          <div className="flex items-center h-20 ">
+          <div className="flex items-center h-[4.5rem] ">
             {/*menu button for mobile*/}
             <button
               type="button"
@@ -222,21 +235,33 @@ export default function Example() {
             </Popover.Group>
 
             <div className="ml-auto lg:mr-14 flex items-center">
-              <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                <NavLink
-                  to="/login"
-                  className=" font-medium text-darkblue/90 hover:text-gray-900"
-                >
-                  Sign in
-                </NavLink>
-                <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-                <NavLink
-                  to="/register"
-                  className=" font-medium text-darkblue/90 hover:text-gray-900"
-                >
-                  Create account
-                </NavLink>
-              </div>
+              {currentUser ? (
+                <div className="h-9 w-9 ">
+                  <NavLink to="/profile">
+                    <img
+                      src={currentUser.profileImg}
+                      alt="Profile Image"
+                      className="rounded-full"
+                    />
+                  </NavLink>
+                </div>
+              ) : (
+                <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+                  <NavLink
+                    to="/login"
+                    className=" font-medium text-darkblue/90 hover:text-gray-900"
+                  >
+                    Sign in
+                  </NavLink>
+                  <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
+                  <NavLink
+                    to="/register"
+                    className=" font-medium text-darkblue/90 hover:text-gray-900"
+                  >
+                    Create account
+                  </NavLink>
+                </div>
+              )}
               {/*Currency*/}
               {/*<div className="hidden lg:ml-8 lg:flex">
                 <a
@@ -277,7 +302,6 @@ export default function Example() {
                   <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
                     0
                   </span>
-                  <span className="sr-only">items in cart, view bag</span>
                 </div>
               </div>
             </div>

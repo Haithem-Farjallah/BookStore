@@ -1,46 +1,64 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
-import google from "../images/Google.svg";
+import { NavLink, useNavigate } from "react-router-dom";
+
 import img7 from "../images/Vector1.png";
+import { handleErrors } from "./handleErrors";
 
 const Register = () => {
-  const [required, setRequired] = useState({
-    name: false,
-    familyname: false,
-    email: false,
-    password: false,
-  });
-  let [forms, setForms] = useState({
-    name: "",
+  const [formData, setFormData] = useState({
+    username: "",
     familyname: "",
     email: "",
     password: "",
-    remember: false,
-    student: false,
+    confirmpassword: "",
+    isStudent: false,
   });
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const handleChange = (e) => {
-    setRequired({ ...required, [e.target.name]: false });
-    setForms({
-      ...forms,
+    setFormData({
+      ...formData,
       [e.target.name]:
         e.target.type === "checkbox" ? e.target.checked : e.target.value,
     });
-    console.log(forms);
+    setErrors({ ...errors, [e.target.name]: "" });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    let exe = { ...required };
-    for (let form in forms) {
-      if (!forms[form]) {
-        exe = { ...exe, [form]: true };
-      }
+    const newErrors = handleErrors(formData, "register");
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
     }
-    setRequired(exe);
+    try {
+      setLoading(true);
+      const res = await fetch("http://localhost:5000/api/auth/signUp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        setLoading(false);
+        setErrors({ server: data.message });
+        return;
+      }
+      setLoading(false);
+      navigate("/login");
+    } catch (error) {
+      setErrors({ server: error.message });
+      setLoading(false);
+      console.log(error);
+    }
   };
+
   return (
     <div className=" bg-gradient-to-tl from-bgreen to-green-300 ">
-      <img src={img7} alt="" className="float-right  -ml-[20%] " />
+      <img src={img7} alt="" className="float-right  -ml-[15%] " />
 
       <div className="    pt-14 flex justify-center items-center ">
         <div className="  bg-bgcolor  py-12  w-[60%] flex flex-col justify-center items-center rounded-3xl drop-shadow-2xl">
@@ -53,22 +71,22 @@ const Register = () => {
           <form
             onSubmit={handleSubmit}
             method="post"
-            className="flex flex-col justify-center items-start mt-5 space-y-2  w-[60%]"
+            className="flex flex-col justify-center items-start mt-5 gap-2  w-[60%]"
           >
-            <label htmlFor="name" className="text-pgray font-semibold">
-              Name
+            <label htmlFor="name" className="text-pgray  font-semibold">
+              username
             </label>
             <input
               type="text"
               id="name"
-              name="name"
+              name="username"
               onChange={handleChange}
               placeholder="Enter your Name"
-              className="w-full font-meduim placeholder:font-normal py-1 px-2 text-darkblue  rounded-lg outline-none shadow-test focus:shadow-testhover"
+              className="w-full h-10 font-meduim placeholder:font-normal py-1 px-2 text-darkblue  rounded-lg outline-none shadow-test focus:shadow-testhover"
             />
-            {required.name && (
+            {errors.username && (
               <p className="text-red-500 text-xs font-bold pl-2">
-                *Name is required!
+                {errors.username}
               </p>
             )}
             <label htmlFor="familyname" className="text-pgray font-semibold">
@@ -80,11 +98,11 @@ const Register = () => {
               name="familyname"
               onChange={handleChange}
               placeholder="Enter your Family Name"
-              className="w-full font-meduim placeholder:font-normal py-1 px-2 text-darkblue  rounded-lg outline-none shadow-test focus:shadow-testhover"
+              className="w-full h-10 font-meduim placeholder:font-normal py-1 px-2 text-darkblue  rounded-lg outline-none shadow-test focus:shadow-testhover"
             />
-            {required.familyname && (
+            {errors.familyname && (
               <p className="text-red-500 text-xs font-bold pl-2">
-                *Family Name is required!
+                {errors.familyname}
               </p>
             )}
 
@@ -97,11 +115,11 @@ const Register = () => {
               name="email"
               onChange={handleChange}
               placeholder="Enter your email"
-              className="w-full font-meduim placeholder:font-normal py-1 px-2 text-darkblue  rounded-lg outline-none shadow-test focus:shadow-testhover"
+              className="w-full h-10 font-meduim placeholder:font-normal py-1 px-2 text-darkblue  rounded-lg outline-none shadow-test focus:shadow-testhover"
             />
-            {required.email && (
+            {errors.email && (
               <p className="text-red-500 text-xs font-bold pl-2">
-                *Email is required!
+                {errors.email}
               </p>
             )}
             <label htmlFor="password" className="text-pgray font-semibold">
@@ -113,11 +131,11 @@ const Register = () => {
               name="password"
               onChange={handleChange}
               placeholder="********"
-              className="w-full py-1 px-2 text-darkblue  outline-none rounded-lg shadow-test focus:shadow-testhover"
+              className="w-full h-10 py-1 px-2 text-darkblue  outline-none rounded-lg shadow-test focus:shadow-testhover"
             />
-            {required.password && (
+            {errors.password && (
               <p className="text-red-500 text-xs font-bold pl-2">
-                *Password is required!
+                {errors.password}
               </p>
             )}
             <label
@@ -132,55 +150,40 @@ const Register = () => {
               name="confirmpassword"
               onChange={handleChange}
               placeholder="********"
-              className="w-full py-1 px-2 text-darkblue  outline-none rounded-lg shadow-test focus:shadow-testhover"
+              className="w-full h-10 py-1 px-2 text-darkblue  outline-none rounded-lg shadow-test focus:shadow-testhover"
             />
-            {false && (
+            {errors.confirmpassword && (
               <p className="text-red-500 text-xs font-bold pl-2">
-                *Password is required!
+                {errors.confirmpassword}
               </p>
             )}
 
-            <div className="  space-x-2  mt-5  w-full ">
-              <input
-                type="checkbox"
-                name="remember"
-                id="remember"
-                onChange={handleChange}
-                className=" align-middle outline-none mb-[1px] ml-2 accent-bggreen"
-              />
-              <label
-                htmlFor="remember"
-                className="text-sm  text-pgray outline-none"
-              >
-                Remember me
-              </label>
-            </div>
             <div className="  space-x-2  mt-1  w-full ">
               <input
                 type="checkbox"
-                name="student"
-                id="student"
+                name="isStudent"
+                id="isStudent"
                 onChange={handleChange}
-                className=" align-middle outline-none mb-[1px] ml-2 accent-bggreen"
+                className=" align-middle  outline-none mb-[1px] ml-2 accent-bggreen"
               />
               <label
-                htmlFor="student"
+                htmlFor="isStudent"
                 className="text-sm  text-pgray outline-none"
               >
                 I am currently a Student.
               </label>
             </div>
-            <button className="bg-bgreen w-full rounded-xl py-2  text-white outline-green-800 shadow-test hover:shadow-testhover ">
-              Sign Up
+            {errors.server && (
+              <p className="text-red-500  font-medium pl-2">{errors.server}</p>
+            )}
+            <button
+              disabled={loading}
+              className="bg-bgreen w-full h-12 hover:opacity-95 disabled:opacity-80 rounded-xl py-2 mt-3  text-white outline-green-800 shadow-test hover:shadow-testhover "
+            >
+              {loading ? "loading..." : "Sign Up"}
             </button>
           </form>
-          <button className="flex justify-center space-x-2 mt-3 mb-5 w-[60%] font-[450] rounded-xl py-2 shadow-test hover:shadow-testhover bg-white text-darkblue border border-gray-400 outline-gray-500">
-            <span>
-              <img src={google} alt="google" />
-            </span>
-            <p>Sign up with google</p>
-          </button>
-          <div className="flex justify-center space-x-2 text-xs w-[60%] ">
+          <div className="flex justify-center space-x-2 text-xs w-[60%] mt-5 ">
             <p className="text-[#5f5f7e] font-semibold">
               Already have an account?{" "}
             </p>

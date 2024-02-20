@@ -106,8 +106,8 @@ function Home() {
   };
 
   return (
-    <div className="  relative mt-20">
-      <div className=" flex  justify-around      md:scale-105 ">
+    <div className="  relative pt-20">
+      <div className=" flex  justify-around   mb-5   md:scale-105 ">
         <div className=" flex flex-col  lg:items-start items-center  lg:ml-12 px-5 sm:space-y-6 space-y-7  pt-8 lg:w-title_width  md:w-widthtitle">
           <h1 className=" drop-shadow-xl sm:text-7xl text-6xl lg:w-title_width md:px-5 lg:px-0 pl-1 sm:pl-0 text-center lg:text-left  text-darkblue font-bold  ">
             Get your{" "}
@@ -158,7 +158,7 @@ function Home() {
       </div>
 
       <div className="  -mt-1 pt-24 pb-1  flex flex-col   bg-grayy  relative overflow-hidden">
-        <div className=" flex flex-col justify-center items-center h-fit mb-8 ">
+        <div className=" flex flex-col justify-center items-center h-fit  ">
           <h1 className="text-7xl text-darkblue font-bold mb-8 ">
             why choose our online Store ?
           </h1>
@@ -167,15 +167,15 @@ function Home() {
             digital content.
           </p>
         </div>
-        <div className=" my-2 mb-12">
-          <div className="flex justify-around items-center my-12">
+        <div className=" my-2 mb-12 ">
+          <div className="flex justify-around items-center my-12 ml-4">
             <img
               src={books}
               alt="books"
               className=" h-[590px] rounded-full 
               "
             />
-            <div className="  w-[55%]  text-bggreen  h-[400px] p-5  flex flex-col justify-center ">
+            <div className="  w-[55%]  text-bggreen  h-[400px] p-5  flex flex-col justify-center gap-4 ">
               <h1 className="font-bold text-6xl mb-4 w-full">
                 Explore Our Vast Selection of Books
               </h1>
@@ -197,7 +197,7 @@ function Home() {
               "
             />
             {/*text-[#267e6a] */}
-            <div className="  w-[50%]    text-bggreen h-[400px] p-5  flex flex-col justify-center ">
+            <div className="  w-[50%]    text-bggreen h-[400px] p-5  flex flex-col justify-center gap-4 ">
               <h1 className="font-bold text-6xl mb-4  w-[110%] ">
                 Elevate Your Bookstore Experience{" "}
               </h1>
@@ -218,7 +218,7 @@ function Home() {
               className=" h-[640px] rounded-full
               "
             />
-            <div className="  w-[50%]  text-bggreen  h-[400px] p-5  flex flex-col justify-center ">
+            <div className="  w-[50%]  text-bggreen  h-[400px] p-5  flex flex-col justify-center gap-4 ">
               <h1 className="font-bold text-6xl mb-4">
                 Swift and Seamless Delivery
               </h1>
@@ -352,19 +352,15 @@ function Home() {
         <h1 className=" text-7xl text-darkblue font-bold  mb-8  w-full text-center">
           Our Clients Review
         </h1>
-        <p className="text-3xl  mb-8 text-pgray  font-medium w-[35%] text-center">
+        <p className="text-3xl  mb-8 text-pgray  font-medium w-[38%] text-center">
           It’s always the best source to hear from others who have already
           bought from us.
         </p>
       </div>
       <div className="relative  py-16  z-10  ">
-        <img
-          src={blob1}
-          alt="blob"
-          className=" absolute z-0 right-0 top-0    "
-        />
+        <img src={blob1} alt="blob" className=" absolute z-0 right-0 top-0  " />
         <div className="h-[20rem]    space-x-12  flex mr-12 ml-4 pl-12 relative z-10 ">
-          <div className=" shadow-xl  bg-white/50 backdrop-blur-md border border-gray-300 rounded-lg  flex flex-col space-y-2  pt-5 transform  hover:scale-105 duration-500">
+          <div className=" shadow-xl  bg-white/50 backdrop-blur-sm   border border-gray-300 rounded-lg  flex flex-col space-y-2  pt-5   ">
             <h1 className="text-darkblue font-bold text-2xl pl-5">
               Great Plateform
             </h1>
@@ -402,7 +398,7 @@ function Home() {
               </div>
             </div>
           </div>
-          <div className=" shadow-xl bg-white/50 border  border-gray-300 backdrop-blur-md rounded-lg  flex flex-col space-y-2  pt-5 transform  hover:scale-105 duration-500 ">
+          <div className=" shadow-xl bg-white/50 border  border-gray-300  rounded-lg  flex flex-col space-y-2  pt-5  ">
             <h1 className="text-darkblue font-bold text-xl pl-5">
               Great Plateform
             </h1>
@@ -440,7 +436,7 @@ function Home() {
               </div>
             </div>
           </div>
-          <div className=" shadow-xl  border border-gray-300  bg-white/50 backdrop-blur-md  rounded-lg  flex flex-col space-y-2  pt-5 transform  hover:scale-105 duration-500 ">
+          <div className=" shadow-xl  border border-gray-300  bg-white/50 backdrop-blur-sm   rounded-lg  flex flex-col space-y-2  pt-5  ">
             <h1 className="text-darkblue font-bold text-xl pl-5">
               Great Plateform
             </h1>
