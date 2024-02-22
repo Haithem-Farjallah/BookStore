@@ -54,3 +54,11 @@ export const signIn = async (req, res, next) => {
     next(error);
   }
 };
+
+export const logOut = async (req, res, next) => {
+  try {
+    res.clearCookie("access_token").status(200).json({ message: "Logged Out" });
+  } catch (error) {
+    next(error);
+  }
+};

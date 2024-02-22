@@ -87,6 +87,7 @@
     "mpath": "^0.9.0",
     "mquery": "^5.0.0",
     "ms": "^2.0.0",
+    "multer": "^1.4.5-lts.1",
     "negotiator": "^0.6.3",
     "nodemon": "^3.0.3",
     "nopt": "^1.0.10",
@@ -130,7 +131,6 @@
     "whatwg-url": "^13.0.0",
     "yallist": "^4.0.0"
   },
-  "devDependencies": {},
   "scripts": {
     "dev": "nodemon server.js"
   },

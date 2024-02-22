@@ -231,15 +231,13 @@ export default function Navbar() {
 
             <div className="ml-auto lg:mr-14 flex items-center">
               {currentUser ? (
-                <div className="h-9 w-9 ">
-                  <NavLink to="/profile">
-                    <img
-                      src={currentUser.profileImg}
-                      alt="Profile Image"
-                      className="rounded-full"
-                    />
-                  </NavLink>
-                </div>
+                <NavLink to="/profile">
+                  <img
+                    src={currentUser.profileImg}
+                    alt="Profile Image"
+                    className="rounded-full w-8 h-8 object-cover"
+                  />
+                </NavLink>
               ) : (
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                   <NavLink
