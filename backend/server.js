@@ -4,7 +4,9 @@ import { connexion } from "./DB.js";
 import cors from "cors";
 import authRouter from "./routers/authRouter.js";
 import userRouter from "./routers/userRouter.js";
+import bookRouter from "./routers/bookRouter.js";
 import cookieParser from "cookie-parser";
+import Book from "./Model/bookModel.js";
 
 const PORT = process.env.PORT;
 connexion();
@@ -16,6 +18,7 @@ app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
+app.use("/api/book", bookRouter);
 
 app.listen(PORT, () => console.log("app is listening on port " + PORT));
 
@@ -27,4 +30,13 @@ app.use((err, req, res, next) => {
     statusCode,
     message,
   });
+});
+
+app.post("/addbook", async (req, res) => {
+  try {
+    const data = await Book.create(req.body);
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(400).json(error);
+  }
 });

@@ -1,32 +1,49 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import stars from "../images/stars.svg";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faDownload, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { useSelector } from "react-redux";
 
 const BookDetails = () => {
+  const { currentUser } = useSelector((state) => state.user);
   const { id } = useParams();
 
   const [number, setNumber] = useState(1);
-  const [results, setresults] = useState(null);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [result, setresult] = useState(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    setLoading(true);
-    fetch(
-      `https://www.googleapis.com/books/v1/volumes/${id}?&key=AIzaSyDPYwZOZa8a7QJKPLJyrsnmDyvzts6HBmk`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setresults(data);
+    const getSingleBook = async () => {
+      try {
+        const res = await fetch(
+          `http://localhost:5000/api/book/getSingleBook?id=${id}`
+        );
+        const data = await res.json();
+        setresult(data);
+        setTotalPrice(data.price);
         setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(true);
-      });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getSingleBook();
   }, [id]);
+  const handlePrice = (e) => {
+    if (e.target.value === "+") {
+      if (number < result.quantity) {
+        setNumber((prev) => prev + 1);
+        setTotalPrice(totalPrice + result.price);
+      }
+    }
+    if (e.target.value === "-") {
+      if (number > 1) {
+        setNumber((prev) => prev - 1);
+        setTotalPrice(totalPrice - result.price);
+      }
+    }
+  };
   return (
     <div className="h-screen ">
       {loading && (
@@ -35,58 +52,35 @@ const BookDetails = () => {
         </div>
       )}
       {!loading && (
-        <div className="grid grid-cols-4 mx-5 mt-[2%]   h-[30rem]">
-          <div className=" col-span-2 border flex  justify-center  mr-8 bg-grayy rounded-xl border-gray-400 h-[100%]">
+        <div className="flex flew-wrap  mx-5 mt-[2%]   h-[30rem]">
+          <div className=" min-w-[30%] maw-w-[30%] border flex  justify-center  mr-8 bg-grayy rounded-xl border-gray-400 h-[100%]">
             <img
-              src={results.volumeInfo.imageLinks.thumbnail}
+              src={result.image}
               alt="book image"
               className="rounded-2xl  drop-shadow-lg my-6 "
             />
           </div>
-          <div className=" col-span-2  h-full ">
+          <div className="   h-full ">
             <h1 className="text-darkblue underline font-bold text-4xl  pt-1 ">
-              {results.volumeInfo.title}
+              {result.name}
             </h1>
-            {results.volumeInfo.authors ? (
-              <p className="text-pgray font-semibold text-xl py-2">
-                <span>By:</span>
-                {results.volumeInfo.authors.map((auth, index) => (
-                  <span key={index}>
-                    {auth}
-                    {index === results.volumeInfo.authors.length - 1
-                      ? "."
-                      : " / "}
-                  </span>
-                ))}
-              </p>
-            ) : (
-              "Not mentioned"
-            )}
-            <p className="text-pgray font-medium text-lg  ml-4  pr-2 line-clamp-4  ">
-              {results.volumeInfo.description
-                ? results.volumeInfo.description
-                : "Description of the book currently unavailable !"}{" "}
+
+            <p className="text-pgray font-semibold text-xl py-2">
+              <span>By:</span>
+              {result.author.map((auth, index) => (
+                <span key={index}>
+                  {auth}
+                  {index === result.author.length - 1 ? "." : " / "}
+                </span>
+              ))}
             </p>
 
-            {/*<div className=" ml-4 ">
-              <p className=" text-darkblue font-bold text-lg">
-                Keys of contents for this book :
+            <div className="overflow-y-scroll border">
+              <p className="text-pgray font-medium text-lg h-[9.3rem] ml-4     ">
+                {result.description}{" "}
               </p>
-              {results.volumeInfo.categories ? (
-                results.volumeInfo.categories.map((categorie, index) => (
-                  <p
-                    key={index}
-                    className="text-sm  w-fit py-1 px-2  text-darkblue font-semibold "
-                  >
-                    *{categorie}
-                  </p>
-                ))
-              ) : (
-                <p className="text-sm  w-fit py-2 px-2 m-1 text-darkblue font-semibold rounded-lg">
-                  Not mentioned
-                </p>
-              )}
-              </div>*/}
+            </div>
+
             <div className="flex my-2 w-fit space-x-2 ml-4">
               <img src={stars} alt=" review" />
               <hr className="h-[24px] w-[1px] rounded bg-[#9f9f9f]" />
@@ -95,25 +89,23 @@ const BookDetails = () => {
               </p>
             </div>
             <p className="font-semibold text-pgray ml-4 mb-2">
-              page count: {results.volumeInfo.pageCount}
+              page count: {result.pageCount}
             </p>
             <p className="font-semibold  text-pgray ml-4">
-              publisher: {results.volumeInfo.publisher}
+              publisher: {result.publisher}
             </p>
             <p className=" text-3xl ml-4  my-2  text-darkblue font-bold">
-              {21.0 * number}DT
+              {totalPrice} TND
             </p>
             <p className="  w-fit py-1 px-2  text-darkblue font-semibold">
-              Quantity available: 10 in stock
+              Quantity available:{result.quantity} in stock
             </p>
             <div className=" flex mt-2  ">
               <div className="flex justify-center  items-center mx-5 ">
                 <input
                   type="button"
                   value="-"
-                  onClick={() =>
-                    setNumber((prev) => (prev === 1 ? 1 : prev - 1))
-                  }
+                  onClick={handlePrice}
                   className={`${
                     number === 1 ? "cursor-not-allowed  " : "cursor-pointer"
                   } h-[100%] bg-grayy border-s border-t border-b border-gray-400 text-bgreen  px-2  rounded-s-xl   font-bold text-xl outline-none`}
@@ -124,11 +116,11 @@ const BookDetails = () => {
                 <input
                   type="button"
                   value="+"
-                  onClick={() =>
-                    setNumber((prev) => (prev === 10 ? prev : prev + 1))
-                  }
+                  onClick={handlePrice}
                   className={`${
-                    number === 10 ? "cursor-not-allowed" : "cursor-pointer"
+                    number === result.quantity
+                      ? "cursor-not-allowed "
+                      : "cursor-pointer"
                   } h-[100%] bg-grayy border-e  border-t border-b border-gray-400  px-2 rounded-e-xl outline-none text-bgreen font-bold text-xl`}
                 />
               </div>
@@ -137,6 +129,18 @@ const BookDetails = () => {
                 value="Add to cart "
                 className=" cursor-pointer bg-bgreen  px-12 py-3 rounded-xl  text-white font-bold text-center"
               />
+              {currentUser.isStudent && (
+                <a
+                  target="blank"
+                  href="https://firebasestorage.googleapis.com/v0/b/bookstore-app-47ae6.appspot.com/o/Bulletin_013479018855_.pdf?alt=media&token=71e15617-9da5-43fa-abbf-4bb57fac5476"
+                >
+                  <FontAwesomeIcon
+                    icon={faDownload}
+                    title="Students can download pdf books"
+                    className="text-darkblue h-8 ml-12 mt-2 "
+                  />
+                </a>
+              )}
             </div>
           </div>
         </div>

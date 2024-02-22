@@ -41,3 +41,20 @@
 #specificElement {
   -ms-overflow-style: none;
 }
+
+::-webkit-scrollbar {
+  width: 8px; /* width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #f5f5f5; /* color of the track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1; /* color of the thumb */
+  border-radius: 6px; /* roundness of the thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a3a3a3; /* color of the thumb on hover */
+}

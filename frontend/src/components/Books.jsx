@@ -20,29 +20,25 @@ const people = [
 
 function Books() {
   const [selected, setSelected] = useState(people[0]);
-
   const [search, setSearch] = useState("");
   const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
 
-  let show = false;
-
   useEffect(() => {
-    setLoading(true);
-    fetch(
-      `https://www.googleapis.com/books/v1/volumes?q='nodejs'&key=AIzaSyDPYwZOZa8a7QJKPLJyrsnmDyvzts6HBmk`
-    )
-      .then((res) => res.json())
-      .then((data) => {
+    const getBooks = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/book/getAllBooks");
+        const data = await res.json();
+        setResults(data);
         console.log(data);
-        setResults(data.items);
         setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(true);
-      });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getBooks();
+    return () => {};
   }, []);
 
   const [Values, setValues] = useState([0, 200]);
@@ -188,68 +184,47 @@ function Books() {
                 >
                   <div className="   w-[15%]">
                     <img
-                      src={
-                        result.volumeInfo.imageLinks
-                          ? result.volumeInfo.imageLinks.thumbnail
-                          : bookImg
-                      }
+                      src={result.image}
                       alt="book"
                       className="h-44 w-full rounded-lg drop-shadow-xl "
                     />
                   </div>
                   <div className="flex flex-col  justify-evenly  ml-10  w-full h-[85%] ">
                     <h1 className="text-darkblue underline font-bold text-2xl truncate pt-1 ">
-                      {result.volumeInfo.title}
+                      {result.name}
                     </h1>
-                    {result.volumeInfo.authors ? (
-                      <p className="text-pgray font-semibold text-lg py-1 line-clamp-1 pr-2">
-                        <span className="font-[650]">
-                          {result.volumeInfo.authors.length === 1
-                            ? "Author : "
-                            : "Authors : "}
+
+                    <p className="text-pgray font-semibold text-lg py-1 line-clamp-1 pr-2">
+                      <span className="font-[650]">
+                        {result.author.length === 1
+                          ? "Author : "
+                          : "Authors : "}
+                      </span>
+                      {result.author.map((auth, index) => (
+                        <span key={index}>
+                          {auth}
+                          {index === result.author.length - 1 ? "." : " / "}
                         </span>
-                        {result.volumeInfo.authors.map((auth, index) => (
-                          <span key={index}>
-                            {auth}
-                            {index === result.volumeInfo.authors.length - 1
-                              ? "."
-                              : " / "}
-                          </span>
-                        ))}
-                      </p>
-                    ) : (
-                      "Not mentioned"
-                    )}
+                      ))}
+                    </p>
 
                     <p className="text-pgray font-medium text-lg mb-3 ml-4 w-[90%]  h-24   line-clamp-3 ">
-                      {result.searchInfo
-                        ? result.searchInfo.textSnippet
-                            .replace(/&#39;/g, "'")
-                            .replace(/&quot;/g, "")
-                        : "Description of the book currently unavailable !"}{" "}
+                      {result.textSnippest}
                     </p>
                     <div className="flex justify-between items-center ">
                       <div className="flex ml-4 ">
-                        {result.volumeInfo.categories ? (
-                          result.volumeInfo.categories.map(
-                            (categorie, index) => (
-                              <p
-                                key={index}
-                                className="text-sm bg-white/25 border border-gray-300 w-fit py-2 px-2 m-1 text-darkblue font-semibold rounded-lg cursor-pointer"
-                              >
-                                {categorie}
-                              </p>
-                            )
-                          )
-                        ) : (
-                          <p className="text-sm bg-white/25 border border-gray-300 w-fit py-2 px-2 m-1 text-darkblue font-semibold rounded-lg">
-                            Not mentioned
+                        {result.category.map((category, index) => (
+                          <p
+                            key={index}
+                            className="text-sm bg-white/25 border border-gray-300 w-fit py-2 px-2 m-1 text-darkblue font-semibold rounded-lg cursor-pointer"
+                          >
+                            {category}
                           </p>
-                        )}
+                        ))}
                       </div>
 
                       <NavLink
-                        to={`/books/${result.id}`}
+                        to={`/books/${result._id}`}
                         className="rounded-lg mr-8 "
                       >
                         <input

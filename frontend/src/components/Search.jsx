@@ -5,18 +5,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 function Search({ outside, closeWindow }) {
-  const [search, setSearch] = useState("");
   const [results, setResults] = useState([]);
+  const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     setLoading(true);
-    fetch(
-      `https://www.googleapis.com/books/v1/volumes?q='${search}'&key=AIzaSyDPYwZOZa8a7QJKPLJyrsnmDyvzts6HBmk`
-    )
+    fetch(`http://localhost:5000/api/book/getAllBooks`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
-        data.items ? setResults(data.items) : setResults([]);
+        if (search !== "") {
+          const filterData = data.filter((result) =>
+            result.name.toLowerCase().includes(search.toLowerCase())
+          );
+          setResults(filterData);
+        } else {
+          setResults(data);
+        }
         setLoading(false);
       })
       .catch((err) => {
@@ -31,11 +35,10 @@ function Search({ outside, closeWindow }) {
       onClick={outside}
     >
       {/*search bar */}
-      <div className="bg-white border w-[40%] absolute top-2 px-3 shadow-md mt-7 mb-6 rounded-lg">
+      <div className=" bg-white border w-[40%] absolute top-2 px-3 shadow-md mt-7 mb-6 rounded-lg">
         <input
           type="text"
           placeholder="What are you looking for ? "
-          value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="focus:outline-none  h-14 w-96 font-semibold placeholder:font-medium pl-2 text-darkblue "
         />
@@ -52,7 +55,7 @@ function Search({ outside, closeWindow }) {
         </svg>
       </div>
       {/*elements */}
-      <div className=" bg-grayy  relative rounded-xl w-[40%] h-[80%] mt-20 py-4  flex flex-col justify-end  items-end overflow-hidden">
+      <div className=" bg-grayy  relative rounded-xl w-[40%] h-[80%]  mt-20 py-4  flex flex-col  overflow-hidden">
         <div className=" w-full  overflow-x-hidden  ">
           {loading && (
             <div className="  absolute top-[50%] right-[50%] text-bgreen  ">
@@ -62,32 +65,27 @@ function Search({ outside, closeWindow }) {
 
           {!loading &&
             results.length !== 0 &&
-            results.map(
-              (result, index) =>
-                result.volumeInfo &&
-                result.volumeInfo.imageLinks &&
-                result.volumeInfo.imageLinks.thumbnail && (
-                  <div
-                    key={index}
-                    className=" bg-white/80 border border-slate-400 border-opacity-50 mb-2 shadow-md rounded-md hover:bg-green-100/40 cursor-pointer h-[17%] w-[94%] mx-5 "
-                  >
-                    <NavLink
-                      to={`/books/${result.id}`}
-                      onClick={closeWindow}
-                      className="flex items-center px-5  py-1 space-x-4 "
-                    >
-                      <img
-                        className="h-[4rem] w-[10%] border border-gray-300 rounded-md"
-                        src={result.volumeInfo.imageLinks.thumbnail}
-                        alt="img"
-                      />
-                      <p className=" font-semibold text-lg text-darkblue line-clamp-2">
-                        {result.volumeInfo.title}
-                      </p>
-                    </NavLink>
-                  </div>
-                )
-            )}
+            results.map((result, index) => (
+              <div
+                key={index}
+                className=" bg-white/80 border border-slate-400 border-opacity-50 mb-2 shadow-md rounded-md hover:bg-green-100/40 cursor-pointer  w-[94%] mx-5 "
+              >
+                <NavLink
+                  to={`/books/${result._id}`}
+                  onClick={closeWindow}
+                  className="flex items-center px-5  py-1 space-x-4 "
+                >
+                  <img
+                    className="h-[4rem] w-[10%] border border-gray-300 rounded-md"
+                    src={result.image}
+                    alt="img"
+                  />
+                  <p className=" font-semibold text-lg text-darkblue line-clamp-2">
+                    {result.name}
+                  </p>
+                </NavLink>
+              </div>
+            ))}
           {!loading && results.length === 0 && (
             <p className=" h-[23rem] text-center text-bgreen mt-16">
               aucune resultat
