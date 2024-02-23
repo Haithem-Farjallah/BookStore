@@ -48,7 +48,7 @@ function App() {
           </Route>
           <Route element={<Layout />}>
             <Route path="/profile" element={<Profile />}>
-              <Route path="" element={<Update />} />
+              <Route path="update" element={<Update />} />
               <Route path="history" element={<History />} />
               <Route path="notifications" element={<Notifications />} />
               <Route path="settings" element={<Settings />} />

@@ -129,7 +129,7 @@ const BookDetails = () => {
                 value="Add to cart "
                 className=" cursor-pointer bg-bgreen  px-12 py-3 rounded-xl  text-white font-bold text-center"
               />
-              {currentUser.isStudent && (
+              {currentUser && currentUser.isStudent && (
                 <a
                   target="blank"
                   href="https://firebasestorage.googleapis.com/v0/b/bookstore-app-47ae6.appspot.com/o/Bulletin_013479018855_.pdf?alt=media&token=71e15617-9da5-43fa-abbf-4bb57fac5476"
