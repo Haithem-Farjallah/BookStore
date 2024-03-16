@@ -9,10 +9,8 @@ import {
   faXTwitter,
 } from "@fortawesome/free-brands-svg-icons";
 const Footer = () => {
-  const topRef = useRef(null);
-
   return (
-    <div className=" h-[30rem]  flex flex-col justify-around   items-center  bg-grayy">
+    <div className="   flex flex-col justify-around   items-center  bg-grayy">
       <div className="grid grid-cols-5 gap-4 h-[15rem] ml-4 ">
         <div className=" pl-5   ">
           <div className="flex items-center">

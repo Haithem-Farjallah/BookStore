@@ -231,7 +231,7 @@ export default function Navbar() {
 
             <div className="ml-auto lg:mr-14 flex items-center">
               {currentUser ? (
-                <NavLink to="/profile/update">
+                <NavLink to="/profile/userDetails">
                   <img
                     src={currentUser.profileImg}
                     alt="Profile Image"

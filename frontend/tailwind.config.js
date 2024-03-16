@@ -20,7 +20,7 @@ module.exports = {
         imagehright: "24rem",
       },
       colors: {
-        darkblue: "#241d45" /*5f5f7e */,
+        darkblue: "#241d45" /*5f5f7e */, //4a4e69
         pgray: "#827A7A",
         bgreen: "#299054",
         bgcolor: "#f5f6fa",

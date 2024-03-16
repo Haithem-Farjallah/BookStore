@@ -18,10 +18,11 @@ import ScrollToTop from "./components/ScrollToTop";
 import CartDetails from "./components/CartDetails";
 import Profile from "./components/Profile";
 import { useSelector } from "react-redux";
-import Update from "./components/Update";
+import UserDetails from "./components/UserDetails";
 import History from "./components/History";
 import Notifications from "./components/Notifications";
 import Settings from "./components/Settings";
+import UpdateUser from "./components/UpdateUser";
 
 const Layout = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -48,10 +49,11 @@ function App() {
           </Route>
           <Route element={<Layout />}>
             <Route path="/profile" element={<Profile />}>
-              <Route path="update" element={<Update />} />
+              <Route path="userDetails" element={<UserDetails />} />
               <Route path="history" element={<History />} />
               <Route path="notifications" element={<Notifications />} />
               <Route path="settings" element={<Settings />} />
+              <Route path="settings/update" element={<UpdateUser />} />
             </Route>
           </Route>
         </Routes>

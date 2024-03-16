@@ -27,14 +27,14 @@ const Profile = () => {
   };
   const location = useLocation().pathname;
   return (
-    <div className="h-[91vh] flex border  ">
-      <nav className=" flex flex-col justify-between py-12   bg-grayy   w-[16%] ">
-        <div className="flex flex-col  text-[#666] font-medium">
+    <div className=" flex   ">
+      <nav className=" flex flex-col   py-12   bg-grayy   w-[25%] ">
+        <div className="flex flex-col    text-[#6c757d] font-medium">
           <NavLink
-            to="/profile/update"
-            className={` h-12 py-3 pl-5 aria-[current=page]:text-bggreen ${
-              location === "/profile/update" &&
-              "bg-bgcolor border-r-2 w-[99.5%] border-bggreen border-w"
+            to="/profile/userDetails"
+            className={` h-12 py-3 pl-10 aria-[current=page]:text-bggreen ${
+              location === "/profile/userDetails" &&
+              "bg-bgcolor border-r-2 w-[99.9%] border-bggreen border-w"
             }`}
           >
             <FontAwesomeIcon icon={faUser} className="h-4 w-4" /> Profile
@@ -42,9 +42,9 @@ const Profile = () => {
           </NavLink>
           <NavLink
             to="/profile/history"
-            className={` h-12 py-3 pl-5 aria-[current=page]:text-bggreen ${
+            className={` h-12 py-3 pl-10 aria-[current=page]:text-bggreen ${
               location === "/profile/history" &&
-              "bg-bgcolor border-r-2 w-[99.5%] border-bggreen border-w"
+              "bg-bgcolor border-r-2 w-[99.9%] border-bggreen border-w"
             }`}
           >
             <FontAwesomeIcon icon={faClockRotateLeft} className="h-4 w-4" />{" "}
@@ -53,33 +53,34 @@ const Profile = () => {
           {/*bg-bgcolor  w-[101%] */}
           <NavLink
             to="/profile/notifications"
-            className={` h-12 py-3 pl-5 aria-[current=page]:text-bggreen ${
+            className={` h-12 py-3 pl-10 aria-[current=page]:text-bggreen ${
               location === "/profile/notifications" &&
-              "bg-bgcolor border-r-2 w-[99.5%] border-bggreen border-w"
+              "bg-bgcolor border-r-2 w-[99.9%] border-bggreen border-w"
             }`}
           >
             <FontAwesomeIcon icon={faBell} className="h-4 w-4" /> Notifications
           </NavLink>
           <NavLink
             to="/profile/settings"
-            className={` h-12 py-3 pl-5  aria-[current=page]:text-bggreen ${
-              location === "/profile/settings" &&
-              "bg-bgcolor border-r-2 w-[99.5%] border-bggreen border-w"
+            className={` h-12 py-3 pl-10  aria-[current=page]:text-bggreen ${
+              (location === "/profile/settings" ||
+                location === "/profile/settings/update") &&
+              "bg-bgcolor border-r-2 w-[99.9%] border-bggreen border-w"
             }`}
           >
             <FontAwesomeIcon icon={faGear} className="h-4 w-4 mr-1" />
             Settings
           </NavLink>
-        </div>
-        <div
-          onClick={handleLogout}
-          className=" p-2  flex gap-1 items-center pl-5 cursor-pointer text-red-500 hover:opacity-90"
-        >
-          <FontAwesomeIcon icon={faRightFromBracket} />
-          <p className="">Log Out</p>
+          <div
+            onClick={handleLogout}
+            className=" py-3 pl-10  flex gap-1 items-center cursor-pointer text-red-500 "
+          >
+            <FontAwesomeIcon icon={faRightFromBracket} />
+            <p className="">Log Out</p>
+          </div>
         </div>
       </nav>
-      <div className="w-full     ">
+      <div className="w-full  ">
         <Outlet />
       </div>
     </div>
