@@ -46,7 +46,14 @@ const BookDetails = () => {
     }
   };
   const handleAdd = () => {
-    const BookElement = { id, title: result.name, number, totalPrice };
+    const BookElement = {
+      id,
+      title: result.name,
+      url: result.image,
+      number,
+      price: result.price,
+      totalPrice,
+    };
     dispatch(addToCart(BookElement));
   };
   return (

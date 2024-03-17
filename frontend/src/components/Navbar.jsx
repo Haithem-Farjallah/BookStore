@@ -34,6 +34,9 @@ export default function Navbar() {
     if (e.target.classList.contains("outside")) {
       setShow(!show);
     }
+    if (e.target.classList.contains("closeCart")) {
+      setOpenCart(!openCart);
+    }
   };
   const changeNavBarBackground = () => {
     if (window.scrollY > scrollY) {

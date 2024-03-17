@@ -24,10 +24,15 @@ const bookSlice = createSlice({
 
       if (existingBook) {
         existingBook.number += bookDetails.number; // here we can use existingBook to modify Books array because objects are passed by reference
-        existingBook.totalPrice += bookDetails.totalPrice;
       } else {
         state.books.push(bookDetails);
       }
+    },
+    removeFromCart: (state, action) => {
+      const { id, items, price } = action.payload;
+      state.books = state.books.filter((book) => book.id !== id);
+      state.totalItems -= items;
+      state.totalPrice -= price;
     },
     clearCart: (state) => {
       state.books = [];
@@ -36,5 +41,5 @@ const bookSlice = createSlice({
     },
   },
 });
-export const { addToCart, clearCart } = bookSlice.actions;
+export const { addToCart, removeFromCart, clearCart } = bookSlice.actions;
 export default bookSlice.reducer;

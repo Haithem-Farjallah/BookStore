@@ -130,11 +130,13 @@ function Home() {
         </div>
         <div className="relative mt-1 mr-5 hidden lg:block">
           <img
+            loading="lazy"
             src={img1}
             alt=""
             className="relative z-10 mt-8 w-imagewidth  inline "
           />
           <img
+            loading="lazy"
             src={blob}
             alt=""
             className="absolute top-0 inline left-0 ml-3  mt-12 w-imagewidth   "
@@ -170,6 +172,7 @@ function Home() {
         <div className=" my-2 mb-12 ">
           <div className="flex justify-around items-center my-12 ml-4">
             <img
+              loading="lazy"
               src={books}
               alt="books"
               className=" h-[590px] rounded-full 
@@ -191,6 +194,7 @@ function Home() {
 
           <div className="flex flex-row-reverse justify-around items-center my-12">
             <img
+              loading="lazy"
               src={customerService}
               alt="customerService"
               className=" h-[600px] rounded-full
@@ -213,6 +217,7 @@ function Home() {
           </div>
           <div className="flex justify-around items-center my-12">
             <img
+              loading="lazy"
               src={delivery}
               alt="delivery"
               className=" h-[640px] rounded-full
@@ -295,12 +300,17 @@ function Home() {
                 >
                   {result.volumeInfo.imageLinks ? (
                     <img
+                      loading="lazy"
                       src={result.volumeInfo.imageLinks.thumbnail}
                       alt=""
                       className="h-52   w-full  brightness-95"
                     />
                   ) : (
-                    <img src={bookImg} className="h-60 w-full  brightness-95" />
+                    <img
+                      src={bookImg}
+                      loading="lazy"
+                      className="h-60 w-full  brightness-95"
+                    />
                   )}
                 </div>
               ))}
@@ -319,7 +329,12 @@ function Home() {
 
       {/* The Promotion part */}
       <div className="relative">
-        <img src={img} alt="" className=" -top-20  left-5 z-0  absolute" />
+        <img
+          src={img}
+          loading="lazy"
+          alt=""
+          className=" -top-20  left-5 z-0  absolute"
+        />
         <div className="h-[40rem] mt-48   mx-20 rounded-3xl flex items-center justify-between   bg-grayy z-10 relative ">
           <div className=" flex flex-col  w-[55%] justify-center space-y-7 ml-24  ">
             <h2 className="drop-shadow-xl text-6xl  text-darkblue font-bold">
@@ -341,10 +356,20 @@ function Home() {
             />
           </div>
           <div className=" mr-14  ">
-            <img src={pick} alt="" className=" h-[35rem] rounded-2xl " />
+            <img
+              src={pick}
+              alt=""
+              loading="lazy"
+              className=" h-[35rem] rounded-2xl "
+            />
           </div>
         </div>
-        <img src={img} alt="" className=" -bottom-10 right-5 absolute z-0" />
+        <img
+          src={img}
+          alt=""
+          loading="lazy"
+          className=" -bottom-10 right-5 absolute z-0"
+        />
       </div>
 
       {/*client review*/}
@@ -358,13 +383,23 @@ function Home() {
         </p>
       </div>
       <div className="relative  py-16  z-10  ">
-        <img src={blob1} alt="blob" className=" absolute z-0 right-0 top-0  " />
+        <img
+          src={blob1}
+          alt="blob"
+          loading="lazy"
+          className=" absolute z-0 right-0 top-0  "
+        />
         <div className="h-[20rem]    space-x-12  flex mr-12 ml-4 pl-12 relative z-10 ">
           <div className=" shadow-xl  bg-white/50 backdrop-blur-sm   border border-gray-300 rounded-lg  flex flex-col space-y-2  pt-5   ">
             <h1 className="text-darkblue font-bold text-2xl pl-5">
               Great Plateform
             </h1>
-            <img src={vector} alt="" className="h-5 w-fit pl-5" />
+            <img
+              src={vector}
+              alt=""
+              loading="lazy"
+              className="h-5 w-fit pl-5"
+            />
             <p className="text-pgray pl-5  pr-1 w-full text-left">
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Adipisci
               facere unde totam alias harum quaerat distinctio ad expedita,
@@ -372,7 +407,7 @@ function Home() {
             </p>
             <hr className=" mx-5  bg-gray-300 h-1" />
             <div className="flex pl-5 h-full w-full pt-2 ">
-              <img src={user1} alt="" className="h-16  mt-1" />
+              <img src={user1} alt="" loading="lazy" className="h-16  mt-1" />
               <div className="ml-2 mt-2">
                 <p className="text-darkblue  font-semibold text-lg">
                   Bethe James
@@ -402,7 +437,12 @@ function Home() {
             <h1 className="text-darkblue font-bold text-xl pl-5">
               Great Plateform
             </h1>
-            <img src={vector} alt="" className="h-5 w-fit pl-5" />
+            <img
+              src={vector}
+              alt=""
+              loading="lazy"
+              className="h-5 w-fit pl-5"
+            />
             <p className="text-pgray pl-5 pr-1 w-full text-left">
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Adipisci
               facere unde totam alias harum quaerat distinctio ad expedita,
@@ -410,7 +450,7 @@ function Home() {
             </p>
             <hr className=" mx-5  bg-gray-300 h-1" />
             <div className="flex pl-5 h-full w-full pt-2 ">
-              <img src={user2} alt="" className="h-16 mt-1" />
+              <img src={user2} loading="lazy" alt="" className="h-16 mt-1" />
               <div className="ml-2 mt-2">
                 <p className="text-darkblue  font-semibold text-lg">
                   Bethe James
@@ -440,7 +480,12 @@ function Home() {
             <h1 className="text-darkblue font-bold text-xl pl-5">
               Great Plateform
             </h1>
-            <img src={vector} alt="" className="h-5 w-fit pl-5" />
+            <img
+              src={vector}
+              alt=""
+              loading="lazy"
+              className="h-5 w-fit pl-5"
+            />
             <p className="text-pgray pl-5 pr-1 w-full text-left">
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Adipisci
               facere unde totam alias harum quaerat distinctio ad expedita,
@@ -448,7 +493,7 @@ function Home() {
             </p>
             <hr className=" mx-5  bg-gray-300 h-1" />
             <div className="flex pl-5 h-full w-full pt-2 ">
-              <img src={user3} alt="" className="h-16  mt-1" />
+              <img src={user3} alt="" loading="lazy" className="h-16  mt-1" />
               <div className="ml-2 mt-2">
                 <p className="text-darkblue text-lg font-semibold">
                   Bethe James
@@ -478,6 +523,7 @@ function Home() {
         <img
           src={blob2}
           alt=""
+          loading="lazy"
           className=" absolute z-0 left-0 bottom-0 h-80 "
         />
       </div>
@@ -504,6 +550,7 @@ function Home() {
               <img
                 src={playstore}
                 alt="playstore"
+                loading="lazy"
                 className=" cursor-pointer drop-shadow-2xl  "
               />
             </Link>
@@ -516,13 +563,14 @@ function Home() {
               <img
                 src={appstore}
                 alt="appstore"
+                loading="lazy"
                 className="drop-shadow-2xl"
               />{" "}
             </Link>
           </div>
         </div>
         <div className=" flex justify-center">
-          <img src={phone} alt="phone" className=" h-full " />
+          <img src={phone} alt="phone" loading="lazy" className=" h-full " />
         </div>
       </div>
     </div>

@@ -31,7 +31,6 @@ function Books() {
         const res = await fetch("http://localhost:5000/api/book/getAllBooks");
         const data = await res.json();
         setResults(data);
-        console.log(data);
         setLoading(false);
       } catch (error) {
         console.log(error);
