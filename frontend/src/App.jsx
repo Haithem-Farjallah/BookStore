@@ -41,13 +41,14 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/books" element={<Books />} />
-          <Route path="/cartDetails" element={<CartDetails />} />
+
           <Route path="/books/:id" element={<BookDetails />} />
           <Route element={<PreventLog />}>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Route>
           <Route element={<Layout />}>
+            <Route path="/cartDetails" element={<CartDetails />} />
             <Route path="/profile" element={<Profile />}>
               <Route path="userDetails" element={<UserDetails />} />
               <Route path="history" element={<History />} />
