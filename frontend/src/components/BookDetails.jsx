@@ -4,12 +4,13 @@ import stars from "../images/stars.svg";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload, faSpinner } from "@fortawesome/free-solid-svg-icons";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { addToCart } from "../store/cartSlice";
 
 const BookDetails = () => {
   const { currentUser } = useSelector((state) => state.user);
   const { id } = useParams();
-
+  const dispatch = useDispatch();
   const [number, setNumber] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
   const [result, setresult] = useState(null);
@@ -43,6 +44,10 @@ const BookDetails = () => {
         setTotalPrice(totalPrice - result.price);
       }
     }
+  };
+  const handleAdd = () => {
+    const BookElement = { id, title: result.name, number, totalPrice };
+    dispatch(addToCart(BookElement));
   };
   return (
     <div className="h-screen ">
@@ -127,6 +132,7 @@ const BookDetails = () => {
               <input
                 type="button"
                 value="Add to cart "
+                onClick={handleAdd}
                 className=" cursor-pointer bg-bgreen  px-12 py-3 rounded-xl  text-white font-bold text-center"
               />
               {currentUser && currentUser.isStudent && (

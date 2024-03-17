@@ -1,17 +1,3 @@
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/aspect-ratio'),
-    ],
-  }
-  ```
-*/
 import { Fragment, useState, useEffect } from "react";
 import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
 import Search from "./Search";
@@ -37,6 +23,7 @@ const navigation = {
 
 export default function Navbar() {
   const { currentUser } = useSelector((state) => state.user);
+  const { totalItems } = useSelector((state) => state.book);
   let location = useLocation();
   const [open, setOpen] = useState(false);
   const [show, setShow] = useState(false);
@@ -293,7 +280,7 @@ export default function Navbar() {
                     aria-hidden="true"
                   />
                   <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                    0
+                    {totalItems}
                   </span>
                 </div>
               </div>
