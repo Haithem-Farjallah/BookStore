@@ -150,7 +150,12 @@ const Login = () => {
         </div>
       </div>
       <div className="bg-darkbg mt-8 h-[82%] w-[45%] rounded-r-3xl drop-shadow-2xl overflow-hidden ">
-        <img src={books} alt="books" className="bg-contain h-full opacity-80" />
+        <img
+          src={books}
+          alt="books"
+          loading="lazy"
+          className="bg-contain h-full opacity-80"
+        />
       </div>
     </div>
   );

@@ -33,6 +33,7 @@ const Update = () => {
       <div className=" relative">
         <div className="bg-black ml-[0.1rem] ">
           <img
+            loading="lazy"
             src={banner}
             alt="banner"
             className="w-full max-h-[15rem] min-h-[15rem]  opacity-80 border-b-2 shadow border-pgray  "
@@ -40,7 +41,8 @@ const Update = () => {
         </div>
         <div className="z-20 relative ">
           <img
-            className=" h-[10rem] w-[10rem]  -mt-24 ml-10 rounded-full drop-shadow-xl border-2  border-pgray  "
+            loading="lazy"
+            className=" h-[10rem] w-[10rem]  -mt-24 ml-10 rounded-full drop-shadow-xl border-2  border-pgray  bg-pgray "
             src={currentUser.profileImg}
             alt="imageProfile"
           />
