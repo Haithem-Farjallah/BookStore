@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import trash from "../images/trash.svg";
-import book from "../images/book.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { removeFromCart } from "../store/cartSlice";
 
@@ -24,9 +23,23 @@ const CartTotals = () => {
     }
   }, []);
   const CartBooks = useSelector((state) => state.book);
+  const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const RemoveFromCart = (data) => {
+  const RemoveFromCart = async (data) => {
     dispatch(removeFromCart(data));
+    try {
+      const res = await fetch(
+        "http://localhost:5000/api/cart/removeBookFromCart",
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...data, userId: currentUser._id }),
+        }
+      );
+      console.log(await res.json());
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div className=" mt-12 w-full flex mx-12 gap-6 ">

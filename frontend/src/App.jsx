@@ -23,6 +23,7 @@ import History from "./components/History";
 import Notifications from "./components/Notifications";
 import Settings from "./components/Settings";
 import UpdateUser from "./components/UpdateUser";
+import Checkout from "./components/Checkout";
 
 const Layout = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -49,6 +50,7 @@ function App() {
           </Route>
           <Route element={<Layout />}>
             <Route path="/cartDetails" element={<CartDetails />} />
+            <Route path="/Checkout" element={<Checkout />} />
             <Route path="/profile" element={<Profile />}>
               <Route path="userDetails" element={<UserDetails />} />
               <Route path="history" element={<History />} />

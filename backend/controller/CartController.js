@@ -80,10 +80,8 @@ export const UpdateBooksAfterLogin = async (req, res, next) => {
   try {
     const { userId, ...items } = req.body;
     const data = await Cart.findOne({ userId });
-    console.log("ok", data);
     if (!data) return;
     const result = await Cart.updateOne({ userId }, { $set: items });
-    console.log(result);
     res.status(200).json("done");
   } catch (error) {
     next(error);
