@@ -45,7 +45,7 @@ const BookDetails = () => {
       }
     }
   };
-  const handleAdd = () => {
+  const handleAdd = async () => {
     const BookElement = {
       id,
       title: result.name,
@@ -55,6 +55,13 @@ const BookDetails = () => {
       totalPrice,
     };
     dispatch(addToCart(BookElement));
+    if (currentUser) {
+      await fetch("http://localhost:5000/api/cart/addBookToCart", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...BookElement, userId: currentUser._id }),
+      });
+    }
   };
   return (
     <div className="h-screen ">

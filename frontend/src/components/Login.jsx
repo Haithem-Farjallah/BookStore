@@ -6,9 +6,11 @@ import circle from "../images/circle.png";
 import { handleErrors } from "./handleErrors";
 import { signInFailure, signInSuccess, SignInStart } from "../store/userSlice";
 import { useSelector, useDispatch } from "react-redux";
+import { getPrevAndNewCarts, getPrevCarts } from "../store/cartSlice";
 const Login = () => {
   const { errors, loading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const CartBooks = useSelector((state) => state.book);
 
   let [forms, setForms] = useState({
     email: "",
@@ -24,6 +26,7 @@ const Login = () => {
     });
     dispatch(signInFailure({ ...errors, [e.target.name]: "" }));
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = handleErrors(forms, "login"); //call a function that verify inputs using regex
@@ -46,7 +49,67 @@ const Login = () => {
         return;
       }
       dispatch(signInSuccess(data));
-      navigate("/");
+      try {
+        let items;
+        const getCarts = await fetch(
+          "http://localhost:5000/api/cart/getBooksAfterLogin", /// will return the books that user added before logging out
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ userId: data._id }),
+          }
+        );
+        items = await getCarts.json();
+        console.log(items);
+        if (CartBooks.books.length === 0) {
+          // if the data in redux is null (it means user did not pick any book before logging in)
+          if (items) {
+            console.log("ok");
+            dispatch(getPrevCarts(items));
+            navigate("/");
+            return;
+          }
+        }
+        console.log("test");
+        const arrayData = items.books;
+        let totalItems = items.totalItems;
+        let totalPrice = items.totalPrice;
+        console.log(arrayData);
+        ///when the user picked books before logging in
+        ///here we will combine both the books chosen before logging in and books chosen before logging out
+        const combinedArray = [];
+        const combinedObjects = [...arrayData, ...CartBooks.books];
+
+        // Iterate over each object in the combinedObjects array
+        combinedObjects.forEach((obj) => {
+          // Check if the object with the same id already exists in combinedArray
+          const existingObj = combinedArray.find((item) => item.id === obj.id);
+
+          if (existingObj) {
+            // If the object exists, update its number and totalPrice
+            existingObj.number += obj.number;
+            existingObj.totalPrice += obj.totalPrice;
+          } else {
+            // If the object does not exist, add it to combinedArray
+            combinedArray.push(obj);
+          }
+        });
+        console.log(combinedArray);
+        totalItems += CartBooks.totalItems;
+        totalPrice += CartBooks.totalPrice;
+        console.log(totalItems);
+        const finalResult = { books: combinedArray, totalItems, totalPrice };
+        console.log(finalResult);
+        dispatch(getPrevAndNewCarts(finalResult));
+        await fetch("http://localhost:5000/api/cart/UpdateBooksAfterLogin", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...finalResult, userId: data._id }),
+        });
+        navigate("/");
+      } catch (error) {
+        console.log(error);
+      }
     } catch (error) {
       dispatch(signInFailure({ server: error.message }));
     }

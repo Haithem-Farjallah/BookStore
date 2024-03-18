@@ -9,12 +9,45 @@ import { NavLink } from "react-router-dom";
 
 export default function Cart({ outside, close }) {
   const CartBooks = useSelector((state) => state.book);
+  const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const RemoveFromCart = (data) => {
+
+  const RemoveFromCart = async (data) => {
+    console.log(CartBooks);
     dispatch(removeFromCart(data));
+    if (currentUser) {
+      try {
+        const res = await fetch(
+          "http://localhost:5000/api/cart/removeBookFromCart",
+          {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ...data, userId: currentUser._id }),
+          }
+        );
+        console.log(await res.json());
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
-  const RemoveAllFromCart = () => {
+  const RemoveAllFromCart = async () => {
     dispatch(clearCart());
+    if (currentUser) {
+      try {
+        const res = await fetch(
+          "http://localhost:5000/api/cart/removeAllFromCart",
+          {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ userId: currentUser._id }),
+          }
+        );
+        console.log(await res.json());
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
   return (
     <div

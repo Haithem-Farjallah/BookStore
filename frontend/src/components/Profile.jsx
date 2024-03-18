@@ -10,6 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { deleteSuccess } from "../store/userSlice";
 import { useDispatch } from "react-redux";
+import { clearCart } from "../store/cartSlice";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,7 @@ const Profile = () => {
         credentials: "include",
       });
       dispatch(deleteSuccess());
+      dispatch(clearCart());
     } catch (error) {
       console.log(error);
     }
