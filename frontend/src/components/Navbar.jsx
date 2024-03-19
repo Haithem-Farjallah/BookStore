@@ -3,6 +3,7 @@ import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
 import Search from "./Search";
 import img3 from "./../images/capture.png";
 import Cart from "./Cart";
+import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import {
   Bars3Icon,
@@ -64,7 +65,7 @@ export default function Navbar() {
   }, [show, openCart]);
 
   return (
-    <div className="relative bg-white z-10">
+    <div className="relative bg-white border  z-10">
       {/* Mobile menu */}
       <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="relative z-40 lg:hidden" onClose={setOpen}>
@@ -223,6 +224,8 @@ export default function Navbar() {
               {currentUser ? (
                 <NavLink to="/profile/userDetails">
                   <img
+                    effect="blur"
+                    placeholder={currentUser.profileImg}
                     src={currentUser.profileImg}
                     alt="Profile Image"
                     className="rounded-full w-8 h-8 object-cover"

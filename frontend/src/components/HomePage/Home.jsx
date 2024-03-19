@@ -7,11 +7,6 @@ import { NavLink, Link } from "react-router-dom";
 import bookImg from "../../images/book.jpg";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faFacebookF,
-  faLinkedin,
-  faXTwitter,
-} from "@fortawesome/free-brands-svg-icons";
 
 import img from "./../../images/img.png";
 import img1 from "./../../images/img1.png";
@@ -39,6 +34,7 @@ import user3 from "./../../images/user3.png";
 import vector from "./../../images/Vector.png";
 import moveto from "./../../images/moveto.png";
 import CountdownTimer from "./CounterDown";
+import LoadData from "../LoadData";
 
 function Home() {
   var settings = {
@@ -106,7 +102,7 @@ function Home() {
   };
 
   return (
-    <div className="  relative pt-20">
+    <div className="   pt-20 ">
       <div className=" flex  justify-around   mb-5   md:scale-105 ">
         <div className=" flex flex-col  lg:items-start items-center  lg:ml-12 px-5 sm:space-y-6 space-y-7  pt-8 lg:w-title_width  md:w-widthtitle">
           <h1 className=" drop-shadow-xl sm:text-7xl text-6xl lg:w-title_width md:px-5 lg:px-0 pl-1 sm:pl-0 text-center lg:text-left  text-darkblue font-bold  ">
@@ -124,7 +120,7 @@ function Home() {
             <input
               type="button"
               value="Get Started "
-              className=" drop-shadow-xl bg-bgreen cursor-pointer hover:bg-green-600 text-white shadow-xl px-5 py-3 rounded-xl font-semibold"
+              className=" drop-shadow-xl bg-bgreen cursor-pointer hover:opacity-95 text-white shadow-xl px-5 py-3 rounded-xl font-semibold"
             />
           </div>
         </div>
@@ -309,7 +305,7 @@ function Home() {
                     <img
                       src={bookImg}
                       loading="lazy"
-                      className="h-60 w-full  brightness-95"
+                      className="h-52 w-full  brightness-95"
                     />
                   )}
                 </div>

@@ -4,15 +4,16 @@ import banner from "../images/banner.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { NavLink } from "react-router-dom";
+import LoadData from "./LoadData";
 
 const Update = () => {
-  const { currentUser } = useSelector((state) => state.user);
+  const { profileImg, ...currentUser } = useSelector(
+    (state) => state.user.currentUser
+  );
   const date = new Date(currentUser.createdAt);
   const month = date.toLocaleString("en-US", { month: "long" });
   const year = date.getFullYear();
   const formattedDate = `${month} ${year}`;
-
-  //handle the Image when it changes
 
   const handleLogout = async () => {
     try {
@@ -30,6 +31,7 @@ const Update = () => {
   };
   return (
     <div className="relative h-screen">
+      <LoadData time={1000} />
       <div className=" relative">
         <div className="bg-black ml-[0.1rem] ">
           <img
@@ -39,11 +41,10 @@ const Update = () => {
             className="w-full max-h-[15rem] min-h-[15rem]  opacity-80 border-b-2 shadow border-pgray  "
           />
         </div>
-        <div className="z-20 relative ">
+        <div className=" relative ">
           <img
-            loading="lazy"
-            className=" h-[10rem] w-[10rem]  -mt-24 ml-10 rounded-full drop-shadow-xl border-2  border-pgray  bg-pgray "
-            src={currentUser.profileImg}
+            className=" h-[10rem] w-[10rem]  -mt-24 ml-10 rounded-full drop-shadow-xl border-2  border-pgray   "
+            src={profileImg}
             alt="imageProfile"
           />
         </div>
