@@ -21,15 +21,15 @@
 .slick-list {
   margin: 10px 10px;
 }
-
-.slick-prev::before,
-.slick-next:before {
-  background-color: rgb(141, 140, 140);
-  border-radius: 500px;
+.slick-prev,
+.slick-next {
+  font-size: 15px !important;
+  margin-top: -40px;
 }
 
-#specificElement::-webkit-scrollbar {
-  display: none;
+.slick-prev:before,
+.slick-next:before {
+  content: "" !important;
 }
 
 ::-webkit-scrollbar {
