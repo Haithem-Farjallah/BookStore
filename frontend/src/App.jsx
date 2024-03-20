@@ -40,7 +40,7 @@ function App() {
     <div className="bg-bgcolor overflow-hidden  ">
       <Router>
         <ScrollToTop />
-        <LoadData time={3000} />
+
         <Navbar />
         <Routes>
           <Route path="/slides" element={<Swiper />} />

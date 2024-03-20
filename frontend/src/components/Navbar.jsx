@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect } from "react";
+import { Fragment, useState, useEffect, useRef } from "react";
 import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
 import Search from "./Search";
 import img3 from "./../images/capture.png";
@@ -12,6 +12,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { useSelector } from "react-redux";
+import LoadData from "./LoadData";
 
 const navigation = {
   pages: [
@@ -23,6 +24,8 @@ const navigation = {
 };
 
 export default function Navbar() {
+  const bodyRef = useRef(document.body);
+  const [value, setValue] = useState(true);
   const { currentUser } = useSelector((state) => state.user);
   const { totalItems } = useSelector((state) => state.book);
   let location = useLocation();
@@ -56,16 +59,14 @@ export default function Navbar() {
 
   //To prevent scrolling when opening search and cart :
   useEffect(() => {
-    show || openCart
-      ? document.body.classList.add("overflow-hidden")
-      : document.body.classList.remove("overflow-hidden");
-    return () => {
-      document.body.classList.remove("overflow-hidden");
-    };
-  }, [show, openCart]);
+    show || openCart || value
+      ? (bodyRef.current.style.overflow = "hidden")
+      : (bodyRef.current.style.overflow = "auto");
+  }, [show, openCart, value]);
 
   return (
-    <div className="relative bg-white border  z-10">
+    <div className="relative bg-white border  z-30">
+      <LoadData time={3000} changeValue={(value) => setValue(value)} />
       {/* Mobile menu */}
       <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="relative z-40 lg:hidden" onClose={setOpen}>
@@ -159,10 +160,10 @@ export default function Navbar() {
 
       <header
         className={`${
-          HideNavbar && location.pathname === "/" && " -translate-y-20"
+          HideNavbar && location.pathname === "/" && " -translate-y-96"
         }   ${
           location.pathname === "/" && "fixed"
-        } bg-bgcolor/90   w-full  z-20 backdrop-blur-md transform duration-[0.3s]`}
+        } bg-bgcolor/90 -mt-1  w-full  z-20 backdrop-blur-md transform duration-[0.3s]`}
       >
         <nav aria-label="Top" className="  sm:px-6   shadow-sm ">
           <div className="flex items-center h-[4.5rem] ">

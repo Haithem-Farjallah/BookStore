@@ -1,24 +1,30 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import HashLoader from "react-spinners/HashLoader";
 import ScaleLoader from "react-spinners/ScaleLoader";
 
-const LoadData = ({ time }) => {
+const LoadData = ({ time, changeValue }) => {
   const location = useLocation();
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
+      changeValue(false);
     }, time);
   }, []);
-  loading
-    ? (document.body.style.overflow = "hidden")
-    : (document.body.style.overflow = "auto");
+
   return (
     <>
       {loading && (
-        <div className="   absolute top-0   bg-grayy  flex items-center justify-center  w-full   z-30 h-full   ">
+        <div
+          className={`${
+            location.pathname === "/profile/userDetails"
+              ? "bg-bgcolor"
+              : "bg-grayy"
+          }  "absolute top-0    flex items-center justify-center  w-full   z-30 h-screen "  `}
+        >
           {location.pathname === "/profile/userDetails" ? (
             <ScaleLoader color="#267e6a" height={28} />
           ) : (

@@ -31,7 +31,7 @@ const Update = () => {
   };
   return (
     <div className="relative h-screen">
-      <LoadData time={1000} />
+      <LoadData time={1000} changeValue={(test) => null} />
       <div className=" relative">
         <div className="bg-black ml-[0.1rem] ">
           <img
