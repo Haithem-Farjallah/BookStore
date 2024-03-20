@@ -1,10 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import { NavLink, Link } from "react-router-dom";
 
-import bookImg from "../../images/book.jpg";
+import { NavLink, Link } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -35,71 +31,26 @@ import vector from "./../../images/Vector.png";
 import moveto from "./../../images/moveto.png";
 import CountdownTimer from "./CounterDown";
 import LoadData from "../LoadData";
+import Sliders from "./Sliders";
 
 function Home() {
-  var settings = {
-    dots: false,
-    arrows: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 5,
-    slidesToScroll: 1,
-    initialSlide: 0,
-    autoplay: true,
-    autoplaySpeed: 2000,
-    pauseOnHover: true,
-
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 1,
-          infinite: true,
-          dots: true,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-          initialSlide: 2,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-        },
-      },
-    ],
-  };
-
   const [search] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    setLoading(true);
-    fetch(
-      `https://www.googleapis.com/books/v1/volumes?q=intitle:'${search}'&printType=books&langRestrict=ar&key=AIzaSyDPYwZOZa8a7QJKPLJyrsnmDyvzts6HBmk`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        data.items ? setResults(data.items) : setResults([]);
+    const getBestBooks = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch("http://localhost:5000/api/book/getAllBooks");
+        const data = await res.json();
+        setResults(data);
         setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(true);
-      });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getBestBooks();
   }, []);
-
-  const secondSliderSettings = {
-    ...settings,
-    rtl: true, // Enable reverse looping for the second Slider
-  };
 
   return (
     <div className="   pt-20 ">
@@ -285,32 +236,8 @@ function Home() {
             Our BestSellers
           </h1>
         </div>
-        <div className="h-52 mb-12">
-          <Slider {...settings} className="cards">
-            {!loading &&
-              results.length !== 0 &&
-              results.map((result, index) => (
-                <div
-                  key={index}
-                  className="  border   rounded-xl overflow-hidden"
-                >
-                  {result.volumeInfo.imageLinks ? (
-                    <img
-                      loading="lazy"
-                      src={result.volumeInfo.imageLinks.thumbnail}
-                      alt=""
-                      className="h-52   w-full  brightness-95"
-                    />
-                  ) : (
-                    <img
-                      src={bookImg}
-                      loading="lazy"
-                      className="h-52 w-full  brightness-95"
-                    />
-                  )}
-                </div>
-              ))}
-          </Slider>
+        <div className=" mb-12 h-[60vh] flex items-center ">
+          <Sliders results={results} loading={loading} />
         </div>
         {/* <div className="h-52">
             <Slider {...secondSliderSettings} className='cards  '>

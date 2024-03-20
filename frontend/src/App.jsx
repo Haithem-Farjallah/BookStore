@@ -24,8 +24,6 @@ import Notifications from "./components/Notifications";
 import Settings from "./components/Settings";
 import UpdateUser from "./components/UpdateUser";
 import Checkout from "./components/Checkout";
-import LoadData from "./components/LoadData";
-import Swiper from "./components/HomePage/Swiper";
 
 const Layout = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -43,7 +41,6 @@ function App() {
 
         <Navbar />
         <Routes>
-          <Route path="/slides" element={<Swiper />} />
           <Route path="/" element={<Home />} />
           <Route path="/books" element={<Books />} />
 

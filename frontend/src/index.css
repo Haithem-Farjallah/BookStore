@@ -10,7 +10,7 @@
 }
 
 .cards {
-  width: 80%;
+  width: 90%;
   margin: 0 auto;
 }
 
@@ -30,16 +30,6 @@
 
 #specificElement::-webkit-scrollbar {
   display: none;
-}
-
-/* Hide scrollbar for Firefox */
-#specificElement {
-  scrollbar-width: none;
-}
-
-/* Hide scrollbar for Internet Explorer and Edge */
-#specificElement {
-  -ms-overflow-style: none;
 }
 
 ::-webkit-scrollbar {
