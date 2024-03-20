@@ -212,10 +212,10 @@ export default function Navbar() {
                     Authors
                   </NavLink>
                   <NavLink
-                    to="/blog"
+                    to="/Contact"
                     className="text-darkblue/90 hover:text-gray-900 aria-[current=page]:text-bgreen font-medium "
                   >
-                    Blog
+                    Contact
                   </NavLink>
                 </ul>
               </div>

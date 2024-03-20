@@ -3,18 +3,29 @@ import { NavLink } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 const Sliders = ({ results, loading }) => {
-  function SamplePrevArrow(props) {
-    const { className, style, onClick } = props;
+  const SamplePrevArrow = (props) => {
+    const { className, onClick } = props;
     return (
-      <div
-        className={className}
-        style={{ ...style, display: "block", background: "green" }}
-        onClick={onClick}
-      />
+      <div className={className} onClick={onClick}>
+        <FontAwesomeIcon icon={faAngleLeft} color="#827A7A" size="2x" />
+      </div>
     );
-  }
+  };
+  const SampleNextArrow = (props) => {
+    const { className, onClick } = props;
+    return (
+      <div className={className} onClick={onClick}>
+        <FontAwesomeIcon icon={faAngleRight} color="#827A7A" size="2x" />
+      </div>
+    );
+  };
+
   var settings = {
+    prevArrow: <SamplePrevArrow />,
+    nextArrow: <SampleNextArrow />,
     dots: false,
     arrows: true,
     infinite: true,

@@ -24,6 +24,7 @@ import Notifications from "./components/Notifications";
 import Settings from "./components/Settings";
 import UpdateUser from "./components/UpdateUser";
 import Checkout from "./components/Checkout";
+import Contact from "./components/Contact";
 
 const Layout = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -43,6 +44,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/books" element={<Books />} />
+          <Route path="/Contact" element={<Contact />} />
 
           <Route path="/books/:id" element={<BookDetails />} />
           <Route element={<PreventLog />}>
