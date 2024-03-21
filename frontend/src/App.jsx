@@ -43,6 +43,22 @@ const PreventLog = () => {
     </div>
   );
 };
+const Activate = () => {
+  const { currentUser } = useSelector((state) => state.user);
+  return (
+    <>
+      {currentUser && currentUser.isActive ? (
+        <Outlet />
+      ) : (
+        <Navigate to="/confirmAccount" />
+      )}
+    </>
+  );
+};
+const AlreadyActive = () => {
+  const { currentUser } = useSelector((state) => state.user);
+  return <div>{currentUser.isActive ? <Navigate to="/" /> : <Outlet />}</div>;
+};
 function App() {
   return (
     <div className="bg-bgcolor overflow-hidden  ">
@@ -62,8 +78,13 @@ function App() {
           </Route>
           <Route element={<Layout />}>
             <Route path="/cartDetails" element={<CartDetails />} />
-            <Route path="/Checkout" element={<Checkout />} />
-            <Route path="/confirmAccount" element={<ConfirmAccount />} />
+            <Route element={<Activate />}>
+              <Route path="/Checkout" element={<Checkout />} />
+            </Route>
+            <Route element={<AlreadyActive />}>
+              <Route path="/confirmAccount" element={<ConfirmAccount />} />
+            </Route>
+
             <Route path="/profile" element={<Profile />}>
               <Route path="userDetails" element={<UserDetails />} />
               <Route path="history" element={<History />} />

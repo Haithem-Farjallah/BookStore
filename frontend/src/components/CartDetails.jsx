@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import trash from "../images/trash.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { removeFromCart } from "../store/cartSlice";
+import { NavLink } from "react-router-dom";
 
 const CartTotals = () => {
   const { date } = useSelector((state) => state.user.currentUser.createdAt);
@@ -116,13 +117,16 @@ const CartTotals = () => {
             {Math.floor(CartBooks.totalPrice * (newUser ? 0.7 : 1))} TND{" "}
           </p>
         </div>
-        <div className="flex justify-center items-center my-12">
+        <NavLink
+          to="/Checkout"
+          className="flex justify-center items-center my-12"
+        >
           <input
             type="button"
             value="Check Out"
             className=" border border-pgray/80 hover:border-pgray border-solid shadow-lg cursor-pointer text-darkblue/80 hover:text-darkblue hover:underline-offset-4 py-2 px-8 font-medium text-lg rounded-xl "
           />
-        </div>
+        </NavLink>
       </div>
     </div>
   );
