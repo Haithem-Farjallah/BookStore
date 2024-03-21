@@ -49,7 +49,7 @@ export const signIn = async (req, res, next) => {
     const max = 99999; // Maximum value for a 5-digit number
     const generateCode = Math.floor(Math.random() * (max - min + 1)) + min;
     const token = jwt.sign({ id: validMail._id }, process.env.JWT_SECRET);
-    await User.updateOne({ email }, { $set: { generateCode } });
+    await User.updateOne({ email }, { $set: { activationCode: generateCode } });
     const {
       password: pass,
       activationCode: active,

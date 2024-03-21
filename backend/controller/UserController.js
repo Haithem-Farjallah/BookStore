@@ -53,3 +53,31 @@ export const deleteUser = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getUser = async (req, res, next) => {
+  try {
+    const email = req.body.email;
+    const data = await User.findOne({ email });
+    const { activationCode: active, ...result } = data._doc;
+    res.status(200).json(active);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const activateUser = async (req, res, next) => {
+  try {
+    const { id } = req.body;
+    const data = await User.findByIdAndUpdate(
+      id,
+      {
+        $set: { isActive: true, activationCode: 0 },
+      },
+      { new: true }
+    );
+    const { password: pass, activationCode: active, ...result } = data._doc;
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
