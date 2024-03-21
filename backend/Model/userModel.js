@@ -28,6 +28,13 @@ const UserSchema = mongoose.Schema(
       default:
         "https://www.shutterstock.com/image-vector/vector-flat-illustration-grayscale-avatar-600nw-2281862025.jpg",
     },
+    isActive: {
+      type: Boolean,
+      default: false,
+    },
+    activationCode: {
+      type: Number,
+    },
   },
   { timestamps: true }
 );

@@ -25,6 +25,7 @@ import Settings from "./components/Settings";
 import UpdateUser from "./components/UpdateUser";
 import Checkout from "./components/Checkout";
 import Contact from "./components/Contact";
+import ConfirmAccount from "./components/ConfirmAccount";
 
 const Layout = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -32,7 +33,15 @@ const Layout = () => {
 };
 const PreventLog = () => {
   const { currentUser } = useSelector((state) => state.user);
-  return <div>{currentUser ? <Navigate to="/" /> : <Outlet />}</div>;
+  return (
+    <div>
+      {currentUser ? (
+        <Navigate to={currentUser.isActive ? "/" : "/confirmAccount"} />
+      ) : (
+        <Outlet />
+      )}
+    </div>
+  );
 };
 function App() {
   return (
@@ -54,6 +63,7 @@ function App() {
           <Route element={<Layout />}>
             <Route path="/cartDetails" element={<CartDetails />} />
             <Route path="/Checkout" element={<Checkout />} />
+            <Route path="/confirmAccount" element={<ConfirmAccount />} />
             <Route path="/profile" element={<Profile />}>
               <Route path="userDetails" element={<UserDetails />} />
               <Route path="history" element={<History />} />

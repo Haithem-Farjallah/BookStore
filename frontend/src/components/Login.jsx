@@ -44,7 +44,6 @@ const Login = () => {
       });
       const data = await res.json();
       if (data.success === false) {
-        console.log(data);
         dispatch(signInFailure({ server: data.message }));
         return;
       }
@@ -60,18 +59,20 @@ const Login = () => {
           }
         );
         items = await getCarts.json();
-        console.log(items);
+        // if the data in redux is null (it means user did not pick any book before logging in)
         if (CartBooks.books.length === 0) {
-          // if the data in redux is null (it means user did not pick any book before logging in)
           if (items) {
             console.log("ok");
             dispatch(getPrevCarts(items));
+            if (data.isActive === false) {
+              navigate("/settings/confirmAccount");
+              return;
+            }
             navigate("/");
             return;
           }
         }
-        console.log("test");
-        const arrayData = items.books;
+        const arrayData = items.books || [];
         let totalItems = items.totalItems;
         let totalPrice = items.totalPrice;
         console.log(arrayData);
@@ -106,6 +107,10 @@ const Login = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ ...finalResult, userId: data._id }),
         });
+        if (data.isActive === false) {
+          navigate("settings/confirmAccount");
+          return;
+        }
         navigate("/");
       } catch (error) {
         console.log(error);
