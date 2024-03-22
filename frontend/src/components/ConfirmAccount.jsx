@@ -24,7 +24,7 @@ const ConfirmAccount = () => {
     }
   };
   const handleClick = (index) => {
-    inputRefs.current[index].setSelectionRange(1, 1);
+    inputRefs.current[index].setSelectionRange(1, 1); /// to move cursor on right of input
   };
   const handleKeyDown = (e, index) => {
     if (e.key === "Backspace" && index > 0 && !otp[index]) {

@@ -8,6 +8,7 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import Pagination from "./Pagination";
 
 const people = [
   { name: "All" },
@@ -21,9 +22,10 @@ const people = [
 function Books() {
   const [selected, setSelected] = useState(people[0]);
   const [search, setSearch] = useState("");
-  const [results, setResults] = useState(null);
+  const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [booksPerPage] = useState(3);
 
   useEffect(() => {
     const getBooks = async () => {
@@ -39,6 +41,9 @@ function Books() {
     getBooks();
     return () => {};
   }, []);
+  const indexOfLastBook = booksPerPage * currentPage;
+  const indexOfFirstBook = indexOfLastBook - booksPerPage;
+  const currentBooks = results.slice(indexOfFirstBook, indexOfLastBook);
 
   const [Values, setValues] = useState([0, 200]);
 
@@ -175,8 +180,8 @@ function Books() {
             </div>
           )}
           {!loading && (
-            <div className="flex flex-col w-full space-y-8 mb-12 ">
-              {results.map((result, index) => (
+            <div className="flex flex-col justify-between h-full w-full space-y-8 mb-12 ">
+              {currentBooks.map((result, index) => (
                 <div
                   key={index}
                   className="bg-grayy border border-gray-300 h-[16rem] flex items-center shadow-lg hover:shadow-xl rounded-xl pl-12"
@@ -236,6 +241,12 @@ function Books() {
                   </div>
                 </div>
               ))}
+              <Pagination
+                booksPerPage={booksPerPage}
+                totalBooks={results.length}
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+              />
             </div>
           )}
 
