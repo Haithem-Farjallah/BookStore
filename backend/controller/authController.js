@@ -3,7 +3,11 @@ import bcryptjs from "bcryptjs";
 import { errorHandler } from "../utils/errorHandler.js";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
-import { sendConfirmationMail } from "../utils/nodeMailer.js";
+import {
+  sendConfirmationMail,
+  sendVerificationPass,
+} from "../utils/nodeMailer.js";
+import cryptoRandomString from "crypto-random-string";
 
 export const signUp = async (req, res, next) => {
   const { username, familyname, email, password, isStudent, remember } =
@@ -51,6 +55,7 @@ export const signIn = async (req, res, next) => {
     const token = jwt.sign({ id: validMail._id }, process.env.JWT_SECRET);
     await User.updateOne({ email }, { $set: { activationCode: generateCode } });
     const {
+      RecoverPass: recover,
       password: pass,
       activationCode: active,
       ...result
@@ -78,4 +83,37 @@ export const logOut = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+
+export const sendrecoverPassword = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    const emailExist = await User.findOne({ email });
+    if (!emailExist) {
+      return next(errorHandler(403, "No account found with this email !"));
+    }
+    let recoverCode = cryptoRandomString({ length: 10, type: "alphanumeric" }); // will generate a random alphanumeric string
+    //or u can generate it manually like this :
+    /*const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    for (let i = 0; i < 25; i++) {
+      recoverCode += Math.floor(Math.random() * characters[i]);
+    } */
+    sendVerificationPass(recoverCode, email);
+    await User.updateOne({ email }, { $set: { RecoverPass: recoverCode } });
+    res.status(200).send("Email sent successfully");
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const recoverPassword = async (req, res, next) => {
+  const { RecoverPass, newPassword } = req.body;
+  const validCode = await User.findOne({ RecoverPass });
+  if (!validCode) {
+    return next(errorHandler(403, "Unvalid Link ! "));
+  }
+  const hashedPassword = bcryptjs.hashSync(newPassword, 10);
+  await User.updateOne({ RecoverPass }, { $set: { password: hashedPassword } });
+  res.status(200).send("updated Successfully ! ");
 };

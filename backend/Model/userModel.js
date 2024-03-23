@@ -35,6 +35,10 @@ const UserSchema = mongoose.Schema(
     activationCode: {
       type: Number,
     },
+    RecoverPass: {
+      type: String,
+      default: "",
+    },
   },
   { timestamps: true }
 );

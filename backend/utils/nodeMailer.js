@@ -28,3 +28,21 @@ export const sendConfirmationMail = (verificationCode, email) => {
     }
   );
 };
+export const sendVerificationPass = (recoverCode, email) => {
+  transporter.sendMail(
+    {
+      from: "haithemfarjallah2002@gmail.com",
+      to: email,
+      subject: "Verification Code for Changing Password",
+      html: `<p style="font-size: 15px; ">Here is the Link to change your password :</p>
+      <a href="http://localhost:3000/recoverPassword/${recoverCode}"> Click Here !</a>`,
+    },
+    (error, info) => {
+      if (error) {
+        console.log("Error occurred:", error);
+      } else {
+        console.log("Email sent:", info.response);
+      }
+    }
+  );
+};
