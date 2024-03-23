@@ -56,8 +56,9 @@ const ConfirmAccount = () => {
               credentials: "include",
             }
           );
-          console.log(await result.json());
-          dispatch(signInSuccess(await result.json()));
+          console.log();
+          const ActiveUser = await result.json();
+          dispatch(signInSuccess(ActiveUser));
           setLoading(false);
           navigate("/");
         } else {
