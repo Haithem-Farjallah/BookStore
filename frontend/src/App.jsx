@@ -73,15 +73,16 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/books" element={<Books />} />
           <Route path="/Contact" element={<Contact />} />
-          <Route
-            path="/sendRecoverPassword"
-            element={<SendRecoverPassword />}
-          />
+
           <Route path="/recoverPassword/:code" element={<RecoverPassword />} />
           <Route path="/books/:id" element={<BookDetails />} />
           <Route element={<PreventLog />}>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route
+              path="/sendRecoverPassword"
+              element={<SendRecoverPassword />}
+            />
           </Route>
           <Route element={<Layout />}>
             <Route path="/cartDetails" element={<CartDetails />} />

@@ -59,7 +59,7 @@ const Contact = () => {
 
       {/* Form container */}
       <div className="absolute top-0 w-full h-[95vh] flex items-center justify-center ">
-        <div className="bg-white p-8 flex justify-around gap-5 h-[80vh] w-[80%] shadow-2xl rounded-lg ">
+        <div className="bg-bgcolor p-8 flex justify-around gap-5 h-[80vh] w-[80%] shadow-2xl rounded-lg ">
           <form
             onSubmit={sendEmail}
             ref={form}

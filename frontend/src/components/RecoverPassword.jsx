@@ -19,8 +19,9 @@ const RecoverPassword = () => {
           credentials: "include",
         });
         const data = await res.json();
+        console.log(data);
         if (data.statusCode === 403) {
-          navigate("/404");
+          navigate("/invalidLink");
           return;
         }
       } catch (error) {
