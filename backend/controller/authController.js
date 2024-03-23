@@ -101,19 +101,23 @@ export const sendrecoverPassword = async (req, res, next) => {
     } */
     sendVerificationPass(recoverCode, email);
     await User.updateOne({ email }, { $set: { RecoverPass: recoverCode } });
-    res.status(200).send("Email sent successfully");
+    res.status(200).json({ message: "Email sent successfully" });
   } catch (error) {
     next(error);
   }
 };
-
-export const recoverPassword = async (req, res, next) => {
-  const { RecoverPass, newPassword } = req.body;
+export const verifyLink = async (req, res, next) => {
+  const { RecoverPass } = req.body;
   const validCode = await User.findOne({ RecoverPass });
   if (!validCode) {
     return next(errorHandler(403, "Unvalid Link ! "));
   }
+  res.end();
+};
+
+export const recoverPassword = async (req, res, next) => {
+  const { RecoverPass, newPassword } = req.body;
   const hashedPassword = bcryptjs.hashSync(newPassword, 10);
   await User.updateOne({ RecoverPass }, { $set: { password: hashedPassword } });
-  res.status(200).send("updated Successfully ! ");
+  res.status(200).json({ message: "updated Successfully ! " });
 };
