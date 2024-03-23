@@ -26,6 +26,9 @@ import UpdateUser from "./components/UpdateUser";
 import Checkout from "./components/Checkout";
 import Contact from "./components/Contact";
 import ConfirmAccount from "./components/ConfirmAccount";
+import SendRecoverPassword from "./components/SendRecoverPassword";
+import RecoverPassword from "./components/RecoverPassword";
+import NotFound from "./components/NotFound";
 
 const Layout = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -70,7 +73,11 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/books" element={<Books />} />
           <Route path="/Contact" element={<Contact />} />
-
+          <Route
+            path="/sendRecoverPassword"
+            element={<SendRecoverPassword />}
+          />
+          <Route path="/recoverPassword/:code" element={<RecoverPassword />} />
           <Route path="/books/:id" element={<BookDetails />} />
           <Route element={<PreventLog />}>
             <Route path="/login" element={<Login />} />
@@ -93,6 +100,7 @@ function App() {
               <Route path="settings/update" element={<UpdateUser />} />
             </Route>
           </Route>
+          <Route path="/*" element={<NotFound />} />
         </Routes>
         <Footer />
       </Router>

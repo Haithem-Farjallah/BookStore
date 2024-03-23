@@ -184,7 +184,7 @@ const Login = () => {
               </label>
             </div>
             <NavLink
-              to="/"
+              to="/sendRecoverPassword"
               className="text-sm text-pgray hover:text-bgreen hover:underline outline-none mt-1 mr-1 "
             >
               Forgot password
