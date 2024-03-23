@@ -10,8 +10,7 @@ import {
 import cryptoRandomString from "crypto-random-string";
 
 export const signUp = async (req, res, next) => {
-  const { username, familyname, email, password, isStudent, remember } =
-    req.body;
+  const { username, familyname, email, password, isStudent } = req.body;
   try {
     const emailUser = await User.findOne({ email });
     if (!emailUser) {
@@ -39,7 +38,7 @@ export const signUp = async (req, res, next) => {
 };
 
 export const signIn = async (req, res, next) => {
-  const { email, password } = req.body;
+  const { email, password, remember } = req.body;
   try {
     const validMail = await User.findOne({ email });
     if (!validMail) {
@@ -60,10 +59,13 @@ export const signIn = async (req, res, next) => {
       activationCode: active,
       ...result
     } = validMail._doc;
-    const twoDaysInSeconds = 2 * 24 * 60 * 60; //2 days before the end of cookie
-    const expirationTime = new Date(Date.now() + twoDaysInSeconds * 1000);
     if (!result.isActive) {
       sendConfirmationMail(generateCode, result.email);
+    }
+    let expirationTime = 0;
+    if (remember) {
+      const twoDaysInSeconds = 2 * 24 * 60 * 60; //2 days before the end of cookie
+      expirationTime = new Date(Date.now() + twoDaysInSeconds * 1000);
     }
     res
       .cookie("access_token", token, {
@@ -112,12 +114,15 @@ export const verifyLink = async (req, res, next) => {
   if (!validCode) {
     return next(errorHandler(403, "Unvalid Link ! "));
   }
-  res.end();
+  res.status(200).json({ message: "You're good to go" });
 };
 
 export const recoverPassword = async (req, res, next) => {
   const { RecoverPass, newPassword } = req.body;
   const hashedPassword = bcryptjs.hashSync(newPassword, 10);
-  await User.updateOne({ RecoverPass }, { $set: { password: hashedPassword } });
+  await User.updateOne(
+    { RecoverPass },
+    { $set: { password: hashedPassword, RecoverPass: "" } }
+  );
   res.status(200).json({ message: "updated Successfully ! " });
 };
