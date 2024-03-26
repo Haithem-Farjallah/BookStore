@@ -3,6 +3,7 @@ import moment from "moment";
 
 const UserComments = ({ comment }) => {
   const [userDetails, setUserDetails] = useState({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getUserDetails = async () => {
@@ -12,8 +13,10 @@ const UserComments = ({ comment }) => {
         );
         const data = await result.json();
         setUserDetails(data);
+        setLoading(false);
       } catch (error) {
         console.log(error);
+        setLoading(false);
       }
     };
     getUserDetails();
@@ -28,16 +31,16 @@ const UserComments = ({ comment }) => {
           className="w-10 h-10 rounded-full"
         />
       </div>
-      <div className="">
-        <div className="flex items-center justify-between w-full">
+      <div className="  w-full">
+        <div className="flex items-center justify-between ">
           <p className="text-sm text-pgray hover:underline font-semibold ">
             @{userDetails.username} {userDetails.familyname}{" "}
           </p>
-          <p className="text-sm text-darkblue">
+          <p className="text-sm text-darkgray font-medium">
             {moment(comment.createdAt).fromNow()}
           </p>
         </div>
-        <p>{comment.content} </p>
+        <p className="p-1 font-medium text-darkblue ">{comment.content} </p>
       </div>
     </div>
   );

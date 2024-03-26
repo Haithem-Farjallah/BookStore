@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import stars from "../images/stars.svg";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart } from "../store/cartSlice";
-import BooksComments from "./BookComments";
+
+import Tabs from "./Tabs";
 
 const BookDetails = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -64,24 +64,25 @@ const BookDetails = () => {
       });
     }
   };
+
   return (
     <div className="space-y-2">
       {loading && (
-        <div className="h-[100%] mt-10 text-bgreen flex justify-center items-center  w-full">
+        <div className="h-screen mt-10 text-bgreen flex justify-center items-center  w-full">
           <FontAwesomeIcon icon={faSpinner} spin className="  h-8" />
         </div>
       )}
       {!loading && (
         <React.Fragment>
-          <div className="flex flew-wrap  mx-5 mt-[2%]   h-[30rem]">
-            <div className=" min-w-[30%] maw-w-[30%] border flex  justify-center  mr-8 bg-grayy rounded-xl border-gray-400 h-[100%]">
+          <div className="flex flew-wrap  mx-5 mt-[2%] h-[75vh] ">
+            <div className=" border flex  justify-center  px-5 mr-10 bg-grayy rounded-xl border-gray-400 h-[70vh] w-[25%] ">
               <img
                 src={result.image}
                 alt="book image"
-                className="rounded-2xl  drop-shadow-lg my-6 "
+                className="rounded-2xl  drop-shadow-lg my-6 w-[25vw] "
               />
             </div>
-            <div className="   h-full ">
+            <div className=" w-[80%] mt-5   h-full ">
               <h1 className="text-darkblue underline font-bold text-4xl  pt-1 ">
                 {result.name}
               </h1>
@@ -96,9 +97,9 @@ const BookDetails = () => {
                 ))}
               </p>
 
-              <div className="overflow-y-scroll border">
-                <p className="text-pgray font-medium text-lg h-[9.3rem] ml-4     ">
-                  {result.description}{" "}
+              <div className="overflow-y-scroll ">
+                <p className="text-pgray font-medium text-lg  ml-4  line-clamp-3   ">
+                  {result.textSnippest}{" "}
                 </p>
               </div>
 
@@ -166,8 +167,10 @@ const BookDetails = () => {
               </div>
             </div>
           </div>
+
+          {/* Tabs  */}
+          <Tabs result={result} />
           {/*Comments section : */}
-          <BooksComments id={id} className="mx-5" />
         </React.Fragment>
       )}
     </div>
