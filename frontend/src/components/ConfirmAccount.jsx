@@ -36,6 +36,8 @@ const ConfirmAccount = () => {
     const code = otp.join("");
     if (code.length === 5) {
       setLoading(true);
+      ///here we get the code and if matches we change user status
+      //we could do it in a single request !!
       try {
         const res = await fetch("http://localhost:5000/api/user/getUser", {
           method: "POST",

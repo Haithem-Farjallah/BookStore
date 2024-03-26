@@ -54,7 +54,7 @@ export const deleteUser = async (req, res, next) => {
   }
 };
 
-export const getUser = async (req, res, next) => {
+export const getUserCode = async (req, res, next) => {
   try {
     const email = req.body.email;
     const data = await User.findOne({ email });
@@ -80,4 +80,12 @@ export const activateUser = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+
+export const getUserDetails = async (req, res, next) => {
+  try {
+    const data = await User.findOne({ _id: req.params.id });
+    const { username, familyname, profileImg, ...results } = data;
+    res.status(200).json({ username, familyname, profileImg });
+  } catch (error) {}
 };

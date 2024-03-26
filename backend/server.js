@@ -6,6 +6,7 @@ import authRouter from "./routers/authRouter.js";
 import userRouter from "./routers/userRouter.js";
 import bookRouter from "./routers/bookRouter.js";
 import cartRouter from "./routers/CartRouter.js";
+import commentRouter from "./routers/commentRouter.js";
 import cookieParser from "cookie-parser";
 import Book from "./Model/bookModel.js";
 
@@ -21,6 +22,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/book", bookRouter);
 app.use("/api/cart", cartRouter);
+app.use("/api/comment", commentRouter);
 
 app.listen(PORT, () => console.log("app is listening on port " + PORT));
 

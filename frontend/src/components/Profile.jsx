@@ -5,28 +5,10 @@ import {
   faBell,
   faClockRotateLeft,
   faGear,
-  faRightFromBracket,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import { deleteSuccess } from "../store/userSlice";
-import { useDispatch } from "react-redux";
-import { clearCart } from "../store/cartSlice";
 
 const Profile = () => {
-  const dispatch = useDispatch();
-  const handleLogout = async () => {
-    try {
-      const data = await fetch("http://localhost:5000/api/auth/logOut", {
-        method: "Get",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-      });
-      dispatch(deleteSuccess());
-      dispatch(clearCart());
-    } catch (error) {
-      console.log(error);
-    }
-  };
   const location = useLocation().pathname;
   return (
     <div className=" flex   ">
@@ -73,13 +55,6 @@ const Profile = () => {
             <FontAwesomeIcon icon={faGear} className="h-4 w-4 mr-1" />
             Settings
           </NavLink>
-          <div
-            onClick={handleLogout}
-            className=" py-3 pl-10  flex gap-1 items-center cursor-pointer text-red-500 "
-          >
-            <FontAwesomeIcon icon={faRightFromBracket} />
-            <p className="">Log Out</p>
-          </div>
         </div>
       </nav>
       <div className="w-full  ">

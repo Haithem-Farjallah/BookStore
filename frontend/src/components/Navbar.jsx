@@ -13,6 +13,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { useSelector } from "react-redux";
 import LoadData from "./LoadData";
+import DropDownMenu from "./DropDownMenu";
 
 const navigation = {
   pages: [
@@ -223,15 +224,7 @@ export default function Navbar() {
 
             <div className="ml-auto lg:mr-14 flex items-center">
               {currentUser ? (
-                <NavLink to="/profile/userDetails">
-                  <img
-                    effect="blur"
-                    placeholder={currentUser.profileImg}
-                    src={currentUser.profileImg}
-                    alt="Profile Image"
-                    className="rounded-full w-8 h-8 object-cover"
-                  />
-                </NavLink>
+                <DropDownMenu />
               ) : (
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                   <NavLink

@@ -35,12 +35,12 @@ function Search({ outside, closeWindow }) {
       onClick={outside}
     >
       {/*search bar */}
-      <div className=" bg-white border w-[40%] absolute top-2 px-3 shadow-md mt-7 mb-6 rounded-lg">
+      <div className=" bg-white  w-[40%] absolute top-2 px-3 shadow-md mt-7 mb-6 rounded-lg">
         <input
           type="text"
           placeholder="What are you looking for ? "
           onChange={(e) => setSearch(e.target.value)}
-          className="focus:outline-none  h-14 w-96 font-semibold placeholder:font-medium pl-2 text-darkblue "
+          className="focus:outline-none border-none  h-14 w-96 font-semibold placeholder:font-medium pl-2 text-darkblue "
         />
         <svg
           xmlns="http://www.w3.org/2000/svg"
