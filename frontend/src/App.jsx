@@ -67,7 +67,6 @@ function App() {
     <div className="bg-bgcolor overflow-hidden  ">
       <Router>
         <ScrollToTop />
-
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />

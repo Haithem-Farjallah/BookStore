@@ -3,7 +3,6 @@ import BooksComments from "./BookComments";
 import { Tab } from "@headlessui/react";
 
 const Tabs = ({ result }) => {
-  console.log(result);
   return (
     <div className="w-full ">
       <Tab.Group>

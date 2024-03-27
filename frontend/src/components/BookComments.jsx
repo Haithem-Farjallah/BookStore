@@ -25,6 +25,7 @@ const BookComments = ({ id }) => {
     };
     getAllcomments();
   }, []);
+  //add new Comment :
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -40,10 +41,78 @@ const BookComments = ({ id }) => {
       });
       const data = await result.json();
       setAllComments([data, ...allComments]);
+      setComment("");
     } catch (error) {
       console.log(error);
     }
   };
+  const handleLikes = async (id) => {
+    try {
+      if (!currentUser) {
+        alert("You must login ");
+        return;
+      }
+      const result = await fetch("http://localhost:5000/api/comment/likes", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          commentId: id,
+          userId: currentUser._id,
+        }),
+        credentials: "include",
+      });
+      const data = await result.json();
+      setAllComments((prevComments) =>
+        prevComments.map((comment) =>
+          comment._id === id
+            ? {
+                ...comment,
+                likes: data.likes,
+                numberOfLikes: data.likes.length,
+              }
+            : comment
+        )
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const updatecomments = (updatedContent, id) => {
+    setAllComments(
+      allComments.map((c) => {
+        return c._id === id
+          ? {
+              ...c,
+              content: updatedContent,
+            }
+          : c;
+      })
+    );
+  };
+  const handleDelete = async (commentId) => {
+    try {
+      const result = await fetch(
+        "http://localhost:5000/api/comment/deleteComment",
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            commentId,
+            userId: currentUser._id,
+          }),
+          credentials: "include",
+        }
+      );
+      const data = await result.json();
+      console.log(data);
+      setAllComments((prevComments) =>
+        prevComments.filter((comment) => comment._id !== commentId)
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className=" p-10 ">
       <div className="max-w-5xl mx-auto  ">
@@ -74,6 +143,7 @@ const BookComments = ({ id }) => {
         {currentUser && (
           <form className=" py-3 " onSubmit={handleSubmit}>
             <textarea
+              value={comment}
               onChange={(e) => setComment(e.target.value)}
               placeholder="Add comment ..."
               rows="3"
@@ -110,7 +180,13 @@ const BookComments = ({ id }) => {
               </div>
             </div>
             {allComments.map((comment) => (
-              <UserComments comment={comment} key={comment._id} />
+              <UserComments
+                comment={comment}
+                key={comment._id}
+                handleLikes={handleLikes}
+                updatecomments={updatecomments}
+                handleDelete={handleDelete}
+              />
             ))}
           </>
         )}
