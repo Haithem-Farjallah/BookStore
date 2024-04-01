@@ -69,15 +69,15 @@ const Sliders = ({ results, loading }) => {
       {!loading &&
         results.map((result, index) => (
           <NavLink key={index} to={`/books/${result._id}`}>
-            <div className="mb-5">
+            <div className="mb-5 ">
               <img
                 loading="lazy"
                 src={result.image}
                 alt="Book"
-                className="h-[45vh] rounded-xl  w-full  brightness-95"
+                className="h-[45vh] rounded-xl  w-full  brightness-95 shadow-2xl "
               />
             </div>
-            <h1 className=" text-darkblue font-semibold text-center h-12 line-clamp-2 mx-2">
+            <h1 className=" text-darkblue font-semibold text-center h-12 line-clamp-2 mx-2  ">
               {result.name}{" "}
             </h1>
           </NavLink>

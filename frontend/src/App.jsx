@@ -2,6 +2,7 @@ import "./App.css";
 import Home from "./components/HomePage/Home";
 import Books from "./components/Books";
 import BookDetails from "./components/BookDetails";
+import Cookies from "js-cookie";
 
 import {
   BrowserRouter as Router,
@@ -29,6 +30,7 @@ import ConfirmAccount from "./components/ConfirmAccount";
 import SendRecoverPassword from "./components/SendRecoverPassword";
 import RecoverPassword from "./components/RecoverPassword";
 import NotFound from "./components/NotFound";
+import { useEffect } from "react";
 
 const Layout = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -63,6 +65,13 @@ const AlreadyActive = () => {
   return <div>{currentUser.isActive ? <Navigate to="/" /> : <Outlet />}</div>;
 };
 function App() {
+  useEffect(() => {
+    const cookieExists = Cookies.get("access_token");
+
+    if (!cookieExists) {
+      localStorage.removeItem("persist:root");
+    }
+  }, []);
   return (
     <div className="bg-bgcolor overflow-hidden  ">
       <Router>

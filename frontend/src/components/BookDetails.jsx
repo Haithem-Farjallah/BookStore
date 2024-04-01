@@ -82,7 +82,7 @@ const BookDetails = () => {
                 className="rounded-2xl  drop-shadow-lg my-6 w-[25vw] "
               />
             </div>
-            <div className=" w-[80%] mt-5   h-full ">
+            <div className=" w-[80%]   h-full ">
               <h1 className="text-darkblue underline font-bold text-4xl  pt-1 ">
                 {result.name}
               </h1>
@@ -109,6 +109,16 @@ const BookDetails = () => {
                 <p className=" font-semibold text-md text-darkblue">
                   5 Customer Review
                 </p>
+              </div>
+              <div className="flex ml-2  ">
+                {result.category.map((category, index) => (
+                  <p
+                    key={index}
+                    className="text-sm bg-white/25 border border-gray-300 w-fit py-2 px-2 m-1 text-darkblue font-semibold rounded-lg "
+                  >
+                    {category}
+                  </p>
+                ))}
               </div>
               <p className="font-semibold text-pgray ml-4 mb-2">
                 page count: {result.pageCount}
