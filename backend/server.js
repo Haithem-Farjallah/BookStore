@@ -25,7 +25,10 @@ app.use(cookieParser());
 app.use(
   cors({
     credentials: true,
-    origin: ["http://localhost:3000", "https://BookStore-app.onrender.com"],
+    origin: [
+      "http://localhost:3000",
+      "https://bookstore-app-p5ew.onrender.com",
+    ],
   })
 );
 
