@@ -9,14 +9,25 @@ import cartRouter from "./routers/CartRouter.js";
 import commentRouter from "./routers/commentRouter.js";
 import cookieParser from "cookie-parser";
 import Book from "./Model/bookModel.js";
-
+import path from "path";
 const PORT = process.env.PORT;
 connexion();
 
+const __dirname = path.resolve();
 const app = express();
+app.use(express.static(path.join(__dirname, "/frontend/dist")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+});
+
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+app.use(
+  cors({
+    credentials: true,
+    origin: ["http://localhost:3000", "https://BookStore-app.onrender.com"],
+  })
+);
 
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);

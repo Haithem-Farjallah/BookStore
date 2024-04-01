@@ -134,7 +134,9 @@
     "yallist": "^4.0.0"
   },
   "scripts": {
-    "dev": "nodemon server.js"
+    "dev": "nodemon backend/server.js",
+    "start": "node backend/server.js",
+    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
   },
   "keywords": [],
   "author": "",
