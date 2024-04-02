@@ -19,7 +19,9 @@ const BookDetails = () => {
   useEffect(() => {
     const getSingleBook = async () => {
       try {
-        const res = await fetch(`/api/book/getSingleBook?id=${id}`);
+        const res = await fetch(
+          `https://book-store-backend-mu.vercel.app/api/book/getSingleBook?id=${id}`
+        );
         const data = await res.json();
         setresult(data);
         setTotalPrice(data.price);
