@@ -9,19 +9,12 @@ import cartRouter from "./routers/CartRouter.js";
 import commentRouter from "./routers/commentRouter.js";
 import cookieParser from "cookie-parser";
 import Book from "./Model/bookModel.js";
-//import path from "path";
+
 const PORT = process.env.PORT;
 connexion();
 
-//const __dirname = path.resolve();
 const app = express();
-//app.use(express.static(path.join(__dirname, "/frontend/public")));
-/*app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "frontend", "public", "index.html"));
-});*/
-app.get("/", (req, res) => {
-  res.json({ message: "working" });
-});
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(
