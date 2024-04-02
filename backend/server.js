@@ -19,7 +19,9 @@ const app = express();
 /*app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "frontend", "public", "index.html"));
 });*/
-
+app.get("/", (req, res) => {
+  res.json({ message: "working" });
+});
 app.use(express.json());
 app.use(cookieParser());
 app.use(
