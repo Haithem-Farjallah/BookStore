@@ -12,7 +12,7 @@ const DropDownMenu = () => {
   const dispatch = useDispatch();
   const handleLogout = async () => {
     try {
-      await fetch("/api/auth/logOut", {
+      await fetch("https://book-store-backend-mu.vercel.app/api/auth/logOut", {
         method: "Get",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

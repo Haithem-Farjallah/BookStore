@@ -10,7 +10,7 @@ function Search({ outside, closeWindow }) {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     setLoading(true);
-    fetch(`/api/book/getAllBooks`)
+    fetch(`https://book-store-backend-mu.vercel.app/api/book/getAllBooks`)
       .then((res) => res.json())
       .then((data) => {
         if (search !== "") {

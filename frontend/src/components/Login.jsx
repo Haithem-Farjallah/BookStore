@@ -36,12 +36,15 @@ const Login = () => {
     }
     try {
       dispatch(SignInStart());
-      const res = await fetch("/api/auth/signIn", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(forms),
-        credentials: "include",
-      });
+      const res = await fetch(
+        "https://book-store-backend-mu.vercel.app/api/auth/signIn",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(forms),
+          credentials: "include",
+        }
+      );
       const data = await res.json();
       if (data.success === false) {
         dispatch(signInFailure({ server: data.message }));
@@ -51,7 +54,7 @@ const Login = () => {
       try {
         let items;
         const getCarts = await fetch(
-          "/api/cart/getBooksAfterLogin", /// will return the books that user added before logging out
+          "https://book-store-backend-mu.vercel.app/api/cart/getBooksAfterLogin", /// will return the books that user added before logging out
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -102,11 +105,14 @@ const Login = () => {
         const finalResult = { books: combinedArray, totalItems, totalPrice };
         console.log(finalResult);
         dispatch(getPrevAndNewCarts(finalResult));
-        await fetch("/api/cart/UpdateBooksAfterLogin", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...finalResult, userId: data._id }),
-        });
+        await fetch(
+          "https://book-store-backend-mu.vercel.app/api/cart/UpdateBooksAfterLogin",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ...finalResult, userId: data._id }),
+          }
+        );
         if (data.isActive === false) {
           navigate("settings/confirmAccount");
           return;
