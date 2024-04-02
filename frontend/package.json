@@ -1,6 +1,6 @@
 {
   "name": "idea-app",
-  "proxy": "http://localhost:5000",
+  "proxy": "https://book-store-server-seven.vercel.app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

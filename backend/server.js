@@ -27,7 +27,7 @@ app.use(
     credentials: true,
     origin: [
       "http://localhost:3000",
-      "https://bookstore-app-p5ew.onrender.com",
+      "https://book-store-frontend-lake.vercel.app",
     ],
     methods: ["POST", "GET", "DELETE", "PUT"],
   })
