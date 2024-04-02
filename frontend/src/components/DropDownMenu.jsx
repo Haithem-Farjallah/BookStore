@@ -12,7 +12,7 @@ const DropDownMenu = () => {
   const dispatch = useDispatch();
   const handleLogout = async () => {
     try {
-      await fetch("http://localhost:5000/api/auth/logOut", {
+      await fetch("/api/auth/logOut", {
         method: "Get",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

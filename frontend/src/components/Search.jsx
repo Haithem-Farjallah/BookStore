@@ -10,7 +10,7 @@ function Search({ outside, closeWindow }) {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     setLoading(true);
-    fetch(`http://localhost:5000/api/book/getAllBooks`)
+    fetch(`/api/book/getAllBooks`)
       .then((res) => res.json())
       .then((data) => {
         if (search !== "") {

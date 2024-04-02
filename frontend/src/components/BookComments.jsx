@@ -12,9 +12,7 @@ const BookComments = ({ id }) => {
   useEffect(() => {
     const getAllcomments = async () => {
       try {
-        const result = await fetch(
-          `http://localhost:5000/api/comment/getComments/${id}`
-        );
+        const result = await fetch(`/api/comment/getComments/${id}`);
         const data = await result.json();
         setAllComments(data);
         setLoading(false);
@@ -29,7 +27,7 @@ const BookComments = ({ id }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const result = await fetch("http://localhost:5000/api/comment/create", {
+      const result = await fetch("/api/comment/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -52,7 +50,7 @@ const BookComments = ({ id }) => {
         alert("You must login ");
         return;
       }
-      const result = await fetch("http://localhost:5000/api/comment/likes", {
+      const result = await fetch("/api/comment/likes", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -91,18 +89,15 @@ const BookComments = ({ id }) => {
   };
   const handleDelete = async (commentId) => {
     try {
-      const result = await fetch(
-        "http://localhost:5000/api/comment/deleteComment",
-        {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            commentId,
-            userId: currentUser._id,
-          }),
-          credentials: "include",
-        }
-      );
+      const result = await fetch("/api/comment/deleteComment", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          commentId,
+          userId: currentUser._id,
+        }),
+        credentials: "include",
+      });
       const data = await result.json();
       console.log(data);
       setAllComments((prevComments) =>

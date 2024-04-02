@@ -9,16 +9,16 @@ import cartRouter from "./routers/CartRouter.js";
 import commentRouter from "./routers/commentRouter.js";
 import cookieParser from "cookie-parser";
 import Book from "./Model/bookModel.js";
-import path from "path";
+//import path from "path";
 const PORT = process.env.PORT;
 connexion();
 
-const __dirname = path.resolve();
+//const __dirname = path.resolve();
 const app = express();
-app.use(express.static(path.join(__dirname, "/frontend/public")));
-app.get("*", (req, res) => {
+//app.use(express.static(path.join(__dirname, "/frontend/public")));
+/*app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "frontend", "public", "index.html"));
-});
+});*/
 
 app.use(express.json());
 app.use(cookieParser());
@@ -29,6 +29,7 @@ app.use(
       "http://localhost:3000",
       "https://bookstore-app-p5ew.onrender.com",
     ],
+    methods: ["POST", "GET", "DELETE", "PUT"],
   })
 );
 

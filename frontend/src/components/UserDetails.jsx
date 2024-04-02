@@ -17,7 +17,7 @@ const Update = () => {
 
   const handleLogout = async () => {
     try {
-      const data = await fetch("http://localhost:5000/api/auth/logOut", {
+      const data = await fetch("/api/auth/logOut", {
         method: "Get",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

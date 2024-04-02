@@ -11,14 +11,11 @@ const Settings = () => {
   const { currentUser } = useSelector((state) => state.user);
   const handleDelete = async () => {
     try {
-      const data = await fetch(
-        `http://localhost:5000/api/user/delete/${currentUser._id}`,
-        {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-        }
-      );
+      const data = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
       dispatch(deleteSuccess());
     } catch (error) {
       console.log(error);

@@ -84,15 +84,12 @@ const Update = () => {
     }
     try {
       setLoading(true);
-      const res = await fetch(
-        `http://localhost:5000/api/user/update/${currentUser._id}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-          credentials: "include",
-        }
-      );
+      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+        credentials: "include",
+      });
       const data = await res.json();
       if (data.success === false) {
         setErrors({ server: data.message });

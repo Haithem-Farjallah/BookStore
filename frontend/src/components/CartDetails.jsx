@@ -29,14 +29,11 @@ const CartTotals = () => {
   const RemoveFromCart = async (data) => {
     dispatch(removeFromCart(data));
     try {
-      const res = await fetch(
-        "http://localhost:5000/api/cart/removeBookFromCart",
-        {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...data, userId: currentUser._id }),
-        }
-      );
+      const res = await fetch("/api/cart/removeBookFromCart", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...data, userId: currentUser._id }),
+      });
       console.log(await res.json());
     } catch (error) {
       console.log(error);

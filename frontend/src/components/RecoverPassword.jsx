@@ -10,7 +10,7 @@ const RecoverPassword = () => {
   useEffect(() => {
     const verifyLink = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/auth/verifyLink", {
+        const res = await fetch("/api/auth/verifyLink", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -34,18 +34,15 @@ const RecoverPassword = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await fetch(
-        "http://localhost:5000/api/auth/recoverPassword",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            RecoverPass: code,
-            newPassword: passwordForm,
-          }),
-          credentials: "include",
-        }
-      );
+      const res = await fetch("/api/auth/recoverPassword", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          RecoverPass: code,
+          newPassword: passwordForm,
+        }),
+        credentials: "include",
+      });
       const data = await res.json();
       if (data.statusCode === 403) {
         setLoading(false);
