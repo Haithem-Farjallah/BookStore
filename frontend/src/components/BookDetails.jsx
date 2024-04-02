@@ -57,11 +57,14 @@ const BookDetails = () => {
     };
     dispatch(addToCart(BookElement));
     if (currentUser) {
-      await fetch("/api/cart/addBookToCart", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...BookElement, userId: currentUser._id }),
-      });
+      await fetch(
+        "https://book-store-backend-mu.vercel.app/api/cart/addBookToCart",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...BookElement, userId: currentUser._id }),
+        }
+      );
     }
   };
 
