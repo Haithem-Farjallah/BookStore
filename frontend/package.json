@@ -1,6 +1,6 @@
 {
   "name": "idea-app",
-  "proxy": "https://book-store-server-seven.vercel.app",
+  "proxy": "https://book-store-backend-mu.vercel.app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
