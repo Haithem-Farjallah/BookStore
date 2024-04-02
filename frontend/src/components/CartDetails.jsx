@@ -29,11 +29,14 @@ const CartTotals = () => {
   const RemoveFromCart = async (data) => {
     dispatch(removeFromCart(data));
     try {
-      const res = await fetch("/api/cart/removeBookFromCart", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, userId: currentUser._id }),
-      });
+      const res = await fetch(
+        "https://book-store-backend-mu.vercel.app/api/cart/removeBookFromCart",
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...data, userId: currentUser._id }),
+        }
+      );
       console.log(await res.json());
     } catch (error) {
       console.log(error);
