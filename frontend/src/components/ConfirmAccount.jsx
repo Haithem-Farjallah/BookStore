@@ -39,7 +39,7 @@ const ConfirmAccount = () => {
       ///here we get the code and if matches we change user status
       //we could do it in a single request !!
       try {
-        const res = await fetch("http://localhost:5000/api/user/getUser", {
+        const res = await fetch("/api/user/getUser", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -49,15 +49,12 @@ const ConfirmAccount = () => {
         });
         const userCode = await res.json();
         if (userCode == code) {
-          const result = await fetch(
-            "http://localhost:5000/api/user/ActivateAccount",
-            {
-              method: "PUT",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ id: currentUser._id }),
-              credentials: "include",
-            }
-          );
+          const result = await fetch("/api/user/ActivateAccount", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id: currentUser._id }),
+            credentials: "include",
+          });
           console.log();
           const ActiveUser = await result.json();
           dispatch(signInSuccess(ActiveUser));

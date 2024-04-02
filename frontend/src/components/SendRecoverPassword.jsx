@@ -10,15 +10,12 @@ const SendRecoverPassword = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await fetch(
-        "http://localhost:5000/api/auth/sendRecoverPassword",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: emailForm }),
-          credentials: "include",
-        }
-      );
+      const res = await fetch("/api/auth/sendRecoverPassword", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: emailForm }),
+        credentials: "include",
+      });
       const data = await res.json();
       if (data.statusCode === 403) {
         setLoading(false);

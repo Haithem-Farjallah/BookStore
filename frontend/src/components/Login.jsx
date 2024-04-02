@@ -36,7 +36,7 @@ const Login = () => {
     }
     try {
       dispatch(SignInStart());
-      const res = await fetch("http://localhost:5000/api/auth/signIn", {
+      const res = await fetch("/api/auth/signIn", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(forms),
@@ -51,7 +51,7 @@ const Login = () => {
       try {
         let items;
         const getCarts = await fetch(
-          "http://localhost:5000/api/cart/getBooksAfterLogin", /// will return the books that user added before logging out
+          "/api/cart/getBooksAfterLogin", /// will return the books that user added before logging out
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -102,7 +102,7 @@ const Login = () => {
         const finalResult = { books: combinedArray, totalItems, totalPrice };
         console.log(finalResult);
         dispatch(getPrevAndNewCarts(finalResult));
-        await fetch("http://localhost:5000/api/cart/UpdateBooksAfterLogin", {
+        await fetch("/api/cart/UpdateBooksAfterLogin", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ ...finalResult, userId: data._id }),

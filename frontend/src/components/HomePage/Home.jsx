@@ -41,7 +41,7 @@ function Home() {
     const getBestBooks = async () => {
       setLoading(true);
       try {
-        const res = await fetch("http://localhost:5000/api/book/getAllBooks");
+        const res = await fetch("/api/book/getAllBooks");
         const data = await res.json();
         setResults(data);
         setLoading(false);

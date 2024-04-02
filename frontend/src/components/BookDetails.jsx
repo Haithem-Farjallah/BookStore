@@ -19,9 +19,7 @@ const BookDetails = () => {
   useEffect(() => {
     const getSingleBook = async () => {
       try {
-        const res = await fetch(
-          `http://localhost:5000/api/book/getSingleBook?id=${id}`
-        );
+        const res = await fetch(`/api/book/getSingleBook?id=${id}`);
         const data = await res.json();
         setresult(data);
         setTotalPrice(data.price);
@@ -57,7 +55,7 @@ const BookDetails = () => {
     };
     dispatch(addToCart(BookElement));
     if (currentUser) {
-      await fetch("http://localhost:5000/api/cart/addBookToCart", {
+      await fetch("/api/cart/addBookToCart", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...BookElement, userId: currentUser._id }),

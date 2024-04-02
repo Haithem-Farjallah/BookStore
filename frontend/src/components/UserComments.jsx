@@ -20,9 +20,7 @@ const UserComments = ({
   useEffect(() => {
     const getUserDetails = async () => {
       try {
-        const result = await fetch(
-          `http://localhost:5000/api/user/getUser/${comment.userId}`
-        );
+        const result = await fetch(`/api/user/getUser/${comment.userId}`);
         const data = await result.json();
         setUserDetails(data);
       } catch (error) {
@@ -34,19 +32,16 @@ const UserComments = ({
   const handleEdit = async () => {
     try {
       setLoading(true);
-      const result = await fetch(
-        "http://localhost:5000/api/comment/editComment",
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            commentId: comment._id,
-            content: editContent,
-            userId: currentUser._id,
-          }),
-          credentials: "include",
-        }
-      );
+      const result = await fetch("/api/comment/editComment", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          commentId: comment._id,
+          content: editContent,
+          userId: currentUser._id,
+        }),
+        credentials: "include",
+      });
       const data = await result.json();
       console.log(data);
       updatecomments(data.content, comment._id);
