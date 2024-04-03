@@ -10,6 +10,7 @@ import {
 } from "firebase/storage";
 import { app } from "../firebase.js";
 import { useNavigate } from "react-router-dom";
+import { domain } from "../domain.js";
 
 const Update = () => {
   const dispatch = useDispatch();
@@ -84,15 +85,12 @@ const Update = () => {
     }
     try {
       setLoading(true);
-      const res = await fetch(
-        `https://book-store-backend-mu.vercel.app/api/user/update/${currentUser._id}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-          credentials: "include",
-        }
-      );
+      const res = await fetch(`${domain}/api/user/update/${currentUser._id}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+        credentials: "include",
+      });
       const data = await res.json();
       if (data.success === false) {
         setErrors({ server: data.message });

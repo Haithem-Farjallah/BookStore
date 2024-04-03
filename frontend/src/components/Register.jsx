@@ -4,6 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 
 import img7 from "../images/Vector1.png";
 import { handleErrors } from "./handleErrors";
+import { domain } from "../domain";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -34,16 +35,13 @@ const Register = () => {
     }
     try {
       setLoading(true);
-      const res = await fetch(
-        "https://book-store-backend-mu.vercel.app/api/auth/signUp",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const res = await fetch(domain + "/api/auth/signUp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
       const data = await res.json();
       if (data.success === false) {
         setLoading(false);

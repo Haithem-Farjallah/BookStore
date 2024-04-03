@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { NavLink } from "react-router-dom";
 import LoadData from "./LoadData";
+import { domain } from "../domain";
 
 const Update = () => {
   const { profileImg, ...currentUser } = useSelector(
@@ -17,14 +18,11 @@ const Update = () => {
 
   const handleLogout = async () => {
     try {
-      const data = await fetch(
-        "https://book-store-backend-mu.vercel.app/api/auth/logOut",
-        {
-          method: "Get",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-        }
-      );
+      const data = await fetch(domain + "/api/auth/logOut", {
+        method: "Get",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
       {
         /*dispatch(deleteSuccess());*/
       }

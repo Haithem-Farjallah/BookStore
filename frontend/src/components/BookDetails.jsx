@@ -8,6 +8,7 @@ import { addToCart } from "../store/cartSlice";
 
 import Tabs from "./Tabs";
 import { Spinner } from "flowbite-react";
+import { domain } from "../domain";
 
 const BookDetails = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -56,14 +57,11 @@ const BookDetails = () => {
     };
     dispatch(addToCart(BookElement));
     if (currentUser) {
-      await fetch(
-        "https://book-store-backend-mu.vercel.app/api/cart/addBookToCart",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...BookElement, userId: currentUser._id }),
-        }
-      );
+      await fetch(domain + "/api/cart/addBookToCart", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...BookElement, userId: currentUser._id }),
+      });
     }
   };
 

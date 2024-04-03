@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import MoonLoader from "react-spinners/MoonLoader";
+import { domain } from "../domain";
 
 function Search({ outside, closeWindow }) {
   const [results, setResults] = useState([]);
@@ -9,7 +10,7 @@ function Search({ outside, closeWindow }) {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     setLoading(true);
-    fetch(`https://book-store-backend-mu.vercel.app/api/book/getAllBooks`)
+    fetch(`${domain}/api/book/getAllBooks`)
       .then((res) => res.json())
       .then((data) => {
         if (search !== "") {

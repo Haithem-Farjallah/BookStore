@@ -7,6 +7,7 @@ import { Spinner } from "flowbite-react";
 
 import Pagination from "./Pagination";
 import ListBox from "./ListBox";
+import { domain } from "../domain";
 
 const Books = () => {
   const [results, setResults] = useState([]);
@@ -23,9 +24,7 @@ const Books = () => {
   useEffect(() => {
     const getBooks = async () => {
       try {
-        const res = await fetch(
-          "https://book-store-backend-mu.vercel.app/api/book/getAllBooks"
-        );
+        const res = await fetch(domain + "/api/book/getAllBooks");
         const data = await res.json();
         setResults(data);
         setInitialResult(data);

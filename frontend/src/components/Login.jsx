@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getPrevAndNewCarts, getPrevCarts } from "../store/cartSlice";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
+import { domain } from "../domain";
 
 const Login = () => {
   const [show, setShow] = useState(false); //used to show /hide password
@@ -41,15 +42,12 @@ const Login = () => {
     }
     try {
       dispatch(SignInStart());
-      const res = await fetch(
-        "https://book-store-backend-mu.vercel.app/api/auth/signIn",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(forms),
-          credentials: "include",
-        }
-      );
+      const res = await fetch(domain + "/api/auth/signIn", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(forms),
+        credentials: "include",
+      });
       const data = await res.json();
       if (data.success === false) {
         dispatch(signInFailure({ server: data.message }));
@@ -59,7 +57,7 @@ const Login = () => {
       try {
         let items;
         const getCarts = await fetch(
-          "https://book-store-backend-mu.vercel.app/api/cart/getBooksAfterLogin", /// will return the books that user added before logging out
+          domain + "/api/cart/getBooksAfterLogin", /// will return the books that user added before logging out
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -110,14 +108,11 @@ const Login = () => {
         const finalResult = { books: combinedArray, totalItems, totalPrice };
         console.log(finalResult);
         dispatch(getPrevAndNewCarts(finalResult));
-        await fetch(
-          "https://book-store-backend-mu.vercel.app/api/cart/UpdateBooksAfterLogin",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ ...finalResult, userId: data._id }),
-          }
-        );
+        await fetch(domain + "/api/cart/UpdateBooksAfterLogin", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...finalResult, userId: data._id }),
+        });
         if (data.isActive === false) {
           navigate("settings/confirmAccount");
           return;

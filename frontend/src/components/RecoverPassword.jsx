@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { domain } from "../domain";
 
 const RecoverPassword = () => {
   const { code } = useParams();
@@ -10,17 +11,14 @@ const RecoverPassword = () => {
   useEffect(() => {
     const verifyLink = async () => {
       try {
-        const res = await fetch(
-          "https://book-store-backend-mu.vercel.app/api/auth/verifyLink",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              RecoverPass: code,
-            }),
-            credentials: "include",
-          }
-        );
+        const res = await fetch(domain + "/api/auth/verifyLink", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            RecoverPass: code,
+          }),
+          credentials: "include",
+        });
         const data = await res.json();
         console.log(data);
         if (data.statusCode === 403) {
@@ -37,18 +35,15 @@ const RecoverPassword = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await fetch(
-        "https://book-store-backend-mu.vercel.app/api/auth/recoverPassword",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            RecoverPass: code,
-            newPassword: passwordForm,
-          }),
-          credentials: "include",
-        }
-      );
+      const res = await fetch(domain + "/api/auth/recoverPassword", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          RecoverPass: code,
+          newPassword: passwordForm,
+        }),
+        credentials: "include",
+      });
       const data = await res.json();
       if (data.statusCode === 403) {
         setLoading(false);
