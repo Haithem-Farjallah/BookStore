@@ -4,6 +4,7 @@ import { FaThumbsUp } from "react-icons/fa";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
+import { domain } from "../domain";
 
 const UserComments = ({
   comment,
@@ -21,7 +22,7 @@ const UserComments = ({
     const getUserDetails = async () => {
       try {
         const result = await fetch(
-          `https://book-store-backend-mu.vercel.app/api/user/getUser/${comment.userId}`
+          `${domain}/api/user/getUser/${comment.userId}`
         );
         const data = await result.json();
         setUserDetails(data);
@@ -34,19 +35,16 @@ const UserComments = ({
   const handleEdit = async () => {
     try {
       setLoading(true);
-      const result = await fetch(
-        "https://book-store-backend-mu.vercel.app/api/comment/editComment",
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            commentId: comment._id,
-            content: editContent,
-            userId: currentUser._id,
-          }),
-          credentials: "include",
-        }
-      );
+      const result = await fetch(domain + "/api/comment/editComment", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          commentId: comment._id,
+          content: editContent,
+          userId: currentUser._id,
+        }),
+        credentials: "include",
+      });
       const data = await result.json();
       console.log(data);
       updatecomments(data.content, comment._id);

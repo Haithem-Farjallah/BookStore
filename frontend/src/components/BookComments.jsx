@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import UserComments from "./UserComments";
 import ScaleLoader from "react-spinners/ScaleLoader";
+import { domain } from "../domain";
 
 const BookComments = ({ id }) => {
   const { currentUser } = useSelector((state) => state.user);
@@ -12,9 +13,7 @@ const BookComments = ({ id }) => {
   useEffect(() => {
     const getAllcomments = async () => {
       try {
-        const result = await fetch(
-          `https://book-store-backend-mu.vercel.app/api/comment/getComments/${id}`
-        );
+        const result = await fetch(`${domain}/api/comment/getComments/${id}`);
         const data = await result.json();
         setAllComments(data);
         setLoading(false);
@@ -29,19 +28,16 @@ const BookComments = ({ id }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const result = await fetch(
-        "https://book-store-backend-mu.vercel.app/api/comment/create",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            content: comment,
-            userId: currentUser._id,
-            bookId: id,
-          }),
-          credentials: "include",
-        }
-      );
+      const result = await fetch(domain + "/api/comment/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          content: comment,
+          userId: currentUser._id,
+          bookId: id,
+        }),
+        credentials: "include",
+      });
       const data = await result.json();
       setAllComments([data, ...allComments]);
       setComment("");
@@ -55,18 +51,15 @@ const BookComments = ({ id }) => {
         alert("You must login ");
         return;
       }
-      const result = await fetch(
-        "https://book-store-backend-mu.vercel.app/api/comment/likes",
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            commentId: id,
-            userId: currentUser._id,
-          }),
-          credentials: "include",
-        }
-      );
+      const result = await fetch(domain + "/api/comment/likes", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          commentId: id,
+          userId: currentUser._id,
+        }),
+        credentials: "include",
+      });
       const data = await result.json();
       setAllComments((prevComments) =>
         prevComments.map((comment) =>
@@ -97,18 +90,15 @@ const BookComments = ({ id }) => {
   };
   const handleDelete = async (commentId) => {
     try {
-      const result = await fetch(
-        "https://book-store-backend-mu.vercel.app/api/comment/deleteComment",
-        {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            commentId,
-            userId: currentUser._id,
-          }),
-          credentials: "include",
-        }
-      );
+      const result = await fetch(domain + "/api/comment/deleteComment", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          commentId,
+          userId: currentUser._id,
+        }),
+        credentials: "include",
+      });
       const data = await result.json();
       console.log(data);
       setAllComments((prevComments) =>

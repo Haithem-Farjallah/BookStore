@@ -7,6 +7,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { addToCart } from "../store/cartSlice";
 
 import Tabs from "./Tabs";
+import { Spinner } from "flowbite-react";
+import { domain } from "../domain";
 
 const BookDetails = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -19,9 +21,8 @@ const BookDetails = () => {
   useEffect(() => {
     const getSingleBook = async () => {
       try {
-        const res = await fetch(
-          `https://book-store-backend-mu.vercel.app/api/book/getSingleBook?id=${id}`
-        );
+        const res = await fetch(`${domain}/api/book/getSingleBook?id=${id}`);
+
         const data = await res.json();
         setresult(data);
         setTotalPrice(data.price);
@@ -57,22 +58,19 @@ const BookDetails = () => {
     };
     dispatch(addToCart(BookElement));
     if (currentUser) {
-      await fetch(
-        "https://book-store-backend-mu.vercel.app/api/cart/addBookToCart",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...BookElement, userId: currentUser._id }),
-        }
-      );
+      await fetch(domain + "/api/cart/addBookToCart", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...BookElement, userId: currentUser._id }),
+      });
     }
   };
 
   return (
     <div className="space-y-2">
       {loading && (
-        <div className="h-screen mt-10 text-bgreen flex justify-center items-center  w-full">
-          <FontAwesomeIcon icon={faSpinner} spin className="  h-8" />
+        <div className="h-screen mt-10 flex justify-center items-center  w-full">
+          <Spinner color="success" size="xl" />;
         </div>
       )}
       {!loading && (
@@ -117,7 +115,7 @@ const BookDetails = () => {
                 {result.category.map((category, index) => (
                   <p
                     key={index}
-                    className="text-sm bg-white/25 border border-gray-300 w-fit py-2 px-2 m-1 text-darkblue font-semibold rounded-lg "
+                    className="text-sm bg-grayy shadow border border-gray-300 w-fit py-2 px-2 m-1 text-darkblue font-semibold rounded-lg "
                   >
                     {category}
                   </p>

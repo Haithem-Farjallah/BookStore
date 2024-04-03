@@ -6,13 +6,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { deleteSuccess } from "../store/userSlice";
 import { clearCart } from "../store/cartSlice";
+import { domain } from "../domain";
 
 const DropDownMenu = () => {
   const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const handleLogout = async () => {
     try {
-      await fetch("https://book-store-backend-mu.vercel.app/api/auth/logOut", {
+      await fetch(domain + "/api/auth/logOut", {
         method: "Get",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

@@ -3,6 +3,7 @@ import icon from "../images/Icon.svg";
 import { UseSelector, useDispatch, useSelector } from "react-redux";
 import { signInSuccess } from "../store/userSlice";
 import { useNavigate } from "react-router-dom";
+import { domain } from "../domain";
 const ConfirmAccount = () => {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
@@ -39,28 +40,22 @@ const ConfirmAccount = () => {
       ///here we get the code and if matches we change user status
       //we could do it in a single request !!
       try {
-        const res = await fetch(
-          "https://book-store-backend-mu.vercel.app/api/user/getUser",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              id: currentUser._id,
-              email: currentUser.email,
-            }),
-          }
-        );
+        const res = await fetch(domain + "/api/user/getUser", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            id: currentUser._id,
+            email: currentUser.email,
+          }),
+        });
         const userCode = await res.json();
         if (userCode == code) {
-          const result = await fetch(
-            "https://book-store-backend-mu.vercel.app/api/user/ActivateAccount",
-            {
-              method: "PUT",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ id: currentUser._id }),
-              credentials: "include",
-            }
-          );
+          const result = await fetch(domain + "/api/user/ActivateAccount", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id: currentUser._id }),
+            credentials: "include",
+          });
           console.log();
           const ActiveUser = await result.json();
           dispatch(signInSuccess(ActiveUser));
