@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import google from "../images/Google.svg";
-import books from "../images/12331.jpg";
 import circle from "../images/circle.png";
 import { handleErrors } from "./handleErrors";
 import { signInFailure, signInSuccess, SignInStart } from "../store/userSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { getPrevAndNewCarts, getPrevCarts } from "../store/cartSlice";
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
+
 const Login = () => {
+  const [show, setShow] = useState(false); //used to show /hide password
   const { loading } = useSelector((state) => state.user);
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
@@ -152,7 +155,7 @@ const Login = () => {
             name="email"
             onChange={handleChange}
             placeholder="Enter your email"
-            className="w-full h-9 font-meduim  placeholder:font-normal border border-gray-400 py-1 px-2  rounded-lg  shadow-test "
+            className="w-full h-9 font-meduim  text-darkblue placeholder:font-normal border border-gray-400 py-1 px-2  rounded-lg  shadow-test focus:ring-0 focus:border-gray-500 "
           />
           {errors.email && (
             <p className="text-red-500 text-xs font-bold pl-2 ">
@@ -162,14 +165,27 @@ const Login = () => {
           <label htmlFor="password" className="text-pgray font-semibold ">
             Password
           </label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            onChange={handleChange}
-            placeholder="********"
-            className="w-full h-9 py-1 px-2 border border-gray-400  focus:outline-none  rounded-lg shadow-test focus:shadow-testhover"
-          />
+          <div className="flex items-center relative w-full">
+            <input
+              type={show ? "text" : "password"}
+              id="password"
+              name="password"
+              onChange={handleChange}
+              placeholder="********"
+              className="w-full h-9 text-darkblue py-1 px-2 pr-8 border border-gray-400  focus:outline-none  rounded-lg shadow-test focus:shadow-testhover focus:ring-0 focus:border-gray-500"
+            />
+            {show ? (
+              <FaEyeSlash
+                className="absolute right-[3%] cursor-pointer text-pgray"
+                onClick={() => setShow(!show)}
+              />
+            ) : (
+              <FaEye
+                className="absolute right-[3%] cursor-pointer text-pgray"
+                onClick={() => setShow(!show)}
+              />
+            )}
+          </div>
           {errors.password && (
             <p className="text-red-500 text-xs font-bold pl-2">
               {errors.password}
@@ -223,7 +239,13 @@ const Login = () => {
           </span>
         </div>
       </div>
-      <div className="bg-darkbg mt-8 h-[82%] w-[45%] rounded-r-3xl drop-shadow-2xl overflow-hidden ">
+      <div
+        style={{
+          backgroundImage: `url("https://images.pexels.com/photos/16689056/pexels-photo-16689056/free-photo-of-view-of-rows-of-bookshelves-in-a-college-library.jpeg?auto=compress&cs=tinysrgb&w=10&h=750&dpr=1")`,
+          objectFit: "cover",
+        }}
+        className="bg-darkbg mt-8 h-[82%] w-[45%] rounded-r-3xl drop-shadow-2xl overflow-hidden "
+      >
         <img
           src="https://images.pexels.com/photos/16689056/pexels-photo-16689056/free-photo-of-view-of-rows-of-bookshelves-in-a-college-library.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
           alt="books"

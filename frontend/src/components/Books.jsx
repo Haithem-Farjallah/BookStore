@@ -3,8 +3,7 @@ import Slider from "react-slider";
 import { NavLink } from "react-router-dom";
 import { PiSmileySad } from "react-icons/pi";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { Spinner } from "flowbite-react";
 
 import Pagination from "./Pagination";
 import ListBox from "./ListBox";
@@ -21,7 +20,6 @@ const Books = () => {
   const [initialResult, setInitialResult] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedAuth, setSelectedAuth] = useState("All");
-
   useEffect(() => {
     const getBooks = async () => {
       try {
@@ -62,10 +60,15 @@ const Books = () => {
     let filteredByCategory = [];
     setSelectedCategory(pickedCategory);
     if (pickedCategory === "All") {
-      filteredByCategory = initialResult;
+      filteredByCategory = initialResult.filter(
+        (result) => result.price >= Values[0] && result.price <= Values[1]
+      );
     } else {
-      filteredByCategory = initialResult.filter((result) =>
-        result.category.includes(pickedCategory)
+      filteredByCategory = initialResult.filter(
+        (result) =>
+          result.category.includes(pickedCategory) &&
+          result.price >= Values[0] &&
+          result.price <= Values[1]
       );
     }
     // Apply author filter on filteredByCategory
@@ -73,11 +76,10 @@ const Books = () => {
       setResults(filteredByCategory);
       return;
     }
-    const filteredByCategoryAndAuthor = filteredByCategory.filter((result) =>
+    const filteredEle = filteredByCategory.filter((result) =>
       result.author.includes(selectedAuth)
     );
-    console.log(filteredByCategoryAndAuthor);
-    setResults(filteredByCategoryAndAuthor);
+    setResults(filteredEle);
   };
 
   //same idea here :
@@ -85,23 +87,44 @@ const Books = () => {
     let filteredByAuth = [];
     setSelectedAuth(pickedAuth);
     if (pickedAuth === "All") {
-      filteredByAuth = initialResult;
+      filteredByAuth = initialResult.filter(
+        (result) => result.price >= Values[0] && result.price <= Values[1]
+      );
     } else {
-      filteredByAuth = initialResult.filter((result) =>
-        result.author.includes(pickedAuth)
+      filteredByAuth = initialResult.filter(
+        (result) =>
+          result.author.includes(pickedAuth) &&
+          result.price >= Values[0] &&
+          result.price <= Values[1]
       );
     }
-
-    console.log(selectedCategory);
     if (selectedCategory === "All") {
       setResults(filteredByAuth);
       return;
     }
-    const filteredByCategoryAndAuthor = filteredByAuth.filter((result) =>
+    const filteredEle = filteredByAuth.filter((result) =>
       result.category.includes(selectedCategory)
     );
-    console.log(filteredByCategoryAndAuthor);
-    setResults(filteredByCategoryAndAuthor);
+
+    setResults(filteredEle);
+  };
+
+  //filter per price
+  const filterPrice = (value) => {
+    let filteredArray = initialResult.filter(
+      (result) => result.price >= value[0] && result.price <= value[1]
+    );
+    if (selectedAuth !== "All") {
+      filteredArray = filteredArray.filter((result) =>
+        result.author.includes(selectedAuth)
+      );
+    }
+    if (selectedCategory !== "All") {
+      filteredArray = filteredArray.filter((result) =>
+        result.category.includes(selectedCategory)
+      );
+    }
+    setResults(filteredArray);
   };
 
   //logic for pagination :
@@ -109,14 +132,14 @@ const Books = () => {
   const indexOfFirstBook = indexOfLastBook - booksPerPage;
   const currentBooks = results.slice(indexOfFirstBook, indexOfLastBook);
 
-  const [Values, setValues] = useState([0, 200]);
+  const [Values, setValues] = useState([0, 150]);
 
   return (
     <>
       <div className="flex mx-8    relative rounded-xl pt-10">
         {/*filter section  */}
         <div className=" rounded-2xl bg-grayy border border-gray-300 shadow-lg w-[30%] h-screen mb-5 py-5 px-2 ">
-          <h1 className="font-semibold text-2xl text-darkblue mb-5 ml-2">
+          <h1 className="font-semibold text-2xl text-darkblue mb-5 ml-2 ">
             Filter Books :
           </h1>
           {/*Categories */}
@@ -183,8 +206,11 @@ const Books = () => {
               className="slider  h-doubleRange bg-bgreen"
               value={Values}
               min="0"
-              max="200"
-              onChange={setValues}
+              max="150"
+              onChange={(newValue) => {
+                setValues(newValue);
+                filterPrice(newValue);
+              }}
               thumbClassName="bg-bgcolor border border-bgreen   rounded-full -mt-2 w-4 h-4 cursor-grab "
             />
           </div>
@@ -194,29 +220,29 @@ const Books = () => {
         <div className="flex flex-col ml-12  w-full  ">
           {loading && (
             <div className="h-[100%] mt-10 text-bgreen flex justify-center items-center  w-full">
-              <FontAwesomeIcon icon={faSpinner} spin className="  h-8" />
+              <Spinner color="success" size="xl" />;
             </div>
           )}
           {!loading && currentBooks.length > 0 && (
-            <div className="flex flex-col justify-between h-full w-full space-y-8 mb-12 ">
+            <div className="flex flex-col  justify-between h-full w-full space-y-8 mb-12 ">
               {currentBooks.map((result, index) => (
                 <div
                   key={index}
-                  className="bg-grayy border border-gray-300 h-[16rem] flex items-center shadow-lg hover:shadow-xl rounded-xl pl-12"
+                  className="bg-grayy border border-gray-300 h-[16rem] flex items-center shadow-lg hover:shadow-xl rounded-xl px-5"
                 >
-                  <div className="   w-[15%]">
+                  <div className="   w-[19%]">
                     <img
                       src={result.image}
                       alt="book"
                       className="h-44 w-full rounded-lg drop-shadow-xl "
                     />
                   </div>
-                  <div className="flex flex-col  justify-evenly  ml-10  w-full h-[85%] ">
+                  <div className="flex flex-col justify-evenly   ml-8 w-full  h-[85%] ">
                     <h1 className="text-darkblue underline font-bold text-2xl truncate pt-1 ">
                       {result.name}
                     </h1>
 
-                    <p className="text-pgray font-semibold text-lg py-1 line-clamp-1 pr-2">
+                    <p className="text-pgray font-semibold text-lg  line-clamp-1 pr-2">
                       <span className="font-[650]">
                         {result.author.length === 1
                           ? "Author : "
@@ -230,32 +256,37 @@ const Books = () => {
                       ))}
                     </p>
 
-                    <p className="text-pgray font-medium text-lg mb-3 ml-4 w-[90%]  h-24   line-clamp-3 ">
+                    <p className="text-pgray font-medium text-lg mb-3 ml-4 w-[90%]   line-clamp-3 ">
                       {result.textSnippest}
                     </p>
+
                     <div className="flex justify-between items-center ">
                       <div className="flex ml-4 ">
                         {result.category.map((category, index) => (
                           <p
                             key={index}
-                            className="text-sm bg-white/25 border border-gray-300 w-fit py-2 px-2 m-1 text-darkblue font-semibold rounded-lg cursor-pointer"
+                            className="text-sm bg-white/40 shadow-lg border border-gray-300 w-fit py-2 px-2 m-1 text-darkblue font-semibold rounded-lg cursor-pointer"
                           >
                             {category}
                           </p>
                         ))}
                       </div>
-
-                      <NavLink
-                        to={`/books/${result._id}`}
-                        className="rounded-lg mr-8 "
-                      >
-                        <input
-                          type="button"
-                          value="View Details >"
-                          className="cursor-pointer rounded-xl  p-2 bg-bgreen text-white font-medium text-md border border-bgreen shadow-xl hover:underline "
-                        />
-                      </NavLink>
                     </div>
+                  </div>
+                  <div className=" h-[85%] w-[20%] flex flex-col justify-end items-center gap-5">
+                    <p className="text-darkblue font-semibold text-2xl  font-[poppins] ">
+                      {result.price} TND
+                    </p>
+                    <NavLink
+                      to={`/books/${result._id}`}
+                      className="rounded-lg mb-4 "
+                    >
+                      <input
+                        type="button"
+                        value="View Details >"
+                        className="cursor-pointer rounded-xl  p-2 bg-bgreen text-white font-medium text-md border border-bgreen shadow-xl hover:underline "
+                      />
+                    </NavLink>
                   </div>
                 </div>
               ))}

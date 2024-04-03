@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { addToCart } from "../store/cartSlice";
 
 import Tabs from "./Tabs";
+import { Spinner } from "flowbite-react";
 
 const BookDetails = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -69,8 +70,8 @@ const BookDetails = () => {
   return (
     <div className="space-y-2">
       {loading && (
-        <div className="h-screen mt-10 text-bgreen flex justify-center items-center  w-full">
-          <FontAwesomeIcon icon={faSpinner} spin className="  h-8" />
+        <div className="h-screen mt-10 flex justify-center items-center  w-full">
+          <Spinner color="success" size="xl" />;
         </div>
       )}
       {!loading && (
