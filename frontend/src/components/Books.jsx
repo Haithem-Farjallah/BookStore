@@ -21,6 +21,13 @@ const Books = () => {
   const [initialResult, setInitialResult] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedAuth, setSelectedAuth] = useState("All");
+
+  //logic for pagination :
+  const indexOfLastBook = booksPerPage * currentPage;
+  const indexOfFirstBook = indexOfLastBook - booksPerPage;
+  const currentBooks = results.slice(indexOfFirstBook, indexOfLastBook);
+
+  const [Values, setValues] = useState([0, 150]);
   useEffect(() => {
     const getBooks = async () => {
       try {
@@ -125,13 +132,6 @@ const Books = () => {
     }
     setResults(filteredArray);
   };
-
-  //logic for pagination :
-  const indexOfLastBook = booksPerPage * currentPage;
-  const indexOfFirstBook = indexOfLastBook - booksPerPage;
-  const currentBooks = results.slice(indexOfFirstBook, indexOfLastBook);
-
-  const [Values, setValues] = useState([0, 150]);
 
   return (
     <>

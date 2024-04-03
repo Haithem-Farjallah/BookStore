@@ -21,7 +21,7 @@ const BookDetails = () => {
   useEffect(() => {
     const getSingleBook = async () => {
       try {
-        const res = await fetch(`/api/book/getSingleBook?id=${id}`);
+        const res = await fetch(`${domain}/api/book/getSingleBook?id=${id}`);
         const data = await res.json();
         setresult(data);
         setTotalPrice(data.price);
@@ -114,7 +114,7 @@ const BookDetails = () => {
                 {result.category.map((category, index) => (
                   <p
                     key={index}
-                    className="text-sm bg-white/25 border border-gray-300 w-fit py-2 px-2 m-1 text-darkblue font-semibold rounded-lg "
+                    className="text-sm bg-grayy shadow border border-gray-300 w-fit py-2 px-2 m-1 text-darkblue font-semibold rounded-lg "
                   >
                     {category}
                   </p>
