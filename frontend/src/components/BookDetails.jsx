@@ -22,6 +22,7 @@ const BookDetails = () => {
     const getSingleBook = async () => {
       try {
         const res = await fetch(`${domain}/api/book/getSingleBook?id=${id}`);
+
         const data = await res.json();
         setresult(data);
         setTotalPrice(data.price);
