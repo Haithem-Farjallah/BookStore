@@ -8,14 +8,15 @@ import { signInFailure, signInSuccess, SignInStart } from "../store/userSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { getPrevAndNewCarts, getPrevCarts } from "../store/cartSlice";
 const Login = () => {
-  const { errors, loading } = useSelector((state) => state.user);
+  const { loading } = useSelector((state) => state.user);
+  const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
   const CartBooks = useSelector((state) => state.book);
 
   let [forms, setForms] = useState({
     email: "",
     password: "",
-    remember: false,
+    remember: true,
   });
   const navigate = useNavigate();
   const handleChange = (e) => {
@@ -24,7 +25,7 @@ const Login = () => {
       [e.target.name]:
         e.target.type === "checkbox" ? e.target.checked : e.target.value,
     });
-    dispatch(signInFailure({ ...errors, [e.target.name]: "" }));
+    setErrors({ ...errors, [e.target.name]: "" });
   };
 
   const handleSubmit = async (e) => {
@@ -32,6 +33,7 @@ const Login = () => {
     const newErrors = handleErrors(forms, "login"); //call a function that verify inputs using regex
     if (Object.keys(newErrors).length > 0) {
       dispatch(signInFailure(newErrors));
+      setErrors(newErrors);
       return;
     }
     try {
@@ -121,7 +123,7 @@ const Login = () => {
   };
 
   return (
-    <div className=" overflow-hidden h-[98vh] bg-gradient-to-tl from-bgreen to-green-300 flex justify-center   ">
+    <div className=" overflow-hidden h-[98vh] bg-gradient-to-tl from-bgreen to-green-400 flex justify-center   ">
       <img src={circle} alt="" className="absolute top-0 right-0  " />
       <div className="  bg-bgcolor mt-8 h-[82%]  w-[45%] flex flex-col justify-center items-center rounded-l-3xl drop-shadow-2xl">
         <h1 className=" text-[#5f5f7e] font-semibold uppercase text-4xl ">
@@ -133,7 +135,7 @@ const Login = () => {
         <form
           onSubmit={handleSubmit}
           method="post"
-          className="flex flex-col justify-center items-start  space-y-1  w-[55%]"
+          className="flex flex-col  justify-center items-start  space-y-1  w-[55%]"
         >
           <label htmlFor="email" className="text-pgray font-semibold">
             Email
@@ -144,14 +146,14 @@ const Login = () => {
             name="email"
             onChange={handleChange}
             placeholder="Enter your email"
-            className="w-full h-9 font-meduim placeholder:font-normal py-1 px-2  rounded-lg outline-none shadow-test focus:shadow-testhover"
+            className="w-full h-9 font-meduim  placeholder:font-normal border border-gray-400 py-1 px-2  rounded-lg  shadow-test "
           />
           {errors.email && (
-            <p className="text-red-500 text-xs font-bold pl-2">
+            <p className="text-red-500 text-xs font-bold pl-2 ">
               {errors.email}
             </p>
           )}
-          <label htmlFor="password" className="text-pgray font-semibold">
+          <label htmlFor="password" className="text-pgray font-semibold ">
             Password
           </label>
           <input
@@ -160,7 +162,7 @@ const Login = () => {
             name="password"
             onChange={handleChange}
             placeholder="********"
-            className="w-full h-9 py-1 px-2   outline-none rounded-lg shadow-test focus:shadow-testhover"
+            className="w-full h-9 py-1 px-2 border border-gray-400  focus:outline-none  rounded-lg shadow-test focus:shadow-testhover"
           />
           {errors.password && (
             <p className="text-red-500 text-xs font-bold pl-2">
@@ -173,13 +175,11 @@ const Login = () => {
                 type="checkbox"
                 name="remember"
                 id="remember"
+                checked={forms.remember}
                 onChange={handleChange}
-                className=" align-middle outline-none mb-[1px] ml-2 "
+                className=" text-bgreen mb-[1px] ml-2 focus:ring-0 rounded "
               />
-              <label
-                htmlFor="remember"
-                className="text-sm  text-pgray outline-none"
-              >
+              <label htmlFor="remember" className="text-sm  text-pgray ">
                 Remember me
               </label>
             </div>
@@ -219,10 +219,10 @@ const Login = () => {
       </div>
       <div className="bg-darkbg mt-8 h-[82%] w-[45%] rounded-r-3xl drop-shadow-2xl overflow-hidden ">
         <img
-          src={books}
+          src="https://images.pexels.com/photos/16689056/pexels-photo-16689056/free-photo-of-view-of-rows-of-bookshelves-in-a-college-library.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
           alt="books"
           loading="lazy"
-          className="bg-contain h-full opacity-80"
+          className="bg-contain h-full "
         />
       </div>
     </div>

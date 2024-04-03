@@ -67,7 +67,6 @@ const AlreadyActive = () => {
 function App() {
   useEffect(() => {
     const cookieExists = Cookies.get("access_token");
-
     if (!cookieExists) {
       localStorage.removeItem("persist:root");
     }
