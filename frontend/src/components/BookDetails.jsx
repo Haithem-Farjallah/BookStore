@@ -131,7 +131,9 @@ const BookDetails = () => {
                 {totalPrice} TND
               </p>
               <p className="  w-fit py-1 px-2  text-darkblue font-semibold">
-                Quantity available:{result.quantity} in stock
+                {result.quantity > 0
+                  ? `Quantity available:${result.quantity} in stock`
+                  : "Book currently unavailable in stock"}
               </p>
               <div className=" flex mt-2  ">
                 <div className="flex justify-center  items-center mx-5 ">
@@ -159,22 +161,11 @@ const BookDetails = () => {
                 </div>
                 <input
                   type="button"
+                  disabled={result.quantity === 0}
                   value="Add to cart "
                   onClick={handleAdd}
-                  className=" cursor-pointer bg-bgreen  px-12 py-3 rounded-xl  text-white font-bold text-center"
+                  className=" cursor-pointer bg-bgreen  px-12 py-3 rounded-xl  text-white font-bold text-center disabled:opacity-90 disabled:cursor-not-allowed"
                 />
-                {currentUser && currentUser.isStudent && (
-                  <a
-                    target="blank"
-                    href="https://firebasestorage.googleapis.com/v0/b/bookstore-app-47ae6.appspot.com/o/Bulletin_013479018855_.pdf?alt=media&token=71e15617-9da5-43fa-abbf-4bb57fac5476"
-                  >
-                    <FontAwesomeIcon
-                      icon={faDownload}
-                      title="Students can download pdf books"
-                      className="text-darkblue h-8 ml-12 mt-2 "
-                    />
-                  </a>
-                )}
               </div>
             </div>
           </div>

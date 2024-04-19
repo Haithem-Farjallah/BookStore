@@ -34,6 +34,7 @@ const Books = () => {
         const res = await fetch(domain + "/api/book/getAllBooks");
         const data = await res.json();
         setResults(data);
+        console.log(data);
         setInitialResult(data);
         setLoading(false);
         //create the categories array :

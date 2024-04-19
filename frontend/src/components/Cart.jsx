@@ -55,6 +55,7 @@ export default function Cart({ outside, close }) {
           <img
             src={exit}
             alt="exit"
+            loading="eager"
             onClick={close}
             className="cursor-pointer mr-5 h-6"
           />

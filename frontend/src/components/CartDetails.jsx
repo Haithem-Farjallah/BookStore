@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import trash from "../images/trash.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { removeFromCart } from "../store/cartSlice";
+import { removeFromCart, updatePriceDiscount } from "../store/cartSlice";
 import { NavLink } from "react-router-dom";
 import { domain } from "../domain";
 
 const CartTotals = () => {
-  const { date } = useSelector((state) => state.user.currentUser.createdAt);
-  const [newUser, setNewUser] = useState(false);
+  const dispatch = useDispatch();
+  const date = useSelector((state) => state.user.currentUser.createdAt);
+  const CartBooks = useSelector((state) => state.book);
+  const { currentUser } = useSelector((state) => state.user);
+  const [totalAfterDiscount, setTotalAfterDisc] = useState(0);
   useEffect(() => {
     // Convert the creation date string to a Date object
     const userCreationDate = new Date(date);
@@ -19,14 +22,22 @@ const CartTotals = () => {
     const timeThreshold = 30 * 24 * 60 * 60 * 1000; // 30 days in milliseconds
     // Check if the time difference surpasses the threshold
     if (timeDifference > timeThreshold) {
-      setNewUser(false);
+      setTotalAfterDisc(Math.floor(CartBooks.totalPrice));
+      dispatch(
+        updatePriceDiscount({
+          totalAfterDiscount: Math.floor(CartBooks.totalPrice),
+        })
+      );
     } else {
-      setNewUser(true);
+      setTotalAfterDisc(Math.floor(CartBooks.totalPrice * 0.7));
+      dispatch(
+        updatePriceDiscount({
+          totalAfterDiscount: Math.floor(CartBooks.totalPrice * 0.7),
+        })
+      );
     }
   }, []);
-  const CartBooks = useSelector((state) => state.book);
-  const { currentUser } = useSelector((state) => state.user);
-  const dispatch = useDispatch();
+
   const RemoveFromCart = async (data) => {
     dispatch(removeFromCart(data));
     try {
@@ -60,9 +71,9 @@ const CartTotals = () => {
                   <img
                     src={book.url}
                     alt="Book"
-                    className="h-20 w-14 ml-2 my-2 rounded-lg"
+                    className="h-20  w-14 ml-4 my-2 rounded-lg"
                   />
-                  <p>{book.title}</p>
+                  <p className="text-center w-full">{book.title}</p>
                 </div>
                 <p className="text-pgray">{book.totalPrice} TND </p>
                 <p>
@@ -112,7 +123,7 @@ const CartTotals = () => {
             :
           </p>
           <p className="text-bggreen text-lg font-bold  ">
-            {Math.floor(CartBooks.totalPrice * (newUser ? 0.7 : 1))} TND{" "}
+            {totalAfterDiscount} TND{" "}
           </p>
         </div>
         <NavLink

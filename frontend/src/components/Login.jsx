@@ -237,15 +237,14 @@ const Login = () => {
       </div>
       <div
         style={{
-          backgroundImage: `url("https://images.pexels.com/photos/16689056/pexels-photo-16689056/free-photo-of-view-of-rows-of-bookshelves-in-a-college-library.jpeg?auto=compress&cs=tinysrgb&w=10&h=750&dpr=1")`,
-          objectFit: "cover",
+          backgroundImage: `url("https://images.pexels.com/photos/16689056/pexels-photo-16689056/free-photo-of-view-of-rows-of-bookshelves-in-a-college-library.jpeg?auto=compress&cs=tinysrgb&w=1000&h=100&dpr=1")`,
+          backgroundSize: "cover",
         }}
         className="bg-darkbg mt-8 h-[82%] w-[45%] rounded-r-3xl drop-shadow-2xl overflow-hidden "
       >
         <img
           src="https://images.pexels.com/photos/16689056/pexels-photo-16689056/free-photo-of-view-of-rows-of-bookshelves-in-a-college-library.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
           alt="books"
-          loading="lazy"
           className="bg-contain h-full "
         />
       </div>
