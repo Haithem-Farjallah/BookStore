@@ -59,7 +59,12 @@ const Register = () => {
 
   return (
     <div className=" bg-gradient-to-tl from-bgreen to-green-400 ">
-      <img src={img7} alt="" className="float-right  -ml-[15%] " />
+      <img
+        src={img7}
+        alt="rightImage"
+        loading="eager"
+        className="float-right  -ml-[15%] "
+      />
 
       <div className="    pt-14 flex justify-center items-center ">
         <div className="  bg-bgcolor  py-12  w-[60%] flex flex-col justify-center items-center rounded-3xl drop-shadow-2xl">

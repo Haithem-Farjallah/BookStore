@@ -71,7 +71,6 @@ const Sliders = ({ results, loading }) => {
           <NavLink key={index} to={`/books/${result._id}`}>
             <div className="mb-5 ">
               <img
-                loading="lazy"
                 src={result.image}
                 alt="Book"
                 className="h-[45vh] rounded-xl  w-full  brightness-95 shadow-2xl "
