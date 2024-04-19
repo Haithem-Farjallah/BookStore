@@ -18,3 +18,24 @@ export const getSingleBook = async (req, res, next) => {
     next(error);
   }
 };
+
+export const updateQuantity = (req, res, next) => {
+  try {
+    req.body.map(async (item) => {
+      const book = await Book.findOne({ _id: item.id });
+      if (!book) {
+        return next(errorHandler(403, "No book found !"));
+      }
+      const newQuantity = book.quantity - item.quantity;
+
+      await Book.updateOne(
+        { _id: item.id },
+        { $set: { quantity: newQuantity } }
+      );
+    });
+
+    res.status(200).json({ message: "Quantity updated successfully." });
+  } catch (error) {
+    next(error);
+  }
+};
