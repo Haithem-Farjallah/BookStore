@@ -1,7 +1,9 @@
-#Bookstore Web Application
+# Bookstore Web Application
+
 This is a bookstore web application developed using the MERN stack (MongoDB, Express.js, React.js, Node.js). It incorporates JWT authentication for user authentication, Nodemailer for sending emails, and Redux Toolkit for state management.
 
-#Features
+# Features
+
 User authentication using JWT
 Account creation with email confirmation
 Password recovery functionality
