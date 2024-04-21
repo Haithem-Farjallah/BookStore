@@ -1,14 +1,32 @@
 import React from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { deleteSuccess } from "../store/userSlice";
+import { clearCart } from "../store/cartSlice";
 import {
-  faBell,
   faClockRotateLeft,
   faGear,
+  faRightFromBracket,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
+import { domain } from "../domain";
+import { useDispatch } from "react-redux";
 
 const Profile = () => {
+  const dispatch = useDispatch();
+  const handleLogout = async () => {
+    try {
+      await fetch(domain + "/api/auth/logOut", {
+        method: "Get",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+      dispatch(deleteSuccess());
+      dispatch(clearCart());
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const location = useLocation().pathname;
   return (
     <div className=" flex   ">
@@ -35,15 +53,7 @@ const Profile = () => {
             Order History
           </NavLink>
           {/*bg-bgcolor  w-[101%] */}
-          <NavLink
-            to="/profile/notifications"
-            className={` h-12 py-3 pl-10 aria-[current=page]:text-bggreen ${
-              location === "/profile/notifications" &&
-              "bg-bgcolor border-r-2 w-[99.9%] border-bggreen border-w"
-            }`}
-          >
-            <FontAwesomeIcon icon={faBell} className="h-4 w-4" /> Notifications
-          </NavLink>
+
           <NavLink
             to="/profile/settings"
             className={` h-12 py-3 pl-10  aria-[current=page]:text-bggreen ${
@@ -55,6 +65,12 @@ const Profile = () => {
             <FontAwesomeIcon icon={faGear} className="h-4 w-4 mr-1" />
             Settings
           </NavLink>
+          <button
+            onClick={handleLogout}
+            className="h-12 py-3 pl-10 text-left  border-r-2 w-[99.9%]  text-red-500"
+          >
+            <FontAwesomeIcon icon={faRightFromBracket} /> Log out
+          </button>
         </div>
       </nav>
       <div className="w-full  ">

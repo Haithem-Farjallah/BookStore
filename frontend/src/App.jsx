@@ -21,7 +21,6 @@ import Profile from "./components/Profile";
 import { useSelector } from "react-redux";
 import UserDetails from "./components/UserDetails";
 import History from "./components/History";
-import Notifications from "./components/Notifications";
 import Settings from "./components/Settings";
 import UpdateUser from "./components/UpdateUser";
 import Checkout from "./components/Checkout";
@@ -50,10 +49,15 @@ const PreventLog = () => {
 };
 const Activate = () => {
   const { currentUser } = useSelector((state) => state.user);
+  const { totalItems } = useSelector((state) => state.book);
   return (
     <>
       {currentUser && currentUser.isActive ? (
-        <Outlet />
+        totalItems > 0 ? (
+          <Outlet />
+        ) : (
+          <Navigate to="/books" />
+        )
       ) : (
         <Navigate to="/confirmAccount" />
       )}
@@ -103,7 +107,6 @@ function App() {
             <Route path="/profile" element={<Profile />}>
               <Route path="userDetails" element={<UserDetails />} />
               <Route path="history" element={<History />} />
-              <Route path="notifications" element={<Notifications />} />
               <Route path="settings" element={<Settings />} />
               <Route path="settings/update" element={<UpdateUser />} />
             </Route>

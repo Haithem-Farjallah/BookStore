@@ -171,6 +171,7 @@ const BookDetails = () => {
           </div>
 
           {/* Tabs  */}
+          {console.log(result)}
           <Tabs result={result} />
           {/*Comments section : */}
         </React.Fragment>
