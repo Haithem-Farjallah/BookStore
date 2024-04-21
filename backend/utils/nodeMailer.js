@@ -1,11 +1,11 @@
 import nodemailer from "nodemailer";
-
+import "dotenv/config";
 // Create a transporter for sending emails
 const transporter = nodemailer.createTransport({
   service: "Gmail",
   auth: {
-    user: "haithemfarjallah2002@gmail.com",
-    pass: "ojmbvdldzhvlypwo",
+    user: process.env.UserMail,
+    pass: process.env.userPass,
   },
 });
 
@@ -35,7 +35,7 @@ export const sendVerificationPass = (recoverCode, email) => {
       to: email,
       subject: "Verification Code for Changing Password",
       html: `<p style="font-size: 15px; ">Here is the Link to change your password :</p>
-      <a href="http://localhost:3000/recoverPassword/${recoverCode}"> Click Here !</a>`,
+      <a href="https://book-store-backend-mu.vercel.app/recoverPassword/${recoverCode}"> Click Here !</a>`,
     },
     (error, info) => {
       if (error) {
