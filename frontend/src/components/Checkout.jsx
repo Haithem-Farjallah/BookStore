@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { domain } from "../domain";
 import { useNavigate } from "react-router-dom";
+import { clearCart } from "../store/cartSlice";
 
 const cities = [
   "Ariana",
@@ -32,24 +33,41 @@ const cities = [
 
 const Checkout = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { currentUser } = useSelector((state) => state.user);
+  const { totalPrice, priceAfterDiscount } = useSelector((state) => state.book);
+  const books = useSelector((state) => state.book.books);
   const [form, setForm] = useState({
-    firstname: "",
-    lastname: "",
+    userId: currentUser._id,
+    firstname: currentUser.username,
+    lastname: currentUser.familyname,
     city: "Ariana",
     streetAdress: "",
     ZipCode: "",
     Phone: "",
-    email: "",
+    email: currentUser.email,
     paymentMethod: "bank",
+    total: priceAfterDiscount,
+    books,
   });
-  const books = useSelector((state) => state.book.books);
-  const { totalPrice, priceAfterDiscount } = useSelector((state) => state.book);
+  const [errors, setErrors] = useState({});
   const handleChange = (e) => {
     setForm({ ...form, [e.target.id]: e.target.value });
+    setErrors({ ...errors, [e.target.id]: "" });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const newErrors = {};
+    if (!form.firstname) newErrors.firstname = "FirstName is required";
+    if (!form.lastname) newErrors.lastname = "LastName is required";
+    if (!form.streetAdress) newErrors.streetAdress = "streetAdress is required";
+    if (!form.ZipCode) newErrors.ZipCode = "ZipCode is required";
+    if (!form.Phone) newErrors.Phone = "Phone is required";
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
     const booksToUpdate = books.map((book) => ({
       id: book.id,
       quantity: book.number,
@@ -60,6 +78,33 @@ const Checkout = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(booksToUpdate),
       });
+      dispatch(clearCart());
+
+      try {
+        const res = await fetch(domain + "/api/cart/removeAllFromCart", {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId: currentUser._id }),
+        });
+      } catch (error) {
+        console.log(error);
+      }
+      try {
+        const res = await fetch(
+          domain + "/api/purchaseHistory/setpurchaseHistory",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(form),
+            credentials: "include",
+          }
+        );
+        const data = await res.json();
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+
       navigate("/books");
     } catch (error) {
       console.log(error);
@@ -74,25 +119,37 @@ const Checkout = () => {
         <form className=" space-y-2">
           <div className="flex gap-5 ">
             <div className="flex flex-col  ">
-              <label htmlFor="firstname">FirstName </label>
+              <label htmlFor="firstname">FirstName *</label>
               <input
                 type="text"
                 id="firstname"
+                value={form.firstname}
                 onChange={handleChange}
                 className="w-[12vw] rounded-lg "
               />
+              {errors.firstname && (
+                <p className="text-red-500 text-xs font-bold pl-2">
+                  {errors.firstname}
+                </p>
+              )}
             </div>
             <div className="flex flex-col  ">
-              <label htmlFor="lastname">LastName </label>
+              <label htmlFor="lastname">LastName *</label>
               <input
                 type="text"
                 id="lastname"
+                value={form.lastname}
                 onChange={handleChange}
                 className="w-[12vw] rounded-lg "
               />
+              {errors.lastname && (
+                <p className="text-red-500 text-xs font-bold pl-2">
+                  {errors.lastname}
+                </p>
+              )}
             </div>
           </div>
-          <div className="flex flex-col">
+          <iv className="flex flex-col">
             <label htmlFor="city">Town/City </label>
             <select
               name="city"
@@ -106,39 +163,55 @@ const Checkout = () => {
                 </option>
               ))}
             </select>
-          </div>
+          </iv>
           <div className="flex flex-col">
-            <label htmlFor="streetAdress">Street Adress </label>
+            <label htmlFor="streetAdress">Street Adress *</label>
             <input
               type="text"
               id="streetAdress"
               onChange={handleChange}
               className="rounded-lg "
             />
+            {errors.streetAdress && (
+              <p className="text-red-500 text-xs font-bold pl-2">
+                {errors.streetAdress}
+              </p>
+            )}
           </div>
           <div className="flex flex-col">
-            <label htmlFor="ZipCode">ZIP Code </label>
+            <label htmlFor="ZipCode">ZIP Code *</label>
             <input
               type="text"
               id="ZipCode"
               onChange={handleChange}
               className="rounded-lg "
             />
+            {errors.ZipCode && (
+              <p className="text-red-500 text-xs font-bold pl-2">
+                {errors.ZipCode}
+              </p>
+            )}
           </div>
           <div className="flex flex-col">
-            <label htmlFor="Phone">Phone Number </label>
+            <label htmlFor="Phone">Phone Number *</label>
             <input
               type="text"
               onChange={handleChange}
               id="Phone"
               className="rounded-lg "
             />
+            {errors.Phone && (
+              <p className="text-red-500 text-xs font-bold pl-2">
+                {errors.Phone}
+              </p>
+            )}
           </div>
           <div className="flex flex-col">
             <label htmlFor="email">Email </label>
             <input
               type="text"
               id="email"
+              value={form.email}
               onChange={handleChange}
               className="rounded-lg "
             />

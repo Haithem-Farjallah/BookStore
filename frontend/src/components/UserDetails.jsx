@@ -16,20 +16,6 @@ const Update = () => {
   const year = date.getFullYear();
   const formattedDate = `${month} ${year}`;
 
-  const handleLogout = async () => {
-    try {
-      const data = await fetch(domain + "/api/auth/logOut", {
-        method: "Get",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-      });
-      {
-        /*dispatch(deleteSuccess());*/
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
   return (
     <div className="relative h-screen">
       <LoadData time={1000} changeValue={(test) => null} />

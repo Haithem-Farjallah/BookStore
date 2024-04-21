@@ -41,6 +41,7 @@ const bookSlice = createSlice({
       state.books = [];
       state.totalItems = 0;
       state.totalPrice = 0;
+      state.priceAfterDiscount = 0;
     },
     getPrevCarts: (state, action) => {
       if (action.payload.books.length > 0) {
@@ -58,7 +59,6 @@ const bookSlice = createSlice({
     },
     updatePriceDiscount: (state, action) => {
       state.priceAfterDiscount = action.payload.totalAfterDiscount;
-      console.log(state.priceAfterDiscount);
     },
   },
 });
