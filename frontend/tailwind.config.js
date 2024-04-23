@@ -24,7 +24,7 @@ module.exports = {
       },
       colors: {
         darkblue: "#241d45" /*5f5f7e */, //4a4e69
-        pgray: "#827A7A",
+        pgray: "#62636C", //#827A7A
         bgreen: "#299054",
         bgcolor: "#f5f6fa",
         whitebg: "#f6f7f8",
