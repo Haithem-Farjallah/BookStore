@@ -7,6 +7,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { addToCart } from "../store/cartSlice";
 
 import Tabs from "./Tabs";
+import { Spinner } from "flowbite-react";
+import { domain } from "../domain";
 
 const BookDetails = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -19,9 +21,8 @@ const BookDetails = () => {
   useEffect(() => {
     const getSingleBook = async () => {
       try {
-        const res = await fetch(
-          `https://book-store-backend-mu.vercel.app/api/book/getSingleBook?id=${id}`
-        );
+        const res = await fetch(`${domain}/api/book/getSingleBook?id=${id}`);
+
         const data = await res.json();
         setresult(data);
         setTotalPrice(data.price);
@@ -57,22 +58,19 @@ const BookDetails = () => {
     };
     dispatch(addToCart(BookElement));
     if (currentUser) {
-      await fetch(
-        "https://book-store-backend-mu.vercel.app/api/cart/addBookToCart",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...BookElement, userId: currentUser._id }),
-        }
-      );
+      await fetch(domain + "/api/cart/addBookToCart", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...BookElement, userId: currentUser._id }),
+      });
     }
   };
 
   return (
     <div className="space-y-2">
       {loading && (
-        <div className="h-screen mt-10 text-bgreen flex justify-center items-center  w-full">
-          <FontAwesomeIcon icon={faSpinner} spin className="  h-8" />
+        <div className="h-screen mt-10 flex justify-center items-center  w-full">
+          <Spinner color="success" size="xl" />;
         </div>
       )}
       {!loading && (
@@ -117,7 +115,7 @@ const BookDetails = () => {
                 {result.category.map((category, index) => (
                   <p
                     key={index}
-                    className="text-sm bg-white/25 border border-gray-300 w-fit py-2 px-2 m-1 text-darkblue font-semibold rounded-lg "
+                    className="text-sm bg-grayy shadow border border-gray-300 w-fit py-2 px-2 m-1 text-darkblue font-semibold rounded-lg "
                   >
                     {category}
                   </p>
@@ -133,7 +131,9 @@ const BookDetails = () => {
                 {totalPrice} TND
               </p>
               <p className="  w-fit py-1 px-2  text-darkblue font-semibold">
-                Quantity available:{result.quantity} in stock
+                {result.quantity > 0
+                  ? `Quantity available:${result.quantity} in stock`
+                  : "Book currently unavailable in stock"}
               </p>
               <div className=" flex mt-2  ">
                 <div className="flex justify-center  items-center mx-5 ">
@@ -161,27 +161,17 @@ const BookDetails = () => {
                 </div>
                 <input
                   type="button"
+                  disabled={result.quantity === 0}
                   value="Add to cart "
                   onClick={handleAdd}
-                  className=" cursor-pointer bg-bgreen  px-12 py-3 rounded-xl  text-white font-bold text-center"
+                  className=" cursor-pointer bg-bgreen  px-12 py-3 rounded-xl  text-white font-bold text-center disabled:opacity-90 disabled:cursor-not-allowed"
                 />
-                {currentUser && currentUser.isStudent && (
-                  <a
-                    target="blank"
-                    href="https://firebasestorage.googleapis.com/v0/b/bookstore-app-47ae6.appspot.com/o/Bulletin_013479018855_.pdf?alt=media&token=71e15617-9da5-43fa-abbf-4bb57fac5476"
-                  >
-                    <FontAwesomeIcon
-                      icon={faDownload}
-                      title="Students can download pdf books"
-                      className="text-darkblue h-8 ml-12 mt-2 "
-                    />
-                  </a>
-                )}
               </div>
             </div>
           </div>
 
           {/* Tabs  */}
+          {console.log(result)}
           <Tabs result={result} />
           {/*Comments section : */}
         </React.Fragment>

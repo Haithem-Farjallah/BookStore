@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import MoonLoader from "react-spinners/MoonLoader";
+import { domain } from "../domain";
 
 function Search({ outside, closeWindow }) {
   const [results, setResults] = useState([]);
@@ -10,7 +10,7 @@ function Search({ outside, closeWindow }) {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     setLoading(true);
-    fetch(`https://book-store-backend-mu.vercel.app/api/book/getAllBooks`)
+    fetch(`${domain}/api/book/getAllBooks`)
       .then((res) => res.json())
       .then((data) => {
         if (search !== "") {
@@ -40,7 +40,7 @@ function Search({ outside, closeWindow }) {
           type="text"
           placeholder="What are you looking for ? "
           onChange={(e) => setSearch(e.target.value)}
-          className="focus:outline-none border-none  h-14 w-96 font-semibold placeholder:font-medium pl-2 text-darkblue "
+          className=" border-none focus:ring-0  h-14 w-96 font-medium placeholder:font-medium pl-2 text-darkblue "
         />
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -58,8 +58,8 @@ function Search({ outside, closeWindow }) {
       <div className=" bg-grayy  relative rounded-xl w-[40%] h-[80%]  mt-20 py-4  flex flex-col  overflow-hidden">
         <div className=" w-full  overflow-x-hidden  ">
           {loading && (
-            <div className="  absolute top-[50%] right-[50%] text-bgreen  ">
-              <FontAwesomeIcon icon={faSpinner} spin className="  h-8" />
+            <div className="  absolute top-[40%] right-[48%] text-bgreen  ">
+              <MoonLoader color="#299054" size={40} />
             </div>
           )}
 
@@ -87,7 +87,7 @@ function Search({ outside, closeWindow }) {
               </div>
             ))}
           {!loading && results.length === 0 && (
-            <p className=" h-[23rem] text-center text-bgreen mt-16">
+            <p className=" h-[24rem]  text-center text-bgreen mt-16">
               aucune resultat
             </p>
           )}

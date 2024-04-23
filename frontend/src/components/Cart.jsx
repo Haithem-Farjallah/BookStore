@@ -6,6 +6,7 @@ import { removeFromCart, clearCart } from "../store/cartSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { NavLink } from "react-router-dom";
+import { domain } from "../domain";
 
 export default function Cart({ outside, close }) {
   const CartBooks = useSelector((state) => state.book);
@@ -17,14 +18,11 @@ export default function Cart({ outside, close }) {
     dispatch(removeFromCart(data));
     if (currentUser) {
       try {
-        const res = await fetch(
-          "https://book-store-backend-mu.vercel.app/api/cart/removeBookFromCart",
-          {
-            method: "DELETE",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ ...data, userId: currentUser._id }),
-          }
-        );
+        const res = await fetch(domain + "/api/cart/removeBookFromCart", {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...data, userId: currentUser._id }),
+        });
         console.log(await res.json());
       } catch (error) {
         console.log(error);
@@ -35,14 +33,11 @@ export default function Cart({ outside, close }) {
     dispatch(clearCart());
     if (currentUser) {
       try {
-        const res = await fetch(
-          "https://book-store-backend-mu.vercel.app/api/cart/removeAllFromCart",
-          {
-            method: "DELETE",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ userId: currentUser._id }),
-          }
-        );
+        const res = await fetch(domain + "/api/cart/removeAllFromCart", {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId: currentUser._id }),
+        });
         console.log(await res.json());
       } catch (error) {
         console.log(error);
@@ -60,6 +55,7 @@ export default function Cart({ outside, close }) {
           <img
             src={exit}
             alt="exit"
+            loading="eager"
             onClick={close}
             className="cursor-pointer mr-5 h-6"
           />

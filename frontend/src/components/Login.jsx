@@ -1,21 +1,26 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import google from "../images/Google.svg";
-import books from "../images/12331.jpg";
 import circle from "../images/circle.png";
 import { handleErrors } from "./handleErrors";
 import { signInFailure, signInSuccess, SignInStart } from "../store/userSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { getPrevAndNewCarts, getPrevCarts } from "../store/cartSlice";
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
+import { domain } from "../domain";
+
 const Login = () => {
-  const { errors, loading } = useSelector((state) => state.user);
+  const [show, setShow] = useState(false); //used to show /hide password
+  const { loading } = useSelector((state) => state.user);
+  const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
   const CartBooks = useSelector((state) => state.book);
 
   let [forms, setForms] = useState({
     email: "",
     password: "",
-    remember: false,
+    remember: true,
   });
   const navigate = useNavigate();
   const handleChange = (e) => {
@@ -24,7 +29,7 @@ const Login = () => {
       [e.target.name]:
         e.target.type === "checkbox" ? e.target.checked : e.target.value,
     });
-    dispatch(signInFailure({ ...errors, [e.target.name]: "" }));
+    setErrors({ ...errors, [e.target.name]: "" });
   };
 
   const handleSubmit = async (e) => {
@@ -32,29 +37,28 @@ const Login = () => {
     const newErrors = handleErrors(forms, "login"); //call a function that verify inputs using regex
     if (Object.keys(newErrors).length > 0) {
       dispatch(signInFailure(newErrors));
+      setErrors(newErrors);
       return;
     }
     try {
       dispatch(SignInStart());
-      const res = await fetch(
-        "https://book-store-backend-mu.vercel.app/api/auth/signIn",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(forms),
-          credentials: "include",
-        }
-      );
+      const res = await fetch(domain + "/api/auth/signIn", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(forms),
+        credentials: "include",
+      });
       const data = await res.json();
       if (data.success === false) {
         dispatch(signInFailure({ server: data.message }));
+        setErrors({ server: data.message });
         return;
       }
       dispatch(signInSuccess(data));
       try {
         let items;
         const getCarts = await fetch(
-          "https://book-store-backend-mu.vercel.app/api/cart/getBooksAfterLogin", /// will return the books that user added before logging out
+          domain + "/api/cart/getBooksAfterLogin", /// will return the books that user added before logging out
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -105,14 +109,11 @@ const Login = () => {
         const finalResult = { books: combinedArray, totalItems, totalPrice };
         console.log(finalResult);
         dispatch(getPrevAndNewCarts(finalResult));
-        await fetch(
-          "https://book-store-backend-mu.vercel.app/api/cart/UpdateBooksAfterLogin",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ ...finalResult, userId: data._id }),
-          }
-        );
+        await fetch(domain + "/api/cart/UpdateBooksAfterLogin", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...finalResult, userId: data._id }),
+        });
         if (data.isActive === false) {
           navigate("settings/confirmAccount");
           return;
@@ -127,7 +128,7 @@ const Login = () => {
   };
 
   return (
-    <div className=" overflow-hidden h-[98vh] bg-gradient-to-tl from-bgreen to-green-300 flex justify-center   ">
+    <div className=" overflow-hidden h-[98vh] bg-gradient-to-tl from-bgreen to-green-400 flex justify-center   ">
       <img src={circle} alt="" className="absolute top-0 right-0  " />
       <div className="  bg-bgcolor mt-8 h-[82%]  w-[45%] flex flex-col justify-center items-center rounded-l-3xl drop-shadow-2xl">
         <h1 className=" text-[#5f5f7e] font-semibold uppercase text-4xl ">
@@ -139,7 +140,7 @@ const Login = () => {
         <form
           onSubmit={handleSubmit}
           method="post"
-          className="flex flex-col justify-center items-start  space-y-1  w-[55%]"
+          className="flex flex-col  justify-center items-start  space-y-1  w-[55%]"
         >
           <label htmlFor="email" className="text-pgray font-semibold">
             Email
@@ -150,24 +151,37 @@ const Login = () => {
             name="email"
             onChange={handleChange}
             placeholder="Enter your email"
-            className="w-full h-9 font-meduim placeholder:font-normal py-1 px-2  rounded-lg outline-none shadow-test focus:shadow-testhover"
+            className="w-full h-9 font-meduim  text-darkblue placeholder:font-normal border border-gray-400 py-1 px-2  rounded-lg  shadow-test focus:ring-0 focus:border-gray-500 "
           />
           {errors.email && (
-            <p className="text-red-500 text-xs font-bold pl-2">
+            <p className="text-red-500 text-xs font-bold pl-2 ">
               {errors.email}
             </p>
           )}
-          <label htmlFor="password" className="text-pgray font-semibold">
+          <label htmlFor="password" className="text-pgray font-semibold ">
             Password
           </label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            onChange={handleChange}
-            placeholder="********"
-            className="w-full h-9 py-1 px-2   outline-none rounded-lg shadow-test focus:shadow-testhover"
-          />
+          <div className="flex items-center relative w-full">
+            <input
+              type={show ? "text" : "password"}
+              id="password"
+              name="password"
+              onChange={handleChange}
+              placeholder="********"
+              className="w-full h-9 text-darkblue py-1 px-2 pr-8 border border-gray-400  focus:outline-none  rounded-lg shadow-test focus:shadow-testhover focus:ring-0 focus:border-gray-500"
+            />
+            {show ? (
+              <FaEyeSlash
+                className="absolute right-[3%] cursor-pointer text-pgray"
+                onClick={() => setShow(!show)}
+              />
+            ) : (
+              <FaEye
+                className="absolute right-[3%] cursor-pointer text-pgray"
+                onClick={() => setShow(!show)}
+              />
+            )}
+          </div>
           {errors.password && (
             <p className="text-red-500 text-xs font-bold pl-2">
               {errors.password}
@@ -179,13 +193,11 @@ const Login = () => {
                 type="checkbox"
                 name="remember"
                 id="remember"
+                checked={forms.remember}
                 onChange={handleChange}
-                className=" align-middle outline-none mb-[1px] ml-2 "
+                className=" text-bgreen mb-[1px] ml-2 focus:ring-0 rounded "
               />
-              <label
-                htmlFor="remember"
-                className="text-sm  text-pgray outline-none"
-              >
+              <label htmlFor="remember" className="text-sm  text-pgray ">
                 Remember me
               </label>
             </div>
@@ -223,12 +235,17 @@ const Login = () => {
           </span>
         </div>
       </div>
-      <div className="bg-darkbg mt-8 h-[82%] w-[45%] rounded-r-3xl drop-shadow-2xl overflow-hidden ">
+      <div
+        style={{
+          backgroundImage: `url("https://images.pexels.com/photos/16689056/pexels-photo-16689056/free-photo-of-view-of-rows-of-bookshelves-in-a-college-library.jpeg?auto=compress&cs=tinysrgb&w=1000&h=100&dpr=1")`,
+          backgroundSize: "cover",
+        }}
+        className="bg-darkbg mt-8 h-[82%] w-[45%] rounded-r-3xl drop-shadow-2xl overflow-hidden "
+      >
         <img
-          src={books}
+          src="https://images.pexels.com/photos/16689056/pexels-photo-16689056/free-photo-of-view-of-rows-of-bookshelves-in-a-college-library.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
           alt="books"
-          loading="lazy"
-          className="bg-contain h-full opacity-80"
+          className="bg-contain h-full "
         />
       </div>
     </div>

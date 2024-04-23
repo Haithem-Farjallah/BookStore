@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { domain } from "../domain";
 
 const SendRecoverPassword = () => {
   const [emailForm, setEmailForm] = useState("");
@@ -10,15 +11,12 @@ const SendRecoverPassword = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await fetch(
-        "https://book-store-backend-mu.vercel.app/api/auth/sendRecoverPassword",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: emailForm }),
-          credentials: "include",
-        }
-      );
+      const res = await fetch(domain + "/api/auth/sendRecoverPassword", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: emailForm }),
+        credentials: "include",
+      });
       const data = await res.json();
       if (data.statusCode === 403) {
         setLoading(false);

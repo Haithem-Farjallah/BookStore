@@ -32,8 +32,11 @@ import moveto from "./../../images/moveto.png";
 import CountdownTimer from "./CounterDown";
 import LoadData from "../LoadData";
 import Sliders from "./Sliders";
+import { domain } from "../../domain";
+import { useSelector } from "react-redux";
 
 function Home() {
+  const currentUser = useSelector((state) => state.user.currentUser);
   const [search] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -41,7 +44,7 @@ function Home() {
     const getBestBooks = async () => {
       setLoading(true);
       try {
-        const res = await fetch("https://book-store-backend-mu.vercel.app/api/book/getAllBooks");
+        const res = await fetch(domain + "/api/book/getAllBooks");
         const data = await res.json();
         setResults(data);
         setLoading(false);
@@ -68,22 +71,22 @@ function Home() {
             and read with confidence today!
           </p>
           <div className=" w-fit ">
-            <input
-              type="button"
-              value="Get Started "
-              className=" drop-shadow-xl bg-bgreen cursor-pointer hover:opacity-95 text-white shadow-xl px-5 py-3 rounded-xl font-semibold"
-            />
+            <NavLink to={currentUser ? "/books" : "/login"}>
+              <input
+                type="button"
+                value="Get Started "
+                className=" drop-shadow-xl bg-bgreen cursor-pointer hover:opacity-95 text-white shadow-xl px-5 py-3 rounded-xl font-semibold"
+              />
+            </NavLink>
           </div>
         </div>
         <div className="relative mt-1 mr-5 hidden lg:block">
           <img
-            loading="lazy"
             src={img1}
             alt=""
             className="relative z-10 mt-8 w-imagewidth  inline "
           />
           <img
-            loading="lazy"
             src={blob}
             alt=""
             className="absolute top-0 inline left-0 ml-3  mt-12 w-imagewidth   "
@@ -272,16 +275,18 @@ function Home() {
             <div className="text-xl">
               <CountdownTimer />
             </div>
-            <input
-              type="button"
-              value="Join Now >"
-              className="w-fit bg-bggreen cursor-pointer  text-white text-xl shadow-2xl drop-shadow-xl px-5 py-3 rounded-xl font-semibold"
-            />
+            <NavLink to={currentUser ? "/books" : "/login"}>
+              <input
+                type="button"
+                value="Join Now >"
+                className="w-fit bg-bggreen cursor-pointer  text-white text-xl shadow-2xl drop-shadow-xl px-5 py-3 rounded-xl font-semibold"
+              />
+            </NavLink>
           </div>
           <div className=" mr-14  ">
             <img
               src={pick}
-              alt=""
+              alt="img"
               loading="lazy"
               className=" h-[35rem] rounded-2xl "
             />

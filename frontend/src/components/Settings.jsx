@@ -5,20 +5,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteSuccess } from "../store/userSlice.js";
 
 import { NavLink } from "react-router-dom";
+import { domain } from "../domain.js";
 
 const Settings = () => {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
   const handleDelete = async () => {
     try {
-      const data = await fetch(
-        `https://book-store-backend-mu.vercel.app/api/user/delete/${currentUser._id}`,
-        {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-        }
-      );
+      const data = await fetch(`${domain}/api/user/delete/${currentUser._id}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
       dispatch(deleteSuccess());
     } catch (error) {
       console.log(error);

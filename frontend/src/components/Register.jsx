@@ -4,6 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 
 import img7 from "../images/Vector1.png";
 import { handleErrors } from "./handleErrors";
+import { domain } from "../domain";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -34,16 +35,13 @@ const Register = () => {
     }
     try {
       setLoading(true);
-      const res = await fetch(
-        "https://book-store-backend-mu.vercel.app/api/auth/signUp",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const res = await fetch(domain + "/api/auth/signUp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
       const data = await res.json();
       if (data.success === false) {
         setLoading(false);
@@ -60,8 +58,13 @@ const Register = () => {
   };
 
   return (
-    <div className=" bg-gradient-to-tl from-bgreen to-green-300 ">
-      <img src={img7} alt="" className="float-right  -ml-[15%] " />
+    <div className=" bg-gradient-to-tl from-bgreen to-green-400 ">
+      <img
+        src={img7}
+        alt="rightImage"
+        loading="eager"
+        className="float-right  -ml-[15%] "
+      />
 
       <div className="    pt-14 flex justify-center items-center ">
         <div className="  bg-bgcolor  py-12  w-[60%] flex flex-col justify-center items-center rounded-3xl drop-shadow-2xl">
@@ -85,7 +88,7 @@ const Register = () => {
               name="username"
               onChange={handleChange}
               placeholder="Enter your Name"
-              className="w-full h-10 font-meduim placeholder:font-normal py-1 px-2 text-darkblue  rounded-lg outline-none shadow-test focus:shadow-testhover"
+              className="w-full h-10 font-meduim placeholder:font-normal py-1 px-2 text-darkblue  rounded-lg  shadow-test focus:shadow-testhover"
             />
             {errors.username && (
               <p className="text-red-500 text-xs font-bold pl-2">
@@ -167,7 +170,7 @@ const Register = () => {
                 name="isStudent"
                 id="isStudent"
                 onChange={handleChange}
-                className=" align-middle  outline-none mb-[1px] ml-2 accent-bggreen"
+                className=" align-middle  outline-none mb-[1px] ml-2 focus:ring-0 text-bgreen rounded"
               />
               <label
                 htmlFor="isStudent"

@@ -4,6 +4,7 @@ const initialState = {
   books: [],
   totalItems: 0,
   totalPrice: 0,
+  priceAfterDiscount: 0,
 };
 
 const bookSlice = createSlice({
@@ -40,6 +41,7 @@ const bookSlice = createSlice({
       state.books = [];
       state.totalItems = 0;
       state.totalPrice = 0;
+      state.priceAfterDiscount = 0;
     },
     getPrevCarts: (state, action) => {
       if (action.payload.books.length > 0) {
@@ -51,10 +53,12 @@ const bookSlice = createSlice({
       }
     },
     getPrevAndNewCarts: (state, action) => {
-      console.log(action);
       state.books = action.payload.books;
       state.totalItems = action.payload.totalItems;
       state.totalPrice = action.payload.totalPrice;
+    },
+    updatePriceDiscount: (state, action) => {
+      state.priceAfterDiscount = action.payload.totalAfterDiscount;
     },
   },
 });
@@ -64,5 +68,6 @@ export const {
   clearCart,
   getPrevCarts,
   getPrevAndNewCarts,
+  updatePriceDiscount,
 } = bookSlice.actions;
 export default bookSlice.reducer;
