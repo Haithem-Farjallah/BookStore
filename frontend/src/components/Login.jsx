@@ -10,6 +10,8 @@ import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { domain } from "../domain";
 
+import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
+import { app } from "../firebase.js";
 const Login = () => {
   const [show, setShow] = useState(false); //used to show /hide password
   const { loading } = useSelector((state) => state.user);
@@ -127,6 +129,19 @@ const Login = () => {
     }
   };
 
+  //login using email :
+  const EmailLogin = async () => {
+    try {
+      const provider = new GoogleAuthProvider();
+      provider.setCustomParameters({ prompt: "select_account" });
+      const auth = getAuth(app);
+      const result = await signInWithPopup(auth, provider);
+      console.log(result);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <div className=" overflow-hidden h-[98vh] bg-gradient-to-tl from-bgreen to-green-400 flex justify-center   ">
       <img src={circle} alt="" className="absolute top-0 right-0  " />
@@ -220,7 +235,10 @@ const Login = () => {
             {loading ? "Loading ..." : "Sign In"}
           </button>
         </form>
-        <button className="flex justify-center space-x-2 mt-3 mb-5 w-[55%] font-[450] rounded-xl py-2 shadow-test hover:shadow-testhover bg-white text-darkblue outline-gray-500">
+        <button
+          onClick={EmailLogin}
+          className="flex justify-center space-x-2 mt-3 mb-5 w-[55%] font-[450] rounded-xl py-2 shadow-test hover:shadow-testhover bg-white text-darkblue outline-gray-500"
+        >
           <span>
             <img src={google} alt="google" />
           </span>

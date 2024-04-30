@@ -2,7 +2,7 @@ import nodemailer from "nodemailer";
 import "dotenv/config";
 // Create a transporter for sending emails
 const transporter = nodemailer.createTransport({
-  service: "Gmail",
+  service: "gmail",
   auth: {
     user: process.env.UserMail,
     pass: process.env.userPass,
