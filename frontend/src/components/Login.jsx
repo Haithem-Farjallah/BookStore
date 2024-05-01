@@ -14,7 +14,7 @@ import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { app } from "../firebase.js";
 const Login = () => {
   const [show, setShow] = useState(false); //used to show /hide password
-  const { loading } = useSelector((state) => state.user);
+  const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
   const CartBooks = useSelector((state) => state.book);
@@ -34,11 +34,81 @@ const Login = () => {
     setErrors({ ...errors, [e.target.name]: "" });
   };
 
+  const displayUserBooks = async (data) => {
+    try {
+      let items;
+      const getCarts = await fetch(
+        domain + "/api/cart/getBooksAfterLogin", /// will return the books that user added before logging out
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId: data._id }),
+        }
+      );
+      items = await getCarts.json();
+      // if the data in redux is null (it means user did not pick any book before logging in)
+      if (CartBooks.books.length === 0) {
+        if (items) {
+          console.log("ok");
+          dispatch(getPrevCarts(items));
+          if (data.isActive === false) {
+            navigate("/settings/confirmAccount");
+            return;
+          }
+          navigate("/");
+          return;
+        }
+      }
+      const arrayData = items.books || [];
+      let totalItems = items.totalItems;
+      let totalPrice = items.totalPrice;
+      console.log(arrayData);
+      ///when the user picked books before logging in
+      ///here we will combine both the books chosen before logging in and books chosen before logging out
+      const combinedArray = [];
+      const combinedObjects = [...arrayData, ...CartBooks.books];
+
+      // Iterate over each object in the combinedObjects array
+      combinedObjects.forEach((obj) => {
+        // Check if the object with the same id already exists in combinedArray
+        const existingObj = combinedArray.find((item) => item.id === obj.id);
+
+        if (existingObj) {
+          // If the object exists, update its number and totalPrice
+          existingObj.number += obj.number;
+          existingObj.totalPrice += obj.totalPrice;
+        } else {
+          // If the object does not exist, add it to combinedArray
+          combinedArray.push(obj);
+        }
+      });
+      console.log(combinedArray);
+      totalItems += CartBooks.totalItems;
+      totalPrice += CartBooks.totalPrice;
+      console.log(totalItems);
+      const finalResult = { books: combinedArray, totalItems, totalPrice };
+      console.log(finalResult);
+      dispatch(getPrevAndNewCarts(finalResult));
+      await fetch(domain + "/api/cart/UpdateBooksAfterLogin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...finalResult, userId: data._id }),
+      });
+      if (data.isActive === false) {
+        navigate("settings/confirmAccount");
+        return;
+      }
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = handleErrors(forms, "login"); //call a function that verify inputs using regex
     if (Object.keys(newErrors).length > 0) {
-      dispatch(signInFailure(newErrors));
+      setLoading(false);
       setErrors(newErrors);
       return;
     }
@@ -52,93 +122,53 @@ const Login = () => {
       });
       const data = await res.json();
       if (data.success === false) {
-        dispatch(signInFailure({ server: data.message }));
+        setLoading(false);
         setErrors({ server: data.message });
         return;
       }
       dispatch(signInSuccess(data));
-      try {
-        let items;
-        const getCarts = await fetch(
-          domain + "/api/cart/getBooksAfterLogin", /// will return the books that user added before logging out
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ userId: data._id }),
-          }
-        );
-        items = await getCarts.json();
-        // if the data in redux is null (it means user did not pick any book before logging in)
-        if (CartBooks.books.length === 0) {
-          if (items) {
-            console.log("ok");
-            dispatch(getPrevCarts(items));
-            if (data.isActive === false) {
-              navigate("/settings/confirmAccount");
-              return;
-            }
-            navigate("/");
-            return;
-          }
-        }
-        const arrayData = items.books || [];
-        let totalItems = items.totalItems;
-        let totalPrice = items.totalPrice;
-        console.log(arrayData);
-        ///when the user picked books before logging in
-        ///here we will combine both the books chosen before logging in and books chosen before logging out
-        const combinedArray = [];
-        const combinedObjects = [...arrayData, ...CartBooks.books];
-
-        // Iterate over each object in the combinedObjects array
-        combinedObjects.forEach((obj) => {
-          // Check if the object with the same id already exists in combinedArray
-          const existingObj = combinedArray.find((item) => item.id === obj.id);
-
-          if (existingObj) {
-            // If the object exists, update its number and totalPrice
-            existingObj.number += obj.number;
-            existingObj.totalPrice += obj.totalPrice;
-          } else {
-            // If the object does not exist, add it to combinedArray
-            combinedArray.push(obj);
-          }
-        });
-        console.log(combinedArray);
-        totalItems += CartBooks.totalItems;
-        totalPrice += CartBooks.totalPrice;
-        console.log(totalItems);
-        const finalResult = { books: combinedArray, totalItems, totalPrice };
-        console.log(finalResult);
-        dispatch(getPrevAndNewCarts(finalResult));
-        await fetch(domain + "/api/cart/UpdateBooksAfterLogin", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...finalResult, userId: data._id }),
-        });
-        if (data.isActive === false) {
-          navigate("settings/confirmAccount");
-          return;
-        }
-        navigate("/");
-      } catch (error) {
-        console.log(error);
-      }
+      displayUserBooks(data);
     } catch (error) {
-      dispatch(signInFailure({ server: error.message }));
+      setLoading(false);
+      setErrors({ server: "Someting Went Wrong ,Try Again..." });
     }
   };
 
   //login using email :
   const EmailLogin = async () => {
+    setLoading(true);
+    setErrors("");
     try {
       const provider = new GoogleAuthProvider();
       provider.setCustomParameters({ prompt: "select_account" });
       const auth = getAuth(app);
       const result = await signInWithPopup(auth, provider);
       console.log(result);
+      const res = await fetch(`${domain}/api/auth/google`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: result.user.displayName.split(" ")[0],
+          familyname: result.user.displayName.split(" ")[1],
+          email: result.user.email,
+          profileImg: result.user.photoURL,
+        }),
+        credentials: "include",
+      });
+      const data = await res.json();
+      dispatch(signInSuccess(data));
+      console.log(data);
     } catch (error) {
-      console.log(error.message);
+      if (error.code === "auth/popup-closed-by-user") {
+        // Handle the case where the user closed the popup
+        setErrors({ server: "You closed the authentication popup" });
+        setLoading(false);
+        return;
+      }
+      setErrors({ server: "Something went wrong,try again later..." });
+      setLoading(false);
     }
   };
 

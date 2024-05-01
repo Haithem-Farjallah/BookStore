@@ -20,9 +20,6 @@ const UserSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    isStudent: {
-      type: Boolean,
-    },
     profileImg: {
       type: String,
       default:

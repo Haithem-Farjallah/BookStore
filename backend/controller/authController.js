@@ -10,7 +10,7 @@ import {
 import cryptoRandomString from "crypto-random-string";
 
 export const signUp = async (req, res, next) => {
-  const { username, familyname, email, password, isStudent } = req.body;
+  const { username, familyname, email, password } = req.body;
   try {
     const emailUser = await User.findOne({ email });
     if (!emailUser) {
@@ -20,7 +20,6 @@ export const signUp = async (req, res, next) => {
         familyname,
         email,
         password: hashedPassword,
-        isStudent,
         activationCode: 0,
       });
       const {
@@ -70,12 +69,86 @@ export const signIn = async (req, res, next) => {
     res
       .cookie("access_token", token, {
         httpOnly: true,
-        secure:true,
-        sameSite:"None",
+        secure: true,
+        sameSite: "None",
         expires: expirationTime,
       })
       .status(200)
       .json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+export const signInGoogle = async (req, res, next) => {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    if (user) {
+      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+      let generateCode = cryptoRandomString({ length: 5, type: "numeric" }); // will generate a random numeric number
+      await User.updateOne(
+        { email: req.body.email },
+        { $set: { activationCode: generateCode } }
+      );
+      const {
+        RecoverPass: recover,
+        password: pass,
+        activationCode: active,
+        ...result
+      } = user._doc;
+      if (!result.isActive) {
+        sendConfirmationMail(generateCode, result.email);
+      }
+      let expirationTime = 0;
+      const twoDaysInSeconds = 2 * 24 * 60 * 60; //2 days before the end of cookie
+      expirationTime = new Date(Date.now() + twoDaysInSeconds * 1000);
+
+      res
+        .cookie("access_token", token, {
+          httpOnly: true,
+          secure: true,
+          sameSite: "None",
+          expires: expirationTime,
+        })
+        .status(200)
+        .json(result);
+    } else {
+      const hashedPassword = bcryptjs.hashSync(
+        cryptoRandomString({ length: 10, type: "alphanumeric" }),
+        10
+      );
+      let generateCode = cryptoRandomString({ length: 5, type: "numeric" }); // will generate a random numeric number
+
+      const newUser = await User.create({
+        username: req.body.username,
+        familyname: req.body.familyname,
+        email: req.body.email,
+        profileImg: req.body.profileImg,
+        password: hashedPassword,
+        activationCode: generateCode,
+      });
+
+      const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
+      let expirationTime = 0;
+      const twoDaysInSeconds = 2 * 24 * 60 * 60; //2 days before the end of cookie
+      expirationTime = new Date(Date.now() + twoDaysInSeconds * 1000);
+      const {
+        RecoverPass: recover,
+        password: pass,
+        activationCode: active,
+        ...result
+      } = newUser._doc;
+      sendConfirmationMail(generateCode, result.email);
+
+      res
+        .cookie("access_token", token, {
+          httpOnly: true,
+          secure: true,
+          sameSite: "None",
+          expires: expirationTime,
+        })
+        .status(200)
+        .json(result);
+    }
   } catch (error) {
     next(error);
   }

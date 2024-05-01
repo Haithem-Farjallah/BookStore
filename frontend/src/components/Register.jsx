@@ -13,7 +13,6 @@ const Register = () => {
     email: "",
     password: "",
     confirmpassword: "",
-    isStudent: false,
   });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -164,21 +163,6 @@ const Register = () => {
               </p>
             )}
 
-            <div className="  space-x-2  mt-1  w-full ">
-              <input
-                type="checkbox"
-                name="isStudent"
-                id="isStudent"
-                onChange={handleChange}
-                className=" align-middle  outline-none mb-[1px] ml-2 focus:ring-0 text-bgreen rounded"
-              />
-              <label
-                htmlFor="isStudent"
-                className="text-sm  text-pgray outline-none"
-              >
-                I am currently a Student.
-              </label>
-            </div>
             {errors.server && (
               <p className="text-red-500  font-medium pl-2">{errors.server}</p>
             )}
