@@ -1,4 +1,5 @@
 import User from "../Model/userModel.js";
+import Comment from "../Model/commentModel.js";
 import { errorHandler } from "../utils/errorHandler.js";
 import bcryptjs from "bcryptjs";
 
@@ -48,6 +49,7 @@ export const deleteUser = async (req, res, next) => {
   }
   try {
     const del = await User.findByIdAndDelete(req.params.id);
+    await Comment.deleteMany({ userId: req.params.id });
     res.clearCookie("access_token").status(200).json(del);
   } catch (error) {
     next(error);
@@ -87,5 +89,7 @@ export const getUserDetails = async (req, res, next) => {
     const data = await User.findOne({ _id: req.params.id });
     const { username, familyname, profileImg, ...results } = data;
     res.status(200).json({ username, familyname, profileImg });
-  } catch (error) {}
+  } catch (error) {
+    next(error);
+  }
 };

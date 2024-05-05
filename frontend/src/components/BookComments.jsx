@@ -15,6 +15,7 @@ const BookComments = ({ id }) => {
       try {
         const result = await fetch(`${domain}/api/comment/getComments/${id}`);
         const data = await result.json();
+        console.log(data);
         setAllComments(data);
         setLoading(false);
       } catch (error) {
