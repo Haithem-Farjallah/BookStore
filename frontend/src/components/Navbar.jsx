@@ -19,7 +19,6 @@ const navigation = {
   pages: [
     { name: "Home", href: "/" },
     { name: "Books", href: "/books" },
-    { name: "Authors", href: "/authors" },
     { name: "Blog", href: "/Blog" },
   ],
 };
@@ -205,12 +204,6 @@ export default function Navbar() {
                     className="text-darkblue/90 hover:text-gray-900 aria-[current=page]:text-bgreen font-medium "
                   >
                     Books
-                  </NavLink>
-                  <NavLink
-                    to="/authors"
-                    className="text-darkblue/90 hover:text-gray-900 aria-[current=page]:text-bgreen font-medium "
-                  >
-                    Authors
                   </NavLink>
                   <NavLink
                     to="/Contact"

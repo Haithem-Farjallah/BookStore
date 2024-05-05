@@ -78,17 +78,10 @@ const Footer = () => {
                 Books
               </NavLink>
             </li>
+
             <li>
               <NavLink
-                to="/authors"
-                className="text-pgray  hover:text-darkgray     "
-              >
-                Authors
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/blog"
+                to="/Contact"
                 className="text-pgray   hover:text-darkgray   "
               >
                 Contact Us
