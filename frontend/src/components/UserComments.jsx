@@ -22,7 +22,10 @@ const UserComments = ({
     const getUserDetails = async () => {
       try {
         const result = await fetch(
-          `${domain}/api/user/getUser/${comment.userId}`
+          `${domain}/api/user/getUser/${comment.userId}`,
+          {
+            method: "GET",
+          }
         );
         const data = await result.json();
         setUserDetails(data);
