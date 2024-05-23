@@ -35,6 +35,7 @@ import Sliders from "./Sliders";
 import { domain } from "../../domain";
 import { useSelector } from "react-redux";
 
+import { motion } from "framer-motion";
 function Home() {
   const currentUser = useSelector((state) => state.user.currentUser);
   const [search] = useState("");
@@ -56,9 +57,15 @@ function Home() {
   }, []);
 
   return (
-    <div className="   pt-20 ">
+    <div className="   pt-24 ">
       <div className=" flex  justify-around   mb-5   md:scale-105 ">
-        <div className=" flex flex-col  lg:items-start items-center  lg:ml-12 px-5 sm:space-y-6 space-y-7  pt-8 lg:w-title_width  md:w-widthtitle">
+        <motion.div
+          initial={{ opacity: 0, translateX: -40 }}
+          whileInView={{ opacity: 1, translateX: 0 }}
+          transition={{ ease: "easeOut", duration: 0.5 }}
+          viewport={{ once: true }}
+          className=" flex flex-col  lg:items-start items-center  lg:ml-12 px-5 sm:space-y-6 space-y-7  pt-8 lg:w-title_width  md:w-widthtitle"
+        >
           <h1 className=" drop-shadow-xl sm:text-7xl text-6xl lg:w-title_width md:px-5 lg:px-0 pl-1 sm:pl-0 text-center lg:text-left  text-darkblue font-bold  ">
             Get your{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-br  from-[#29A354] to-gray-200">
@@ -79,8 +86,14 @@ function Home() {
               />
             </NavLink>
           </div>
-        </div>
-        <div className="relative mt-1 mr-5 hidden lg:block">
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, translateX: 40 }}
+          whileInView={{ opacity: 1, translateX: 0 }}
+          transition={{ ease: "easeOut", duration: 0.5 }}
+          viewport={{ once: true }}
+          className="relative mt-1 mr-5 hidden lg:block"
+        >
           <img
             src={img1}
             alt=""
@@ -91,7 +104,7 @@ function Home() {
             alt=""
             className="absolute top-0 inline left-0 ml-3  mt-12 w-imagewidth   "
           />
-        </div>
+        </motion.div>
       </div>
       {/*<img className="w-screen z-10 " src={wave} alt="" />*/}
       {/* part 2 of the home page */}
@@ -111,24 +124,46 @@ function Home() {
 
       <div className="  -mt-1 pt-24 pb-1  flex flex-col   bg-grayy  relative overflow-hidden">
         <div className=" flex flex-col justify-center items-center h-fit  ">
-          <h1 className="text-7xl text-darkblue font-bold mb-8 ">
+          <motion.h1
+            initial={{ opacity: 0, translateY: -40 }}
+            whileInView={{ opacity: 1, translateY: 0 }}
+            transition={{ ease: "easeOut", duration: 0.5 }}
+            viewport={{ margin: "-250px", once: true }}
+            className="text-7xl text-darkblue font-bold mb-8 "
+          >
             why choose our online Store ?
-          </h1>
-          <p className="text-[28px] font-medium w-[50%] mb-8 text-center text-pgray ">
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, translateY: -40 }}
+            whileInView={{ opacity: 1, translateY: 0 }}
+            transition={{ ease: "easeOut", duration: 0.5, delay: 0.5 }}
+            viewport={{ amount: "all", once: true }}
+            className="text-[28px] font-medium w-[50%] mb-8 text-center text-pgray "
+          >
             Shop online and save! Access, read, practice, and engage with
             digital content.
-          </p>
+          </motion.p>
         </div>
         <div className=" my-2 mb-12 ">
           <div className="flex justify-around items-center my-12 ml-4">
-            <img
+            <motion.img
+              initial={{ opacity: 0, translateX: -40 }}
+              whileInView={{ opacity: 1, translateX: 0 }}
+              transition={{ ease: "easeOut", duration: 0.5 }}
+              viewport={{ margin: "-300px", once: true }}
               loading="lazy"
               src={books}
               alt="books"
               className=" h-[590px] rounded-full 
               "
             />
-            <div className="  w-[55%]  text-bggreen  h-[400px] p-5  flex flex-col justify-center gap-4 ">
+            <motion.div
+              initial={{ opacity: 0, translateX: 40 }}
+              whileInView={{ opacity: 1, translateX: 0 }}
+              transition={{ ease: "easeOut", duration: 0.5 }}
+              viewport={{ margin: "-300px", once: true }}
+              className="  w-[55%]  text-bggreen  h-[400px] p-5  flex flex-col justify-center gap-4 "
+            >
               <h1 className="font-bold text-6xl mb-4 w-full">
                 Explore Our Vast Selection of Books
               </h1>
@@ -139,11 +174,15 @@ function Home() {
                 curate an extensive collection that spans from timeless classics
                 to contemporary bestsellers.
               </p>
-            </div>
+            </motion.div>
           </div>
 
           <div className="flex flex-row-reverse justify-around items-center my-12">
-            <img
+            <motion.img
+              initial={{ opacity: 0, translateX: 40 }}
+              whileInView={{ opacity: 1, translateX: 0 }}
+              transition={{ ease: "easeOut", duration: 0.5 }}
+              viewport={{ margin: "-300px", once: true }}
               loading="lazy"
               src={customerService}
               alt="customerService"
@@ -151,7 +190,13 @@ function Home() {
               "
             />
             {/*text-[#267e6a] */}
-            <div className="  w-[50%]    text-bggreen h-[400px] p-5  flex flex-col justify-center gap-4 ">
+            <motion.div
+              initial={{ opacity: 0, translateX: -40 }}
+              whileInView={{ opacity: 1, translateX: 0 }}
+              transition={{ ease: "easeOut", duration: 0.5 }}
+              viewport={{ margin: "-300px", once: true }}
+              className="  w-[50%]    text-bggreen h-[400px] p-5  flex flex-col justify-center gap-4 "
+            >
               <h1 className="font-bold text-6xl mb-4  w-[110%] ">
                 Elevate Your Bookstore Experience{" "}
               </h1>
@@ -163,17 +208,27 @@ function Home() {
                 away, ready to assist you with the utmost professionalism and
                 expertise.
               </p>
-            </div>
+            </motion.div>
           </div>
           <div className="flex justify-around items-center my-12">
-            <img
+            <motion.img
+              initial={{ opacity: 0, translateX: -40 }}
+              whileInView={{ opacity: 1, translateX: 0 }}
+              transition={{ ease: "easeOut", duration: 0.5 }}
+              viewport={{ margin: "-300px", once: true }}
               loading="lazy"
               src={delivery}
               alt="delivery"
               className=" h-[640px] rounded-full
               "
             />
-            <div className="  w-[50%]  text-bggreen  h-[400px] p-5  flex flex-col justify-center gap-4 ">
+            <motion.div
+              initial={{ opacity: 0, translateX: 40 }}
+              whileInView={{ opacity: 1, translateX: 0 }}
+              transition={{ ease: "easeOut", duration: 0.5 }}
+              viewport={{ margin: "-300px", once: true }}
+              className="  w-[50%]  text-bggreen  h-[400px] p-5  flex flex-col justify-center gap-4 "
+            >
               <h1 className="font-bold text-6xl mb-4">
                 Swift and Seamless Delivery
               </h1>
@@ -184,7 +239,7 @@ function Home() {
                 to your schedule, and rest easy knowing that your items are
                 handled with the utmost care.
               </p>
-            </div>
+            </motion.div>
           </div>
         </div>
         {/*<div className="grid grid-cols-4  h-fit  mt-12 ">
@@ -242,15 +297,6 @@ function Home() {
         <div className=" mb-12 h-[60vh] flex items-center ">
           <Sliders results={results} loading={loading} />
         </div>
-        {/* <div className="h-52">
-            <Slider {...secondSliderSettings} className='cards  '>
-                            {!loading && results.length!==0 && results.map((result,index)=>(
-                            <div key={index} className=' bg-whitebg  shadow-lg rounded-xl overflow-hidden'>
-                            { result.volumeInfo.imageLinks ?  <img src={result.volumeInfo.imageLinks.thumbnail} alt=""  className='h-52 w-full  brightness-95'/>: <img src={bookImg} className='h-60 w-full  brightness-95' /> }
-                            </div>)) }
-            </Slider>
-
-            </div> */}
       </div>
 
       {/* The Promotion part */}
@@ -258,39 +304,67 @@ function Home() {
         <img
           src={img}
           loading="lazy"
-          alt=""
+          alt="readBook"
           className=" -top-20  left-5 z-0  absolute"
         />
         <div className="h-[40rem] mt-48   mx-20 rounded-3xl flex items-center justify-between   bg-grayy z-10 relative ">
           <div className=" flex flex-col  w-[55%] justify-center space-y-7 ml-24  ">
-            <h2 className="drop-shadow-xl text-6xl  text-darkblue font-bold">
+            <motion.h2
+              initial={{ opacity: 0, translateX: -40 }}
+              whileInView={{ opacity: 1, translateX: 0 }}
+              transition={{ ease: "easeInOut", duration: 0.5 }}
+              viewport={{ amount: "all", once: true, delay: 5 }}
+              className="drop-shadow-xl text-6xl  text-darkblue font-bold"
+            >
               Exclusive Deal of the Week! Act Fast and Save 50%!
-            </h2>
-            <p className=" text-2xl  font-medium text-pgray ">
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, translateX: -40 }}
+              whileInView={{ opacity: 1, translateX: 0 }}
+              transition={{ ease: "easeInOut", duration: 0.5 }}
+              viewport={{ amount: "all", once: true, delay: 6 }}
+              className=" text-2xl  font-medium text-pgray "
+            >
               For a limited time only, we're thrilled to present our Deal of the
               Week, offering an unbeatable 50% discount on selected items. This
               is your chance to elevate your shopping experience without
               breaking the bank.
-            </p>
-            <div className="text-xl">
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, translateY: -40 }}
+              whileInView={{ opacity: 1, translateY: 0 }}
+              transition={{ ease: "easeInOut", duration: 0.5 }}
+              viewport={{ amount: "all", once: true, delay: 7 }}
+              className="text-xl"
+            >
               <CountdownTimer />
-            </div>
+            </motion.div>
             <NavLink to={currentUser ? "/books" : "/login"}>
-              <input
+              <motion.input
+                initial={{ opacity: 0, translateX: -40 }}
+                whileInView={{ opacity: 1, translateX: 0 }}
+                transition={{ ease: "easeOut", duration: 0.5 }}
+                viewport={{ amount: "all", once: true, delay: 8 }}
                 type="button"
                 value="Join Now >"
                 className="w-fit bg-bggreen cursor-pointer  text-white text-xl shadow-2xl drop-shadow-xl px-5 py-3 rounded-xl font-semibold"
               />
             </NavLink>
           </div>
-          <div className=" mr-14  ">
+          <motion.div
+            initial={{ opacity: 0, translateX: 40 }}
+            whileInView={{ opacity: 1, translateX: 0 }}
+            transition={{ ease: "easeInOut", duration: 0.5 }}
+            viewport={{ margin: "-200px", once: true }}
+            className=" mr-14  "
+          >
             <img
               src={pick}
               alt="img"
               loading="lazy"
               className=" h-[35rem] rounded-2xl "
             />
-          </div>
+          </motion.div>
         </div>
         <img
           src={img}
@@ -302,13 +376,25 @@ function Home() {
 
       {/*client review*/}
       <div className=" z-10 relative flex flex-col justify-center items-center h-fit mt-32  ">
-        <h1 className=" text-7xl text-darkblue font-bold  mb-8  w-full text-center">
+        <motion.h1
+          initial={{ opacity: 0, translateY: -40 }}
+          whileInView={{ opacity: 1, translateY: 0 }}
+          transition={{ ease: "easeOut", duration: 0.5 }}
+          viewport={{ amount: "all", once: true }}
+          className=" text-7xl text-darkblue font-bold  mb-8  w-full text-center"
+        >
           Our Clients Review
-        </h1>
-        <p className="text-3xl  mb-8 text-pgray  font-medium w-[38%] text-center">
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, translateY: -40 }}
+          whileInView={{ opacity: 1, translateY: 0 }}
+          transition={{ ease: "easeOut", duration: 0.5 }}
+          viewport={{ amount: "all", once: true, delay: 1 }}
+          className="text-3xl  mb-8 text-pgray  font-medium w-[38%] text-center"
+        >
           It’s always the best source to hear from others who have already
           bought from us.
-        </p>
+        </motion.p>
       </div>
       <div className="relative  py-16  z-10  ">
         <img
@@ -458,17 +544,29 @@ function Home() {
       {/*Last section: app phone*/}
       <div className=" h-screen flex  justify-around   my-32">
         <div className="w-[50%]   flex flex-col justify-center  space-y-5 ">
-          <h1 className="text-darkblue font-bold text-6xl mb-5">
+          <motion.h1
+            initial={{ opacity: 0, translateX: -40 }}
+            whileInView={{ opacity: 1, translateX: 0 }}
+            transition={{ ease: "easeOut", duration: 0.5 }}
+            viewport={{ amount: "all", once: true }}
+            className="text-darkblue font-bold text-6xl mb-5"
+          >
             Take Your Bookstore Everywhere with Our Mobile App!
-          </h1>
-          <p className="text-pgray font-medium text-2xl ">
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, translateX: -40 }}
+            whileInView={{ opacity: 1, translateX: 0 }}
+            transition={{ ease: "easeOut", duration: 0.5 }}
+            viewport={{ amount: "all", once: true, delay: 1 }}
+            className="text-pgray font-medium text-2xl "
+          >
             Discover a World of Books at Your Fingertips . Now, you can carry
             the magic of our bookstore with you wherever you go. Our mobile app
             is designed to make your reading experience seamless and enjoyable.{" "}
             <br />
             <span className="font-bold underline">Download Now</span> and Embark
             on a Reading Adventure:
-          </p>
+          </motion.p>
           <div className="flex    space-x-5 ">
             <Link
               to="https://play.google.com/store/games?hl=en&gl=US&pli=1"
@@ -497,9 +595,15 @@ function Home() {
             </Link>
           </div>
         </div>
-        <div className=" flex justify-center">
+        <motion.div
+          initial={{ opacity: 0, translateX: 40 }}
+          whileInView={{ opacity: 1, translateX: 0 }}
+          transition={{ ease: "easeOut", duration: 1 }}
+          viewport={{ margin: "-250px", once: true }}
+          className=" flex justify-center"
+        >
           <img src={phone} alt="phone" loading="lazy" className=" h-full " />
-        </div>
+        </motion.div>
       </div>
     </div>
   );
